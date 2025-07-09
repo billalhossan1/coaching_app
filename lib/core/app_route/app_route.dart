@@ -1,0 +1,101 @@
+import 'package:get/get.dart';
+
+import '../../view/screen/auth/sign_in_screen.dart';
+import '../../view/screen/guest/guest_auth/sign_in_screen.dart';
+import '../../view/screen/guest/guest_auth/sign_up_screen.dart';
+import '../../view/screen/guest/package/package_screen.dart';
+import '../../view/screen/home/bottom_nav_bar/bottom_nav_screen.dart';
+import '../../view/screen/home/course_details.dart';
+import '../../view/screen/home/elit_training/home_work.dart';
+import '../../view/screen/home/profile/about/about.dart';
+import '../../view/screen/home/profile/academic_fee/academic_fee.dart';
+import '../../view/screen/home/profile/academic_fee/fee_details.dart';
+import '../../view/screen/home/profile/app_support/app_support.dart';
+import '../../view/screen/home/profile/course_history/course_details.dart';
+import '../../view/screen/home/profile/course_history/course_history.dart';
+import '../../view/screen/home/profile/hep_support/help_support.dart';
+import '../../view/screen/home/profile/order_history/order_history.dart';
+import '../../view/screen/home/profile/profile_details/profile_details.dart';
+import '../../view/screen/home/profile/setting/change_password.dart';
+import '../../view/screen/home/profile/setting/setting.dart';
+import '../../view/screen/home/profile/terms_condition/terms_condition.dart';
+import '../../view/screen/home/profile/wish_list/wish_list.dart';
+import '../../view/screen/home/shop/cart.dart';
+import '../../view/screen/home/shop/checkout.dart';
+import '../../view/screen/home/shop/equipment.dart';
+import '../../view/screen/home/shop/product_details.dart';
+import '../../view/screen/onboarding/view/splash_screen1.dart';
+import '../../view/screen/onboarding/view/onboarding.dart';
+
+class AppRoute {
+  ///==================== Initial Routes ====================
+
+  static const String splashScreen = "/splash_screen";
+  static const String splashScreen2 = "/splash_screen2";
+  static const String signInScreen = "/sign_in_screen";
+  static const String bottomNavBar = "/bottom_nav_bar";
+  static const String trainYourSelf = "/trainYourSelf";
+  static const String trainingVideo = "/trainingVideo";
+  static const String equipmentScreen = "/equipmentScreen";
+  static const String productDetails = "/productDetails";
+  static const String cartScreen = "/cartScreen";
+  static const String checkoutScreen = "/checkoutScreen";
+  static const String homeWork = "/homeWork";
+  static const String profileDetails = "/profileDetails";
+  static const String wishList = "/wishList";
+  static const String academicFee = "/academicFee";
+  static const String feeDetails = "/feeDetails";
+  static const String orderHistory = "/orderHistory";
+  static const String courseHistory = "/courseHistory";
+  static const String courseDetails = "/courseDetails";
+  static const String settings = "/settings";
+  static const String changePassword = "/changePassword";
+  static const String helpSupport = "/helpSupport";
+  static const String about = "/about";
+  static const String appSupport = "/appSupport";
+  static const String termsCondition = "/termsCondition";
+  static const String signUp = "/signUp";
+  static const String guestSignInScreen = "/guestSignInScreen";
+  static const String packageScreen = "/packageScreen";
+  static const String homeCourseDetails = "/homeCourseDetails";
+
+  static List<GetPage> routes = [
+    ///==================== Initial Routes ====================
+
+    GetPage(name: splashScreen, page: () => const SplashScreen1()),
+    GetPage(name: splashScreen2, page: () =>  OnboardingScreen()),
+    GetPage(name: bottomNavBar, page: () =>  BottomNavBar()),
+
+    ///==================== Auth Routes ====================
+    GetPage(name: signInScreen, page: () => SignInScreen()),
+    GetPage(name: signUp, page: () =>  SignUpScreen()),
+    GetPage(name: guestSignInScreen, page: () => GuestSignInScreen()),
+    GetPage(name: packageScreen, page: () => PackageScreen()),
+
+    ///======================= Home Route =====================
+    GetPage(name: homeWork, page: () =>  HomeWork()),
+    GetPage(name: homeCourseDetails, page: () =>  HomeCourseDetails()),
+
+    ///======================= Equipment Route =====================
+    GetPage(name: equipmentScreen, page: () =>  EquipmentScreen()),
+    GetPage(name: productDetails, page: () =>  ProductDetails()),
+    GetPage(name: cartScreen, page: () =>  CartScreen()),
+    GetPage(name: checkoutScreen, page: () =>  CheckoutScreen()),
+
+    ///======================= Profile Details =====================
+    GetPage(name: profileDetails, page: () =>  ProfileDetails()),
+    GetPage(name: wishList, page: () =>  WishList()),
+    GetPage(name: academicFee, page: () =>  AcademicFee()),
+    GetPage(name: feeDetails, page: () =>  FeeDetails()),
+    GetPage(name: orderHistory, page: () =>  OrderHistory()),
+    GetPage(name: courseHistory, page: () =>  CourseHistory()),
+    GetPage(name: courseDetails, page: () =>  CourseDetails()),
+    GetPage(name: settings, page: () =>  Setting()),
+    GetPage(name: changePassword, page: () =>  ChangePassword()),
+    GetPage(name: helpSupport, page: () =>  HelpSupport()),
+    GetPage(name: about, page: () =>  About()),
+    GetPage(name: appSupport, page: () =>  AppSupport()),
+    GetPage(name: termsCondition, page: () =>  TermsCondition()),
+
+  ];
+}

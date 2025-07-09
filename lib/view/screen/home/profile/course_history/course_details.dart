@@ -1,0 +1,201 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:football_coaching_coach_app/view/screen/home/profile/course_history/widget/schedule_table.dart';
+import 'package:get/get.dart';
+
+import '../../../../../utils/AppColors/app_colors.dart';
+import '../../../../../utils/Texts/text_style.dart';
+import '../../../../widget/size.dart';
+import '../../widget/activity_info_widget.dart';
+class CourseDetails extends StatelessWidget {
+  const CourseDetails({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: SafeArea(
+        child: Column(
+          children: [
+            _customAppBar(),
+            HeightGap(height: 12.h),
+            /// Class info
+            Container(
+              width: double.infinity,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16),
+                  color: AppColors.grey800),
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Class Info',
+                      style: TextStyles.title14.copyWith(
+                          fontWeight: FontWeight.w500, color: AppColors.white300),
+                    ),
+                    HeightGap(height: 12.h),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          'Passing Level 1',
+                          style: TextStyles.regular14.copyWith(
+                              fontWeight: FontWeight.w400,
+                              color: AppColors.white600),
+                        ),
+                        Text(
+                          'Upcoming',
+                          style: TextStyles.regular14.copyWith(
+                              fontWeight: FontWeight.w400,
+                              color: AppColors.golden2),
+                        ),
+                      ],
+                    ),
+                    HeightGap(height: 8.h),
+                    Row(
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(100),
+                          child: Image(
+                            image: NetworkImage(
+                              'https://cdn.pixabay.com/photo/2024/04/27/10/14/ai-generated-8723499_640.jpg',
+                            ),
+                            height: 30,
+                            width: 30,
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                        WidthGap(width: 8.w),
+                        Text(
+                          'A.J.Hoge',
+                          style: TextStyles.regular14.copyWith(
+                              fontWeight: FontWeight.w400,
+                              color: AppColors.white700),
+                        ),
+                      ],
+                    ),
+                    HeightGap(height: 8.h),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          '2 Jun, 2025',
+                          style: TextStyles.regular20.copyWith(
+                              fontWeight: FontWeight.w400,
+                              color: AppColors.green300),
+                        ),
+                        Text(
+                          '3:00 PM – 4:30 PM',
+                          style: TextStyles.regular20.copyWith(
+                              fontWeight: FontWeight.w400,
+                              color: AppColors.green300),
+                        ),
+                      ],
+                    ),
+                    Text(
+                      'In this Treaming Session eget Donec porta hendrerit ac vehicula, ex sodales. leo. libero, sit Donec amet, sapien id',
+                      style: TextStyles.regular12.copyWith(
+                          fontWeight: FontWeight.w400, color: AppColors.white700),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            HeightGap(height: 12.h),
+            /// Attendance report
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16.r),
+                color: AppColors.green500
+              ),
+              child: Padding(
+                padding: const EdgeInsets.all(20.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    ActivityInfo(title: '7/8', description: 'Attendance',),
+                    ActivityInfo(title: '90%', description: 'Attendance  Rate',),
+                    ActivityInfo(title: '95%', description: 'Activity',),
+                  ],
+                ),
+              ),
+            ),
+            HeightGap(height: 16.h),
+            Container(
+              width: double.infinity,
+              decoration: BoxDecoration(
+                  borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(16.r),
+                    topLeft: Radius.circular(16.r),
+                  ),
+                  color: AppColors.grey800
+              ),
+              child: Padding(
+                padding: const EdgeInsets.only(left: 20.0, right: 20, top: 20, bottom: 0),
+                child: Text('Student Update', style: TextStyles.title14.copyWith(
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.white300
+                ),),
+              ),
+            ),
+            Expanded(
+              child: Container(
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                        bottomLeft: Radius.circular(16.r),
+                        bottomRight: Radius.circular(16.r)
+                    ),
+                    color: AppColors.grey800
+                ),
+                child: ScheduleTable(),
+              ),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+  /// Custom AppBar
+  Container _customAppBar() {
+    return Container(
+      height: 64.h,
+      decoration: BoxDecoration(
+        color: AppColors.appBar,
+        borderRadius: BorderRadius.only(
+          bottomLeft: Radius.circular(16.r),
+          bottomRight: Radius.circular(16.r),
+        ),
+      ),
+      child: Center(
+        child: Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.only(left: 20.0),
+              child: GestureDetector(
+                onTap: () {
+                  Get.back();
+                },
+                child: Icon(
+                  Icons.arrow_back,
+                  color: AppColors.white50,
+                ),
+              ),
+            ),
+            Spacer(),
+            Padding(
+              padding: const EdgeInsets.only(right: 30.0),
+              child: Text(
+                'Course History',
+                style: TextStyles.regular20.copyWith(
+                    fontWeight: FontWeight.w500, color: AppColors.white50),
+              ),
+            ),
+            Spacer(),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
