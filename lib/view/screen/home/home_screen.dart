@@ -239,15 +239,11 @@ class HomeScreen extends StatelessWidget {
                                     ),
                                   ],
                                 ),
-                                GestureDetector(
-                                  onTap: (){
-                                  },
-                                  child: CustomSvgImage(
-                                    imagePath: AppImages.next,
-                                    height: 42.h,
-                                    width: 42.w,
-                                  ),
-                                )
+                                CustomSvgImage(
+                                  imagePath: AppImages.next,
+                                  height: 42.h,
+                                  width: 42.w,
+                                ),
                               ],
                             ),
                           ),

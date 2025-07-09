@@ -1,12 +1,8 @@
 import 'package:get/get.dart';
 
 import '../../view/screen/auth/sign_in_screen.dart';
-import '../../view/screen/guest/guest_auth/sign_in_screen.dart';
-import '../../view/screen/guest/guest_auth/sign_up_screen.dart';
-import '../../view/screen/guest/package/package_screen.dart';
 import '../../view/screen/home/bottom_nav_bar/bottom_nav_screen.dart';
 import '../../view/screen/home/course_details.dart';
-import '../../view/screen/home/elit_training/home_work.dart';
 import '../../view/screen/home/profile/about/about.dart';
 import '../../view/screen/home/profile/academic_fee/academic_fee.dart';
 import '../../view/screen/home/profile/academic_fee/fee_details.dart';
@@ -20,10 +16,6 @@ import '../../view/screen/home/profile/setting/change_password.dart';
 import '../../view/screen/home/profile/setting/setting.dart';
 import '../../view/screen/home/profile/terms_condition/terms_condition.dart';
 import '../../view/screen/home/profile/wish_list/wish_list.dart';
-import '../../view/screen/home/shop/cart.dart';
-import '../../view/screen/home/shop/checkout.dart';
-import '../../view/screen/home/shop/equipment.dart';
-import '../../view/screen/home/shop/product_details.dart';
 import '../../view/screen/onboarding/view/splash_screen1.dart';
 import '../../view/screen/onboarding/view/onboarding.dart';
 
@@ -68,19 +60,9 @@ class AppRoute {
 
     ///==================== Auth Routes ====================
     GetPage(name: signInScreen, page: () => SignInScreen()),
-    GetPage(name: signUp, page: () =>  SignUpScreen()),
-    GetPage(name: guestSignInScreen, page: () => GuestSignInScreen()),
-    GetPage(name: packageScreen, page: () => PackageScreen()),
 
     ///======================= Home Route =====================
-    GetPage(name: homeWork, page: () =>  HomeWork()),
     GetPage(name: homeCourseDetails, page: () =>  HomeCourseDetails()),
-
-    ///======================= Equipment Route =====================
-    GetPage(name: equipmentScreen, page: () =>  EquipmentScreen()),
-    GetPage(name: productDetails, page: () =>  ProductDetails()),
-    GetPage(name: cartScreen, page: () =>  CartScreen()),
-    GetPage(name: checkoutScreen, page: () =>  CheckoutScreen()),
 
     ///======================= Profile Details =====================
     GetPage(name: profileDetails, page: () =>  ProfileDetails()),

@@ -4,11 +4,9 @@ import 'package:football_coaching_coach_app/view/screen/home/profile/course_hist
 import 'package:football_coaching_coach_app/view/screen/home/widget/activity_info_widget.dart';
 import 'package:get/get.dart';
 
-import '../../../../core/app_route/app_route.dart';
 import '../../../../utils/AppColors/app_colors.dart';
 import '../../../../utils/AppImg/app_img.dart';
 import '../../../../utils/Texts/text_style.dart';
-import '../../widget/custom_button.dart';
 import '../../widget/size.dart';
 
 class HomeCourseDetails extends StatelessWidget {

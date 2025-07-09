@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:football_coaching_coach_app/view/screen/home/mange_class/manage_class.dart';
 import 'package:get/get.dart';
 
 import '../../../../../utils/AppImg/app_img.dart';
 import '../../../auth/controller/auth_controller.dart';
-import '../../../guest/guest_auth/sign_in_screen.dart';
-import '../../elit_training/elit_training.dart';
-import '../../enroll_elit/enroll_elit.dart';
 import '../../home_screen.dart';
 import '../../profile/profile.dart';
-import '../../profile_state/profile_state.dart';
-import '../../shop/shop.dart';
 enum UserType { member, guest }
 
 class BottomNavController extends GetxController {
@@ -26,7 +22,7 @@ class BottomNavController extends GetxController {
   List<Widget> getPages() {
     return [
       HomeScreen(),
-      ShopScreen(),
+      ManageClass(),
       ProfileScreen()
     ];
   }
