@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-
 import '../../../../core/app_route/app_route.dart';
 import '../../../../utils/AppColors/app_colors.dart';
 import '../../../../utils/AppImg/app_img.dart';
@@ -22,7 +21,7 @@ class ProfileScreen extends StatelessWidget {
         child: Column(
           children: [
             CustomAppbarWithTitle(text: 'My Account '),
-            // Profile details and wish list
+            // Profile details and Course history
             Padding(
               padding:
                   const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
@@ -39,56 +38,22 @@ class ProfileScreen extends StatelessWidget {
                   ),
                   ProfileCart(
                     screenWidth: screenWidth,
-                    img: AppImages.wishList,
-                    text: 'Wishlist',
-                    onTap: () {
-                      Get.toNamed(AppRoute.wishList);
-                    },
-                  ),
-                ],
-              ),
-            ),
-            // Academic fees and order history
-            Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  ProfileCart(
-                    screenWidth: screenWidth,
-                    img: AppImages.academicFees,
-                    text: 'Academic Fees',
-                    onTap: () {
-                      Get.toNamed(AppRoute.academicFee);
-                    },
-                  ),
-                  ProfileCart(
-                    screenWidth: screenWidth,
-                    img: AppImages.orderHistory,
-                    text: 'Order History',
-                    onTap: () {
-                      Get.toNamed(AppRoute.orderHistory);
-                    },
-                  ),
-                ],
-              ),
-            ),
-            // Course history and setting
-            Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  ProfileCart(
-                    screenWidth: screenWidth,
                     img: AppImages.courseHistory,
                     text: 'Course History',
                     onTap: () {
                       Get.toNamed(AppRoute.courseHistory);
                     },
                   ),
+                ],
+              ),
+            ),
+            // Setting and Help support
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
                   ProfileCart(
                     screenWidth: screenWidth,
                     img: AppImages.setting,
@@ -97,16 +62,6 @@ class ProfileScreen extends StatelessWidget {
                       Get.toNamed(AppRoute.settings);
                     },
                   ),
-                ],
-              ),
-            ),
-            // Help & support and about
-            Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
                   ProfileCart(
                     screenWidth: screenWidth,
                     img: AppImages.helpSupport,
@@ -115,18 +70,10 @@ class ProfileScreen extends StatelessWidget {
                       Get.toNamed(AppRoute.helpSupport);
                     },
                   ),
-                  ProfileCart(
-                    screenWidth: screenWidth,
-                    img: AppImages.about,
-                    text: 'About',
-                    onTap: () {
-                      Get.toNamed(AppRoute.about);
-                    },
-                  ),
                 ],
               ),
             ),
-            // App Support and Terms and condition
+            // About and App Support
             Padding(
               padding:
                   const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
@@ -135,18 +82,44 @@ class ProfileScreen extends StatelessWidget {
                 children: [
                   ProfileCart(
                     screenWidth: screenWidth,
+                    img: AppImages.about,
+                    text: 'About',
+                    onTap: () {
+                      Get.toNamed(AppRoute.about);
+                    },
+                  ),
+                  ProfileCart(
+                    screenWidth: screenWidth,
                     img: AppImages.helpSupport,
                     text: 'App Support',
                     onTap: () {
                       Get.toNamed(AppRoute.appSupport);
                     },
                   ),
+                ],
+              ),
+            ),
+            // Terms condition and log out
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
                   ProfileCart(
                     screenWidth: screenWidth,
                     img: AppImages.terms,
                     text: 'Terms & Conditions',
                     onTap: () {
                       Get.toNamed(AppRoute.termsCondition);
+                    },
+                  ),
+                  ProfileCart(
+                    screenWidth: screenWidth,
+                    img: AppImages.logOut,
+                    text: 'Log Out',
+                    onTap: () {
+                      Get.toNamed(AppRoute.about);
                     },
                   ),
                 ],

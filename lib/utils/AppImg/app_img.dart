@@ -63,6 +63,7 @@ class AppImages {
   static const String wishList = "assets/svg/wish_list.svg";
   static const String editIcon = "assets/svg/edit.svg";
   static const String blueBg = "$basePath/blue_background.png";
+  static const String logOut = "assets/svg/log out.svg";
 
 
 }

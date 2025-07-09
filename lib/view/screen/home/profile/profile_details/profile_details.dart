@@ -28,53 +28,6 @@ class ProfileDetails extends StatelessWidget {
                     Container(
                       width: double.infinity,
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(16.r),
-                        color: AppColors.grey800
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text('Course Overview', style: TextStyles.title16.copyWith(
-                              fontWeight: FontWeight.w500,
-                              color: AppColors.white300
-                            ),),
-                            HeightGap(height: 8.h),
-                            Text('Under 15 summer 25', style: TextStyles.regular12.copyWith(
-                              fontWeight: FontWeight.w400,
-                              color: AppColors.white500
-                            ),),
-                            HeightGap(height: 8.h),
-                            Text('25 Jun, 2025 - 25 Jul, 2025', style: TextStyles.regular12.copyWith(
-                              fontWeight: FontWeight.w400,
-                              color: AppColors.white500
-                            ),),
-                            HeightGap(height: 8.h),
-                            Center(
-                              child: SizedBox(
-                                height: 6,
-                                child: LinearProgressIndicator(
-                                  value: 0.25, // Progress value between 0.0 and 1.0
-                                  backgroundColor: Colors.grey[300],
-                                  valueColor: AlwaysStoppedAnimation<Color>(Colors.teal),
-                                ),
-                              ),
-                            ),
-                            HeightGap(height: 24.h),
-                            AmountCart(title: 'Total Amount', amount: '500'),
-                            HeightGap(height: 8.h),
-                            AmountCart(title: 'Amount Paid', amount: '500'),
-                            HeightGap(height: 8.h),
-                            AmountCart(title: 'Amount Due', amount: '0'),
-                          ],
-                        ),
-                      ),
-                    ),
-                    HeightGap(height: 8.h),
-                    Container(
-                      width: double.infinity,
-                      decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(16.r),
                           color: AppColors.grey800
                       ),
@@ -95,9 +48,15 @@ class ProfileDetails extends StatelessWidget {
                             HeightGap(height: 8.h),
                             InfoCart(title:'Full Name', contexts: 'Asad ujjaman',),
                             HeightGap(height: 8.h),
-                            InfoCart(title:'Student Id', contexts: '1256354',),
+                            InfoCart(title:'Employee Id', contexts: '1256354',),
                             HeightGap(height: 8.h),
                             InfoCart(title:'Email', contexts: 'Asadux@gmail.com',),
+                            HeightGap(height: 8.h),
+                            InfoCart(title:'Contact No.', contexts: '+88019*******3',),
+                            HeightGap(height: 8.h),
+                            InfoCart(title:'Nationality', contexts: 'American',),
+                            HeightGap(height: 8.h),
+                            InfoCart(title:'Address', contexts: '4517 Washington Av...',),
                           ],
                         ),
                       ),
@@ -123,25 +82,50 @@ class ProfileDetails extends StatelessWidget {
         color: AppColors.grey800,
       ),
       width: double.infinity,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 20.0),
-        child: Column(
-          children: [
-            _imageUrl(),
-            HeightGap(height: 12.h),
-            Text(
-              'Asad Ujjaman',
-              style: TextStyles.regular14.copyWith(
-                  fontWeight: FontWeight.w500, color: AppColors.white300),
+      child: Column(
+        children: [
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 20),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _imageUrl(),
+                WidthGap(width: 12.h),
+                Padding(
+                  padding: const EdgeInsets.only(top: 8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Asad Ujjaman',
+                        style: TextStyles.regular16.copyWith(
+                            fontWeight: FontWeight.w500, color: AppColors.white50),
+                      ),
+                      HeightGap(height: 8.h),
+                      Text(
+                        'Sr. Coach',
+                        style: TextStyles.regular12.copyWith(
+                            fontWeight: FontWeight.w500, color: AppColors.green300),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
-            HeightGap(height: 8.h),
-            Text(
-              'Student',
-              style: TextStyles.regular14.copyWith(
-                  fontWeight: FontWeight.w500, color: AppColors.green300),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left: 16.0, right: 16, bottom: 16),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                CoachActivity(totalValue: '20', title: 'Total Sessions',),
+                CoachActivity(totalValue: '3', title: 'Present Course',),
+                CoachActivity(totalValue: '150', title: 'Total Players',),
+                CoachActivity(totalValue: '95%', title: 'Activity',),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
@@ -151,8 +135,8 @@ class ProfileDetails extends StatelessWidget {
     return Stack(
       children: [
         Container(
-          height: 100.h,
-          width: 100.w,
+          height: 64.h,
+          width: 64.w,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(100),
             color: Color(0xFF212220),
@@ -173,12 +157,12 @@ class ProfileDetails extends StatelessWidget {
           ),
         ),
         Positioned(
-          right: 10,
+          right: 0,
           bottom: 10,
           child: CustomSvgImage(
             imagePath: AppImages.editIcon,
-            height: 30,
-            width: 30,
+            height: 20,
+            width: 20,
           ),
         )
       ],
@@ -218,6 +202,33 @@ class ProfileDetails extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+}
+
+class CoachActivity extends StatelessWidget {
+  final String totalValue;
+  final String title;
+  const CoachActivity({
+    super.key,
+    required this.totalValue,
+    required this.title
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Text(totalValue, style: TextStyles.regular16.copyWith(
+          fontWeight: FontWeight.w500,
+          color: AppColors.white300
+        ),),
+        HeightGap(height: 8.h),
+        Text(title, style: TextStyles.regular12.copyWith(
+          fontWeight: FontWeight.w500,
+          color: AppColors.white900
+        ),),
+      ],
     );
   }
 }
