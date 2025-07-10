@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart';
 import 'package:football_coaching_coach_app/app.dart';
 import 'package:football_coaching_coach_app/core/dependency/dependency.dart';
 import 'package:football_coaching_coach_app/utils/AppColors/app_colors.dart';
@@ -13,5 +14,5 @@ void main() {
   );
   DependencyInjection di = DependencyInjection();
   di.dependencies();
-  runApp(const FootballCoachApp());
+  runApp(Phoenix(child: const FootballCoachApp()));
 }

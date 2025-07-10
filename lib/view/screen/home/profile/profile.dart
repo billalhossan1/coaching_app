@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_phoenix/flutter_phoenix.dart' show Phoenix;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import '../../../../core/app_route/app_route.dart';
@@ -119,7 +120,7 @@ class ProfileScreen extends StatelessWidget {
                     img: AppImages.logOut,
                     text: 'Log Out',
                     onTap: () {
-                      Get.toNamed(AppRoute.about);
+                      Phoenix.rebirth(context);
                     },
                   ),
                 ],

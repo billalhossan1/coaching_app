@@ -54,6 +54,7 @@ dependencies:
   connectivity_plus:
   internet_connection_checker_plus:
   get:
+  flutter_phoenix:
 
 dev_dependencies:
   flutter_test:
