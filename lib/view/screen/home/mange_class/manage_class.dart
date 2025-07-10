@@ -145,7 +145,6 @@ class ManageClass extends StatelessWidget {
       ),
     );
   }
-
   Container _customAppBar() {
     return Container(
       height: 64.h,

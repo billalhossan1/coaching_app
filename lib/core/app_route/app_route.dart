@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import '../../view/screen/auth/sign_in_screen.dart';
 import '../../view/screen/home/bottom_nav_bar/bottom_nav_screen.dart';
 import '../../view/screen/home/course_details.dart';
+import '../../view/screen/home/mange_class/performance.dart';
 import '../../view/screen/home/profile/about/about.dart';
 import '../../view/screen/home/profile/academic_fee/academic_fee.dart';
 import '../../view/screen/home/profile/academic_fee/fee_details.dart';
@@ -50,6 +51,7 @@ class AppRoute {
   static const String guestSignInScreen = "/guestSignInScreen";
   static const String packageScreen = "/packageScreen";
   static const String homeCourseDetails = "/homeCourseDetails";
+  static const String performance = "/performance";
 
   static List<GetPage> routes = [
     ///==================== Initial Routes ====================
@@ -63,6 +65,7 @@ class AppRoute {
 
     ///======================= Home Route =====================
     GetPage(name: homeCourseDetails, page: () =>  HomeCourseDetails()),
+    GetPage(name: performance, page: () =>  Performance()),
 
     ///======================= Profile Details =====================
     GetPage(name: profileDetails, page: () =>  ProfileDetails()),

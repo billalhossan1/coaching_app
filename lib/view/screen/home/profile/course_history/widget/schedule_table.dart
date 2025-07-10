@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:football_coaching_coach_app/core/app_route/app_route.dart';
 import 'package:football_coaching_coach_app/view/widget/network_image_widget.dart';
+import 'package:get/get.dart';
 
 import '../../../../../../utils/AppColors/app_colors.dart';
 import '../../../../../../utils/Texts/text_style.dart';
@@ -607,8 +609,7 @@ class ScheduleTable4 extends StatelessWidget {
             ? Padding(
           padding: EdgeInsets.symmetric(horizontal: 10.w),
           child: const Divider(color: AppColors.white900),
-        )
-            : HeightGap(height: 0.h);
+        ): HeightGap(height: 0.h);
       },
       itemBuilder: (context, index) {
         if (index == 0) {
@@ -644,7 +645,7 @@ class ScheduleTable4 extends StatelessWidget {
   // Build header cell
   Widget _buildHeaderCell(String text) {
     return Expanded(
-      flex: text == 'Student Name' ? 3 : 2, // Adjust flex for better spacing
+      flex: text == 'Student Name' ? 3 : 2,
       child: Container(
         padding: EdgeInsets.all(12.w),
         alignment: Alignment.center,
@@ -702,17 +703,22 @@ class ScheduleTable4 extends StatelessWidget {
       flex: 2,
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 8.w),
-        child: Container(
-          height: 24.h,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(90.r),
-            border: Border.all(color: AppColors.green500),
-          ),
-          child: Text(
-            performance,
-            style: TextStyles.regular12.copyWith(color: Colors.white),
-            overflow: TextOverflow.ellipsis,
+        child: GestureDetector(
+          onTap: (){
+            Get.toNamed(AppRoute.performance);
+          },
+          child: Container(
+            height: 24.h,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(90.r),
+              border: Border.all(color: AppColors.green500),
+            ),
+            child: Text(
+              performance,
+              style: TextStyles.regular12.copyWith(color: Colors.white),
+              overflow: TextOverflow.ellipsis,
+            ),
           ),
         ),
       ),

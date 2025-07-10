@@ -49,6 +49,7 @@ class AppImages {
   static const String runningPerson = "assets/svg/runnng_person.svg";
   static const String singlePerson = "assets/svg/single_person.svg";
   static const String enrollElitBg = "assets/images/enroll_elit_bg.png";
+  static const String doneIcon = "assets/svg/doneIcon.svg";
 
 
 
