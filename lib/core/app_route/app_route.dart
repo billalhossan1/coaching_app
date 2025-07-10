@@ -3,7 +3,9 @@ import 'package:get/get.dart';
 import '../../view/screen/auth/sign_in_screen.dart';
 import '../../view/screen/home/bottom_nav_bar/bottom_nav_screen.dart';
 import '../../view/screen/home/course_details.dart';
+import '../../view/screen/home/mange_class/home_work.dart';
 import '../../view/screen/home/mange_class/performance.dart';
+import '../../view/screen/home/mange_class/student_details.dart';
 import '../../view/screen/home/profile/about/about.dart';
 import '../../view/screen/home/profile/academic_fee/academic_fee.dart';
 import '../../view/screen/home/profile/academic_fee/fee_details.dart';
@@ -17,6 +19,7 @@ import '../../view/screen/home/profile/setting/change_password.dart';
 import '../../view/screen/home/profile/setting/setting.dart';
 import '../../view/screen/home/profile/terms_condition/terms_condition.dart';
 import '../../view/screen/home/profile/wish_list/wish_list.dart';
+import '../../view/screen/home/schedule.dart';
 import '../../view/screen/onboarding/view/splash_screen1.dart';
 import '../../view/screen/onboarding/view/onboarding.dart';
 
@@ -52,6 +55,9 @@ class AppRoute {
   static const String packageScreen = "/packageScreen";
   static const String homeCourseDetails = "/homeCourseDetails";
   static const String performance = "/performance";
+  static const String assignHomeWork = "/assignHomeWork";
+  static const String schedule = "/schedule";
+  static const String studentDetails = "/studentDetails";
 
   static List<GetPage> routes = [
     ///==================== Initial Routes ====================
@@ -66,6 +72,9 @@ class AppRoute {
     ///======================= Home Route =====================
     GetPage(name: homeCourseDetails, page: () =>  HomeCourseDetails()),
     GetPage(name: performance, page: () =>  Performance()),
+    GetPage(name: assignHomeWork, page: () =>  HomeWork()),
+    GetPage(name: schedule, page: () =>  Schedule()),
+    GetPage(name: studentDetails, page: () =>  StudentDetails()),
 
     ///======================= Profile Details =====================
     GetPage(name: profileDetails, page: () =>  ProfileDetails()),

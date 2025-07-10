@@ -618,8 +618,8 @@ class ScheduleTable4 extends StatelessWidget {
             padding: EdgeInsets.symmetric(vertical: 12.h),
             child: Row(
               children: [
-                _buildHeaderCell('Student Name'),
-                _buildHeaderCell('Performance'),
+                _buildHeaderCell('Player name'),
+                _buildHeaderCell('        Performance'),
                 _buildHeaderCell('Attendance'),
               ],
             ),
@@ -665,33 +665,38 @@ class ScheduleTable4 extends StatelessWidget {
   Widget _buildTableCell(String text) {
     return Expanded(
       flex: 3, // Give more space to student name
-      child: Container(
-        padding: EdgeInsets.all(12.w),
-        alignment: Alignment.centerLeft,
-        child: Row(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(30.r),
-              child: NetworkImageWidget(
-                imageUrl:
-                'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_640.png',
-                height: 20.h,
-                width: 20.w,
-              ),
-            ),
-            WidthGap(width: 8.w),
-            Expanded(
-              // Wrap Text in Expanded to prevent overflow
-              child: Text(
-                text,
-                style: TextStyles.regular12.copyWith(
-                  fontWeight: FontWeight.w400,
-                  color: AppColors.white800,
+      child: GestureDetector(
+        onTap: (){
+          Get.toNamed(AppRoute.studentDetails);
+        },
+        child: Container(
+          padding: EdgeInsets.all(12.w),
+          alignment: Alignment.centerLeft,
+          child: Row(
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(30.r),
+                child: NetworkImageWidget(
+                  imageUrl:
+                  'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_640.png',
+                  height: 20.h,
+                  width: 20.w,
                 ),
-                overflow: TextOverflow.ellipsis,
               ),
-            ),
-          ],
+              WidthGap(width: 8.w),
+              Expanded(
+                // Wrap Text in Expanded to prevent overflow
+                child: Text(
+                  text,
+                  style: TextStyles.regular12.copyWith(
+                    fontWeight: FontWeight.w400,
+                    color: AppColors.white800,
+                  ),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:football_coaching_coach_app/core/app_route/app_route.dart';
 import 'package:football_coaching_coach_app/view/screen/home/profile/course_history/widget/schedule_table.dart';
 import 'package:football_coaching_coach_app/view/screen/home/widget/activity_info_widget.dart';
 import 'package:get/get.dart';
@@ -8,6 +9,7 @@ import '../../../../utils/AppColors/app_colors.dart';
 import '../../../../utils/AppImg/app_img.dart';
 import '../../../../utils/Texts/text_style.dart';
 import '../../../widget/size.dart';
+import '../widget/custom_appbar_with_title.dart';
 
 class ManageClass extends StatelessWidget {
   const ManageClass({super.key});
@@ -18,7 +20,7 @@ class ManageClass extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            _customAppBar(),
+            CustomAppbarWithTitle(text: 'Manage Class',),
             HeightGap(height: 12.h),
             Expanded(
               child: SingleChildScrollView(
@@ -91,7 +93,7 @@ class ManageClass extends StatelessWidget {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            ActivityInfo(title: '7/8', description: 'Attendance',),
+                            ActivityInfo(title: '20', description: 'Total Players',),
                             ActivityInfo(title: '90%', description: 'Attendance  Rate',),
                             ActivityInfo(title: '95%', description: 'Activity',),
                           ],
@@ -115,17 +117,22 @@ class ManageClass extends StatelessWidget {
                                   fontWeight: FontWeight.w400,
                                   color: AppColors.white300
                                 )),
-                                Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(90.r),
-                                    color: AppColors.green500
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                                    child: Text('Assign HW', style: TextStyles.regular14.copyWith(
-                                      fontWeight: FontWeight.w400,
-                                      color: AppColors.white50
-                                    ),),
+                                GestureDetector(
+                                  onTap: (){
+                                    Get.toNamed(AppRoute.assignHomeWork);
+                                  },
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(90.r),
+                                      color: AppColors.green500
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                                      child: Text('Assign HW', style: TextStyles.regular14.copyWith(
+                                        fontWeight: FontWeight.w400,
+                                        color: AppColors.white50
+                                      ),),
+                                    ),
                                   ),
                                 )
                               ],
@@ -140,45 +147,6 @@ class ManageClass extends StatelessWidget {
                 ),
               ),
             )
-          ],
-        ),
-      ),
-    );
-  }
-  Container _customAppBar() {
-    return Container(
-      height: 64.h,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.only(
-            bottomRight: Radius.circular(16.r),
-            bottomLeft: Radius.circular(16.r)),
-        color: AppColors.appBar,
-      ),
-      child: Center(
-        child: Row(
-          children: [
-            Padding(
-              padding: const EdgeInsets.only(left: 20.0),
-              child: GestureDetector(
-                onTap: () {
-                  Get.back();
-                },
-                child: Icon(
-                  Icons.arrow_back,
-                  color: AppColors.white50,
-                ),
-              ),
-            ),
-            Spacer(),
-            Padding(
-              padding: const EdgeInsets.only(right: 30.0),
-              child: Text(
-                'Courses Details',
-                style: TextStyles.regular20.copyWith(
-                    fontWeight: FontWeight.w500, color: AppColors.white50),
-              ),
-            ),
-            Spacer(),
           ],
         ),
       ),

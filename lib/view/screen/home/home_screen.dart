@@ -98,13 +98,18 @@ class HomeScreen extends StatelessWidget {
                             color: AppColors.white300,
                           ),
                         ),
-                        Text(
-                          'View All',
-                          style: TextStyles.regular14.copyWith(
-                            fontWeight: FontWeight.w500,
-                            color: Colors.blue,
-                            decoration: TextDecoration.underline,
-                            decorationColor: Colors.blue,
+                        GestureDetector(
+                          onTap: (){
+                            Get.toNamed(AppRoute.schedule);
+                          },
+                          child: Text(
+                            'View All',
+                            style: TextStyles.regular14.copyWith(
+                              fontWeight: FontWeight.w500,
+                              color: Colors.blue,
+                              decoration: TextDecoration.underline,
+                              decorationColor: Colors.blue,
+                            ),
                           ),
                         ),
                       ],
