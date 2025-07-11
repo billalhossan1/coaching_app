@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:football_coaching_coach_app/core/app_route/app_route.dart';
 import 'package:football_coaching_coach_app/view/screen/home/profile/course_history/widget/schedule_table.dart';
 import 'package:football_coaching_coach_app/view/screen/home/widget/activity_info_widget.dart';
 import 'package:get/get.dart';
@@ -250,59 +251,64 @@ class HomeCourseDetails extends StatelessWidget {
                               shrinkWrap: true,
                               physics: NeverScrollableScrollPhysics(),
                               itemBuilder: (_,__){
-                                return Container(
-                                  decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(16),
-                                      color: AppColors.black700
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(12.0),
-                                    child: Row(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Flexible(
-                                          flex: 1,
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(16),
-                                                image: DecorationImage(
-                                                    image: NetworkImage('https://cdn.pixabay.com/photo/2016/04/15/20/28/football-1331838_640.jpg'),
-                                                    fit: BoxFit.cover
-                                                )
+                                return GestureDetector(
+                                  onTap: (){
+                                    Get.toNamed(AppRoute.trainingVideoScreen);
+                                  },
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(16),
+                                        color: AppColors.black700
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(12.0),
+                                      child: Row(
+                                        crossAxisAlignment: CrossAxisAlignment.start,
+                                        children: [
+                                          Flexible(
+                                            flex: 1,
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                  borderRadius: BorderRadius.circular(16),
+                                                  image: DecorationImage(
+                                                      image: NetworkImage('https://cdn.pixabay.com/photo/2016/04/15/20/28/football-1331838_640.jpg'),
+                                                      fit: BoxFit.cover
+                                                  )
+                                              ),
+                                              height: 71.h,
                                             ),
-                                            height: 71.h,
                                           ),
-                                        ),
-                                        WidthGap(width: 10.w),
-                                        Flexible(
-                                            flex: 2,
-                                            child: Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  'Trap A Soccer Ball Like A PRO',
-                                                  style: TextStyles.regular14.copyWith(
-                                                      fontWeight: FontWeight.w400, color: AppColors.white500),
-                                                ),
-                                                HeightGap(height: 30.h),
-                                                Row(
-                                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                                  children: [
-                                                    Icon(Icons.play_arrow, color: AppColors.white900,),
-                                                    Padding(
-                                                      padding: const EdgeInsets.only(top: 2.0),
-                                                      child: Text(
-                                                        ' 2:50',
-                                                        style: TextStyles.regular14.copyWith(
-                                                            fontWeight: FontWeight.w400, color: AppColors.white500),
+                                          WidthGap(width: 10.w),
+                                          Flexible(
+                                              flex: 2,
+                                              child: Column(
+                                                crossAxisAlignment: CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    'Trap A Soccer Ball Like A PRO',
+                                                    style: TextStyles.regular14.copyWith(
+                                                        fontWeight: FontWeight.w400, color: AppColors.white500),
+                                                  ),
+                                                  HeightGap(height: 30.h),
+                                                  Row(
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: [
+                                                      Icon(Icons.play_arrow, color: AppColors.white900,),
+                                                      Padding(
+                                                        padding: const EdgeInsets.only(top: 2.0),
+                                                        child: Text(
+                                                          ' 2:50',
+                                                          style: TextStyles.regular14.copyWith(
+                                                              fontWeight: FontWeight.w400, color: AppColors.white500),
+                                                        ),
                                                       ),
-                                                    ),
-                                                  ],
-                                                )
-                                              ],
-                                            )
-                                        ),
-                                      ],
+                                                    ],
+                                                  )
+                                                ],
+                                              )
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 );

@@ -20,6 +20,7 @@ import '../../view/screen/home/profile/setting/setting.dart';
 import '../../view/screen/home/profile/terms_condition/terms_condition.dart';
 import '../../view/screen/home/profile/wish_list/wish_list.dart';
 import '../../view/screen/home/schedule.dart';
+import '../../view/screen/home/training_video_screen.dart';
 import '../../view/screen/onboarding/view/splash_screen1.dart';
 import '../../view/screen/onboarding/view/onboarding.dart';
 
@@ -31,7 +32,6 @@ class AppRoute {
   static const String signInScreen = "/sign_in_screen";
   static const String bottomNavBar = "/bottom_nav_bar";
   static const String trainYourSelf = "/trainYourSelf";
-  static const String trainingVideo = "/trainingVideo";
   static const String equipmentScreen = "/equipmentScreen";
   static const String productDetails = "/productDetails";
   static const String cartScreen = "/cartScreen";
@@ -58,6 +58,7 @@ class AppRoute {
   static const String assignHomeWork = "/assignHomeWork";
   static const String schedule = "/schedule";
   static const String studentDetails = "/studentDetails";
+  static const String trainingVideoScreen = "/trainingVideoScreen";
 
   static List<GetPage> routes = [
     ///==================== Initial Routes ====================
@@ -75,6 +76,7 @@ class AppRoute {
     GetPage(name: assignHomeWork, page: () =>  HomeWork()),
     GetPage(name: schedule, page: () =>  Schedule()),
     GetPage(name: studentDetails, page: () =>  StudentDetails()),
+    GetPage(name: trainingVideoScreen, page: () =>  TrainingVideoScreen()),
 
     ///======================= Profile Details =====================
     GetPage(name: profileDetails, page: () =>  ProfileDetails()),
