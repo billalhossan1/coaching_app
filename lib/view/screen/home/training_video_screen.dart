@@ -182,8 +182,7 @@ class TrainingVideoScreen extends StatelessWidget {
               padding: const EdgeInsets.only(right: 30.0),
               child: Text(
                 'Tutorial for you',
-                style: TextStyles.regular20
-                    .copyWith(fontWeight: FontWeight.w500, color: AppColors.white50),
+                style: TextStyles.regular20.copyWith(fontWeight: FontWeight.w500, color: AppColors.white50),
               ),
             ),
             Spacer(),
