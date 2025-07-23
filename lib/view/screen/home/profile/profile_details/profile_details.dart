@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:football_coaching_coach_app/utils/short_text.dart';
 import 'package:football_coaching_coach_app/view/screen/home/controller/home_controller.dart';
 import 'package:football_coaching_coach_app/view/screen/home/profile/edit_profile_bottom_shit.dart';
 import 'package:football_coaching_coach_app/view/screen/home/profile/model/profile_model.dart';
@@ -16,7 +17,10 @@ class ProfileDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    ProfileModel? profileModel = Get.find<HomeController>().profileModel.value;
+    Rxn<ProfileModel> profileModel = Rxn<ProfileModel>();
+
+    profileModel = Get.find<HomeController>().profileModel;
+    HomeController homeController = Get.find<HomeController>();
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -27,7 +31,7 @@ class ProfileDetails extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _profileData(profileModel!),
+                    _profileData(profileModel.value,homeController),
                     HeightGap(height: 8.h),
                     Container(
                       width: double.infinity,
@@ -50,17 +54,17 @@ class ProfileDetails extends StatelessWidget {
                                 color: AppColors.white900
                             ),),
                             HeightGap(height: 8.h),
-                             InfoCart(title:'Full Name', contexts: profileModel.profileModel?.name??'Unknown',),
+                             InfoCart(title:'Full Name', contexts: profileModel.value?.profileModel?.name??'Unknown',),
                             HeightGap(height: 8.h),
-                             InfoCart(title:'Employee Id', contexts: "${profileModel.profileModel?.sId??''}",),
+                             InfoCart(title:'Employee Id', contexts: "${ShortText.getShortText(profileModel.value?.profileModel?.sId??'',maxLength: 15)}",),
                             HeightGap(height: 8.h),
-                             InfoCart(title:'Email', contexts: profileModel.profileModel?.email??'',),
+                             InfoCart(title:'Email', contexts: profileModel.value?.profileModel?.email??'',),
                             HeightGap(height: 8.h),
-                             InfoCart(title:'Contact No.', contexts: '${profileModel.profileModel?.contact??''}',),
+                             InfoCart(title:'Contact No.', contexts: '${profileModel.value?.profileModel?.contact??''}',),
                             HeightGap(height: 8.h),
-                             InfoCart(title:'Nationality', contexts: profileModel.profileModel?.nationality??'',),
+                             InfoCart(title:'Nationality', contexts: profileModel.value?.profileModel?.nationality??'',),
                             HeightGap(height: 8.h),
-                             InfoCart(title:'Address', contexts: profileModel.profileModel?.address??'',),
+                             InfoCart(title:'Address', contexts: profileModel.value?.profileModel?.address??'',),
                           ],
                         ),
                       ),
@@ -76,7 +80,7 @@ class ProfileDetails extends StatelessWidget {
   }
 
   /// Profile data
-  Container _profileData(ProfileModel? profileModel) {
+  Container _profileData(ProfileModel? profileModel,HomeController controller) {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.only(
@@ -93,7 +97,7 @@ class ProfileDetails extends StatelessWidget {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _imageUrl(profileModel!),
+                _imageUrl(profileModel!,controller),
                 WidthGap(width: 12.h),
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0),
@@ -101,7 +105,7 @@ class ProfileDetails extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        profileModel?.profileModel?.name??'Unknown',
+                        profileModel.profileModel?.name??'Unknown',
                         style: TextStyles.regular16.copyWith(
                             fontWeight: FontWeight.w500, color: AppColors.white50),
                       ),
@@ -135,7 +139,7 @@ class ProfileDetails extends StatelessWidget {
   }
 
   /// Image url
-  Stack _imageUrl(ProfileModel profileModel) {
+  Stack _imageUrl(ProfileModel profileModel,HomeController controller) {
     return Stack(
       children: [
         Container(
@@ -165,7 +169,7 @@ class ProfileDetails extends StatelessWidget {
           bottom: 10,
           child: GestureDetector(
             onTap: (){
-              Get.bottomSheet(editProfileBottomsheet(profileModel));
+              Get.bottomSheet(editProfileBottomsheet(profileModel,controller));
             },
             child: CustomSvgImage(
               imagePath: AppImages.editIcon,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:football_coaching_coach_app/view/screen/home/controller/home_controller.dart';
 import 'package:football_coaching_coach_app/view/screen/home/profile/model/profile_model.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -8,7 +9,7 @@ import '../../../widget/custom_svg.dart'; // Assuming you use Svg for your icons
 
 
 // The bottom sheet widget for editing the profile
-Widget editProfileBottomsheet(ProfileModel? profileModel) {
+Widget editProfileBottomsheet(ProfileModel? profileModel,HomeController controller) {
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
 

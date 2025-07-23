@@ -20,7 +20,9 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final ProfileModel? profileModel =  Get.find<HomeController>().profileModel.value;
+    Rxn<ProfileModel> profileModel = Rxn<ProfileModel>();
+
+    profileModel =  Get.find<HomeController>().profileModel;
     final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       body: SingleChildScrollView(
@@ -36,7 +38,7 @@ class ProfileScreen extends StatelessWidget {
                 children: [
                   ProfileCart1(
                     screenWidth: screenWidth,
-                    img: profileModel!.profileModel!.image!,
+                    img: profileModel.value?.profileModel?.image??'',
                     text: 'Profile Details',
                     onTap: () {
                       Get.toNamed(AppRoute.profileDetails);
