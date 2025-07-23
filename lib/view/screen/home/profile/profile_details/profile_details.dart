@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:football_coaching_coach_app/view/screen/home/controller/home_controller.dart';
+import 'package:football_coaching_coach_app/view/screen/home/profile/edit_profile_bottom_shit.dart';
+import 'package:football_coaching_coach_app/view/screen/home/profile/model/profile_model.dart';
 import 'package:get/get.dart';
 
 import '../../../../../utils/AppColors/app_colors.dart';
@@ -13,6 +16,7 @@ class ProfileDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ProfileModel? profileModel = Get.find<HomeController>().profileModel.value;
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -23,7 +27,7 @@ class ProfileDetails extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _profileData(),
+                    _profileData(profileModel!),
                     HeightGap(height: 8.h),
                     Container(
                       width: double.infinity,
@@ -46,17 +50,17 @@ class ProfileDetails extends StatelessWidget {
                                 color: AppColors.white900
                             ),),
                             HeightGap(height: 8.h),
-                            InfoCart(title:'Full Name', contexts: 'Asad ujjaman',),
+                             InfoCart(title:'Full Name', contexts: profileModel.profileModel?.name??'Unknown',),
                             HeightGap(height: 8.h),
-                            InfoCart(title:'Employee Id', contexts: '1256354',),
+                             InfoCart(title:'Employee Id', contexts: "${profileModel.profileModel?.sId??''}",),
                             HeightGap(height: 8.h),
-                            InfoCart(title:'Email', contexts: 'Asadux@gmail.com',),
+                             InfoCart(title:'Email', contexts: profileModel.profileModel?.email??'',),
                             HeightGap(height: 8.h),
-                            InfoCart(title:'Contact No.', contexts: '+88019*******3',),
+                             InfoCart(title:'Contact No.', contexts: '${profileModel.profileModel?.contact??''}',),
                             HeightGap(height: 8.h),
-                            InfoCart(title:'Nationality', contexts: 'American',),
+                             InfoCart(title:'Nationality', contexts: profileModel.profileModel?.nationality??'',),
                             HeightGap(height: 8.h),
-                            InfoCart(title:'Address', contexts: '4517 Washington Av...',),
+                             InfoCart(title:'Address', contexts: profileModel.profileModel?.address??'',),
                           ],
                         ),
                       ),
@@ -72,7 +76,7 @@ class ProfileDetails extends StatelessWidget {
   }
 
   /// Profile data
-  Container _profileData() {
+  Container _profileData(ProfileModel? profileModel) {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.only(
@@ -89,7 +93,7 @@ class ProfileDetails extends StatelessWidget {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _imageUrl(),
+                _imageUrl(profileModel!),
                 WidthGap(width: 12.h),
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0),
@@ -97,7 +101,7 @@ class ProfileDetails extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Asad Ujjaman',
+                        profileModel?.profileModel?.name??'Unknown',
                         style: TextStyles.regular16.copyWith(
                             fontWeight: FontWeight.w500, color: AppColors.white50),
                       ),
@@ -113,8 +117,8 @@ class ProfileDetails extends StatelessWidget {
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.only(left: 16.0, right: 16, bottom: 16),
+          const Padding(
+            padding: EdgeInsets.only(left: 16.0, right: 16, bottom: 16),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -131,7 +135,7 @@ class ProfileDetails extends StatelessWidget {
   }
 
   /// Image url
-  Stack _imageUrl() {
+  Stack _imageUrl(ProfileModel profileModel) {
     return Stack(
       children: [
         Container(
@@ -139,30 +143,35 @@ class ProfileDetails extends StatelessWidget {
           width: 64.w,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(100),
-            color: Color(0xFF212220),
+            color: const Color(0xFF212220),
           ),
           child: Padding(
-            padding: const EdgeInsets.all(6.0),
+            padding:  EdgeInsets.all(6.0),
             child: Container(
               height: 100.h,
               width: 100.w,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(100),
-                image: DecorationImage(
+                image:  DecorationImage(
                     image: NetworkImage(
-                        "https://t4.ftcdn.net/jpg/03/64/21/11/360_F_364211147_1qgLVxv1Tcq0Ohz3FawUfrtONzz8nq3e.jpg"),
+                        profileModel.profileModel?.image??''),
                     fit: BoxFit.cover),
               ),
             ),
           ),
         ),
-        Positioned(
+         Positioned(
           right: 0,
           bottom: 10,
-          child: CustomSvgImage(
-            imagePath: AppImages.editIcon,
-            height: 20,
-            width: 20,
+          child: GestureDetector(
+            onTap: (){
+              Get.bottomSheet(editProfileBottomsheet(profileModel));
+            },
+            child: CustomSvgImage(
+              imagePath: AppImages.editIcon,
+              height: 20,
+              width: 20,
+            ),
           ),
         )
       ],
@@ -172,7 +181,7 @@ class ProfileDetails extends StatelessWidget {
   Container _customAppBar() {
     return Container(
       height: 64.h,
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
           color: AppColors.appBar,),
       child: Center(
         child: Row(
@@ -183,13 +192,13 @@ class ProfileDetails extends StatelessWidget {
                 onTap: () {
                   Get.back();
                 },
-                child: Icon(
+                child: const Icon(
                   Icons.arrow_back,
                   color: AppColors.white50,
                 ),
               ),
             ),
-            Spacer(),
+            const Spacer(),
             Padding(
               padding: const EdgeInsets.only(right: 30.0),
               child: Text(
@@ -198,7 +207,7 @@ class ProfileDetails extends StatelessWidget {
                     fontWeight: FontWeight.w500, color: AppColors.white50),
               ),
             ),
-            Spacer(),
+            const Spacer(),
           ],
         ),
       ),

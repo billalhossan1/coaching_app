@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 
+import '../../../../Helper/shared_prefe/shared_prefe.dart';
 import '../../../../core/app_route/app_route.dart';
+import '../../../../utils/AppConst/app_const.dart';
 
 class SplashController extends GetxController {
   RxDouble logoScale = 0.5.obs;
@@ -23,6 +25,12 @@ class SplashController extends GetxController {
   // Navigate to HomeScreen after 2 seconds
   void _navigateToHome() async {
     await Future.delayed(const Duration(seconds: 2));
-    Get.toNamed(AppRoute.splashScreen2);
+    String token = await SharePrefsHelper.getString(AppConstants.bearerToken);
+    if(token.isNotEmpty){
+      Get.offAllNamed(AppRoute.bottomNavBar);
+    }
+    else{
+      Get.toNamed(AppRoute.splashScreen2);
+    }
   }
 }

@@ -50,6 +50,7 @@ class CustomTextFromField extends StatelessWidget {
       child: AbsorbPointer(
         absorbing: readonly ?? false,
         child: TextFormField(
+          autovalidateMode: AutovalidateMode.onUserInteraction,
           keyboardType: keyBoardType,
           style: TextStyles.regular16,
           obscureText: obSecureText ?? false,
@@ -162,6 +163,7 @@ class CustomTextFromFieldMaxLine extends StatelessWidget {
       child: AbsorbPointer(
         absorbing: readonly ?? false,
         child: TextFormField(
+          autovalidateMode: AutovalidateMode.onUserInteraction,
           keyboardType: keyBoardType,
           style: TextStyles.regular16,
           obscureText: obSecureText ?? false,

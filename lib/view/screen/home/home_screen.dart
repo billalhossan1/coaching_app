@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:football_coaching_coach_app/shimmer/shimmer_profile_header.dart';
+import 'package:football_coaching_coach_app/view/screen/home/controller/home_controller.dart';
+import 'package:football_coaching_coach_app/view/screen/home/profile/model/profile_model.dart';
 import 'package:football_coaching_coach_app/view/screen/home/widget/custom_app_bar.dart';
 import 'package:get/get.dart';
 
@@ -15,14 +18,20 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final HomeController homeController = Get.find<HomeController>();
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CustomAppBarWithoutBorder(context),
+          Obx(
+            () => homeController.isProfileLoading.value
+                ? buildShimmerProfileHeader(context)
+                : CustomAppBarWithoutBorder(context,
+                    homeController.profileModel.value!.profileModel!.image!),
+          ),
           Container(
             width: double.infinity,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               image: DecorationImage(
                 image: AssetImage(AppImages.cartBg),
                 fit: BoxFit.cover,
@@ -87,7 +96,8 @@ class HomeScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 16),
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20, vertical: 16),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -99,7 +109,7 @@ class HomeScreen extends StatelessWidget {
                           ),
                         ),
                         GestureDetector(
-                          onTap: (){
+                          onTap: () {
                             Get.toNamed(AppRoute.schedule);
                           },
                           child: Text(
@@ -142,17 +152,17 @@ class HomeScreen extends StatelessWidget {
                       ],
                     ),
                   ),
+
                   /// Schedule
                   ListView.separated(
                     itemCount: 2,
                     shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index){
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) {
                       return Container(
-                        decoration:  BoxDecoration(
-                          borderRadius: BorderRadius.circular(16.r),
-                          color: AppColors.grey900
-                        ),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(16.r),
+                            color: AppColors.grey900),
                         child: Padding(
                           padding: const EdgeInsets.all(20.0),
                           child: Column(
@@ -167,7 +177,8 @@ class HomeScreen extends StatelessWidget {
                               ),
                               HeightGap(height: 16.h),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
                                     'Passing Level 1',
@@ -190,7 +201,7 @@ class HomeScreen extends StatelessWidget {
                         ),
                       );
                     },
-                    separatorBuilder: (_,__){
+                    separatorBuilder: (_, __) {
                       return HeightGap(height: 8.h);
                     },
                   ),
@@ -203,22 +214,24 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                   HeightGap(height: 12.h),
+
                   /// Courses
                   ListView.separated(
                     itemCount: 2,
                     shrinkWrap: true,
-                    physics: NeverScrollableScrollPhysics(),
+                    physics: const NeverScrollableScrollPhysics(),
                     itemBuilder: (context, index) {
                       return GestureDetector(
-                        onTap: (){
+                        onTap: () {
                           Get.toNamed(AppRoute.homeCourseDetails);
                         },
                         child: Container(
                           height: 90.h,
                           decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(16.r),
-                              image: DecorationImage(
-                                  image: AssetImage(AppImages.blueBg), fit: BoxFit.cover)),
+                              image: const DecorationImage(
+                                  image: AssetImage(AppImages.blueBg),
+                                  fit: BoxFit.cover)),
                           child: Padding(
                             padding: const EdgeInsets.all(20.0),
                             child: Row(
@@ -226,7 +239,8 @@ class HomeScreen extends StatelessWidget {
                               children: [
                                 Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
                                       'Under 20 summer 25',

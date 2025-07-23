@@ -85,7 +85,7 @@ Container CustomAppBar(BuildContext context) {
   );
 }
 
-Container  CustomAppBarWithoutBorder(BuildContext context) {
+Container  CustomAppBarWithoutBorder(BuildContext context,String imageUrl) {
   return Container(
     height: Responsive.height(context, 65),
       color: AppColors.appBar,
@@ -99,7 +99,7 @@ Container  CustomAppBarWithoutBorder(BuildContext context) {
               ClipRRect(
                 borderRadius: BorderRadius.circular(40),
                 child: Image.network(
-                  'https://cdn.pixabay.com/photo/2014/04/05/13/05/boy-317041_640.jpg',
+                  imageUrl,
                   height: 50.h,
                   width: 50.w,
                   fit: BoxFit.cover,

@@ -13,7 +13,6 @@ import '../../widget/custom_text_form_field.dart';
 import '../../widget/size.dart';
 class SignInScreen extends StatelessWidget {
   SignInScreen({super.key});
-  final GlobalKey<FormState> _signUpFormKey = GlobalKey<FormState>();
 
   RxBool value = false.obs;
 
@@ -28,7 +27,7 @@ class SignInScreen extends StatelessWidget {
         child: SingleChildScrollView(
           child: Center(
             child: Form(
-              key: _signUpFormKey,
+              key: controller.signInFormKey,
               child: Column(
                 children: [
                   Padding(
@@ -37,20 +36,20 @@ class SignInScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        Image(image: AssetImage(AppImages.logo), height: 82.h, width: 82.w,),
+                        Image(image: const AssetImage(AppImages.logo), height: 82.h, width: 82.w,),
                         // sing in page logo
-                        HeightGap(height: 24),
+                        const HeightGap(height: 24),
                         // sign in title
                         Text(AppString.signInScreenTitle, style: TextStyles.regular20.copyWith(
                           fontWeight: FontWeight.w600,
                           color: AppColors.white300,
                         ),),
-                        HeightGap(height: 8),
+                        const HeightGap(height: 8),
                         // Sign in description
                         Text(AppString.signInScreenDescription, style: TextStyles.regular14.copyWith(
                           fontWeight: FontWeight.w400,color: AppColors.white600,
                         ),),
-                        HeightGap(height: 29),
+                        const HeightGap(height: 29),
                         // Email Field
                         CustomTextFromField(
                           controller: controller.signInEmailTextEditingController,
@@ -62,20 +61,20 @@ class SignInScreen extends StatelessWidget {
                             return null;
                           },
                         ),
-                        HeightGap(height: 33),
+                        const HeightGap(height: 33),
                         // Password Field
                         _passwordField(),
-                        HeightGap(height: 20),
+                        const HeightGap(height: 20),
                         // Remember Me and Forgot Password
                         _rememberMeAndForgotPassword(authController),
-                        HeightGap(height: 24),
+                        const HeightGap(height: 24),
                         // Sing in Button
                         Obx(() {
                           return controller.isLoading.value
-                              ? CustomCircularIndicator()
+                              ? const CustomCircularIndicator()
                               : CustomButton(
                             onTap: () {
-                              Get.toNamed(AppRoute.bottomNavBar);
+                             controller.onTapLogin();
                               // if (_signUpFormKey.currentState!.validate()) {
                               //   Get.toNamed(AppRoute.bottomNavBar);
                               // }
@@ -147,7 +146,7 @@ class SignInScreen extends StatelessWidget {
                       color: Colors.green,
                       size: 18,
                     ) : null),),
-                WidthGap(width: 8),
+                const WidthGap(width: 8),
                 Text(
                   'Remember me',
                   style: TextStyles.regular12.copyWith(

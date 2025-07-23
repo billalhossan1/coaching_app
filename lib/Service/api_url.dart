@@ -1,7 +1,7 @@
 class ApiConstant {
 
-  static const baseUrl="https://azizul3000.binarybards.online/api/v1";
-  static const imageUrl="https://azizul3000.binarybards.online";
+  static const baseUrl="http://10.10.7.6:6005/api/v1";
+  static const imageUrl="http://10.10.7.6:6005";
   static const socketUrl="https://azizul3000.binarybards.online";
 
 
@@ -15,8 +15,10 @@ class ApiConstant {
 
   ///<================= For Auth And Home part ====================>
   static const create_user = "/user";
+  static const getCourse = "/course";
+  static const getHomeWork = "/homework";
   static const auth_login = "/auth/login";
-  static const forgot_password = "/auth/forgot-password";
+  static const forgot_password = "/auth/forget-password";
   static const verify_email = "/auth/verify-email";
   static const reset_password = "/auth/reset-password";
   static const resend_otp = "/auth/resend-otp";
@@ -31,6 +33,7 @@ class ApiConstant {
   static const add_story = "/story";
   static const fetch_story = "/story";
   static const make_save = "/bookmark";
+  static const getSession = "/session";
   static const delete_account = "/user/delete-account";
   static const interest_selection = "/user/interest";
   static const info = "/onboarding";

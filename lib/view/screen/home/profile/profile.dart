@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart' show Phoenix;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:football_coaching_coach_app/Helper/shared_prefe/shared_prefe.dart';
+import 'package:football_coaching_coach_app/utils/AppConst/app_const.dart';
+import 'package:football_coaching_coach_app/view/screen/home/controller/home_controller.dart';
+import 'package:football_coaching_coach_app/view/screen/home/profile/model/profile_model.dart';
 import 'package:get/get.dart';
 import '../../../../core/app_route/app_route.dart';
 import '../../../../utils/AppColors/app_colors.dart';
@@ -16,6 +20,7 @@ class ProfileScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ProfileModel? profileModel =  Get.find<HomeController>().profileModel.value;
     final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       body: SingleChildScrollView(
@@ -31,7 +36,7 @@ class ProfileScreen extends StatelessWidget {
                 children: [
                   ProfileCart1(
                     screenWidth: screenWidth,
-                    img: "https://cdn.pixabay.com/photo/2016/08/20/05/38/avatar-1606916_640.png",
+                    img: profileModel!.profileModel!.image!,
                     text: 'Profile Details',
                     onTap: () {
                       Get.toNamed(AppRoute.profileDetails);
@@ -120,7 +125,9 @@ class ProfileScreen extends StatelessWidget {
                     img: AppImages.logOut,
                     text: 'Log Out',
                     onTap: () {
-                      Phoenix.rebirth(context);
+                      SharePrefsHelper.remove(AppConstants.bearerToken);
+                      Get.offAllNamed(AppRoute.signInScreen);
+
                     },
                   ),
                 ],
