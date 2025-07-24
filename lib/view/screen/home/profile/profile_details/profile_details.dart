@@ -24,95 +24,97 @@ class ProfileDetails extends StatelessWidget {
     HomeController homeController = Get.find<HomeController>();
     return Scaffold(
       body: SafeArea(
-        child: Obx(()=>Column(
-          children: [
-            _customAppBar(),
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    _profileData(profileModel.value, homeController),
-                    HeightGap(height: 8.h),
-                    Container(
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(16.r),
-                        color: AppColors.grey800,
-                      ),
-                      child: Padding(
-                        padding: const EdgeInsets.all(20.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Personal Informations',
-                              style: TextStyles.regular16.copyWith(
-                                fontWeight: FontWeight.w500,
-                                color: AppColors.white300,
+        child: Obx(
+          () => Column(
+            children: [
+              _customAppBar(),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _profileData(profileModel.value, homeController),
+                      HeightGap(height: 8.h),
+                      Container(
+                        width: double.infinity,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(16.r),
+                          color: AppColors.grey800,
+                        ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(20.0),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Personal Informations',
+                                style: TextStyles.regular16.copyWith(
+                                  fontWeight: FontWeight.w500,
+                                  color: AppColors.white300,
+                                ),
                               ),
-                            ),
-                            HeightGap(height: 12.h),
-                            Text(
-                              'Basic Information',
-                              style: TextStyles.regular12.copyWith(
-                                fontWeight: FontWeight.w400,
-                                color: AppColors.white900,
+                              HeightGap(height: 12.h),
+                              Text(
+                                'Basic Information',
+                                style: TextStyles.regular12.copyWith(
+                                  fontWeight: FontWeight.w400,
+                                  color: AppColors.white900,
+                                ),
                               ),
-                            ),
-                            HeightGap(height: 8.h),
-                            InfoCart(
-                              title: 'Full Name',
-                              contexts:
-                              profileModel.value?.profileModel?.name ??
-                                  'Unknown',
-                            ),
-                            HeightGap(height: 8.h),
-                            InfoCart(
-                              title: 'Employee Id',
-                              contexts:
-                              "${ShortText.getShortText(profileModel.value?.profileModel?.sId ?? '', maxLength: 15)}",
-                            ),
-                            HeightGap(height: 8.h),
-                            InfoCart(
-                              title: 'Email',
-                              contexts:
-                              profileModel.value?.profileModel?.email ??
-                                  '',
-                            ),
-                            HeightGap(height: 8.h),
-                            InfoCart(
-                              title: 'Contact No.',
-                              contexts:
-                              '${profileModel.value?.profileModel?.contact ?? ''}',
-                            ),
-                            HeightGap(height: 8.h),
-                            InfoCart(
-                              title: 'Nationality',
-                              contexts:
-                              profileModel
-                                  .value
-                                  ?.profileModel
-                                  ?.nationality ??
-                                  '',
-                            ),
-                            HeightGap(height: 8.h),
-                            InfoCart(
-                              title: 'Address',
-                              contexts:
-                              profileModel.value?.profileModel?.address ??
-                                  '',
-                            ),
-                          ],
+                              HeightGap(height: 8.h),
+                              InfoCart(
+                                title: 'Full Name',
+                                contexts:
+                                    profileModel.value?.profileModel?.name ??
+                                    'Unknown',
+                              ),
+                              HeightGap(height: 8.h),
+                              InfoCart(
+                                title: 'Employee Id',
+                                contexts:
+                                    "${ShortText.getShortText(profileModel.value?.profileModel?.sId ?? '', maxLength: 15)}",
+                              ),
+                              HeightGap(height: 8.h),
+                              InfoCart(
+                                title: 'Email',
+                                contexts:
+                                    profileModel.value?.profileModel?.email ??
+                                    '',
+                              ),
+                              HeightGap(height: 8.h),
+                              InfoCart(
+                                title: 'Contact No.',
+                                contexts:
+                                    '${profileModel.value?.profileModel?.contact ?? ''}',
+                              ),
+                              HeightGap(height: 8.h),
+                              InfoCart(
+                                title: 'Nationality',
+                                contexts:
+                                    profileModel
+                                        .value
+                                        ?.profileModel
+                                        ?.nationality ??
+                                    '',
+                              ),
+                              HeightGap(height: 8.h),
+                              InfoCart(
+                                title: 'Address',
+                                contexts:
+                                    profileModel.value?.profileModel?.address ??
+                                    '',
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
-            ),
-          ],
-        ),)
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -166,18 +168,32 @@ class ProfileDetails extends StatelessWidget {
               ],
             ),
           ),
-          Obx(()=>Padding(
-            padding: EdgeInsets.only(left: 16.0, right: 16, bottom: 16),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                CoachActivity(totalValue: '${controller.profileAnalytics.value?.overView?.totalCourse??0}', title: 'Total Sessions'),
-                CoachActivity(totalValue: '${controller.profileAnalytics.value?.overView?.currentCourse??0}', title: 'Present Course'),
-                CoachActivity(totalValue: '${controller.profileAnalytics.value?.overView?.totalStudents??0}', title: 'Total Players'),
-                CoachActivity(totalValue: '${controller.profileAnalytics.value?.overView?.currentCourse??0}%', title: 'Activity'),
-              ],
+          Obx(
+            () => Padding(
+              padding: EdgeInsets.only(left: 16.0, right: 16, bottom: 16),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  CoachActivity(
+                    totalValue:
+                        '${controller.profileAnalytics.value?.overView?.totalCourse ?? 0}',
+                    title: 'Total Sessions',
+                  ),
+                  CoachActivity(
+                    totalValue:
+                        '${controller.profileAnalytics.value?.overView?.currentCourse ?? 0}',
+                    title: 'Present Course',
+                  ),
+                  CoachActivity(
+                    totalValue:
+                        '${controller.profileAnalytics.value?.overView?.totalStudents ?? 0}',
+                    title: 'Total Players',
+                  ),
+                  // CoachActivity(totalValue: '${controller.profileAnalytics.value?.overView?.currentCourse??0}%', title: 'Activity'),
+                ],
+              ),
             ),
-          ),)
+          ),
         ],
       ),
     );
@@ -202,7 +218,9 @@ class ProfileDetails extends StatelessWidget {
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(100),
                 image: DecorationImage(
-                  image: NetworkImage("${ApiConstant.imageUrl}${profileModel.profileModel?.image ?? ''}"),
+                  image: NetworkImage(
+                    "${ApiConstant.imageUrl}${profileModel.profileModel?.image ?? ''}",
+                  ),
                   fit: BoxFit.cover,
                 ),
               ),
@@ -216,7 +234,7 @@ class ProfileDetails extends StatelessWidget {
             onTap: () {
               controller.setTextEditingController();
               Get.bottomSheet(
-                editProfileBottomsheet(profileModel, controller,Get.context!),
+                editProfileBottomsheet(profileModel, controller, Get.context!),
                 enableDrag: true,
               ).then((_) {
                 controller.selectedImage = null;

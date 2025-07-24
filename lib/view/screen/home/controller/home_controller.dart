@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:football_coaching_coach_app/model/course_model.dart';
 import 'package:football_coaching_coach_app/model/profile_analytics_model.dart';
+import 'package:football_coaching_coach_app/model/proile_today_session_model.dart';
+import 'package:football_coaching_coach_app/model/session_model.dart';
 import 'package:football_coaching_coach_app/model/upcomming_session_list_model.dart' hide Course;
 import 'package:football_coaching_coach_app/view/screen/home/repo/home_screen_repo.dart';
 import 'package:get/get.dart';
@@ -19,8 +21,10 @@ class HomeController extends GetxController {
   RxBool isUpdateProfileLoading = false.obs;
   RxBool isCourseLoading = false.obs;
   RxBool isUpComingSessionLoading = false.obs;
+  RxBool isUpComingTodaySessionLoading = false.obs;
   Rxn<ProfileModel> profileModel = Rxn<ProfileModel>();
   Rxn<ProfileAnalytics> profileAnalytics = Rxn<ProfileAnalytics>();
+  Rxn<SingleSession> todaySession = Rxn<SingleSession>();
   RxList<Course> courseList = RxList<Course>();
   RxList<UpComingSessionModel> upComingSessionList = RxList<UpComingSessionModel>();
   int coursePage = 1;
@@ -37,6 +41,7 @@ class HomeController extends GetxController {
   Future<void> homeInit() async {
     getCourses();
     getUpcomingSession();
+    getTodaySession();
     await getProfile();
     getProfileAnalytics();
     setTextEditingController();
@@ -191,6 +196,22 @@ void setTextEditingController(){
     if(response.statusCode==200){
       ProfileAnalyticsModel profileAnalyticsModel = ProfileAnalyticsModel.fromJson(response.body);
       profileAnalytics.value = profileAnalyticsModel.profileAnalytics;
+    }else{
+      showCustomSnackBar(response.statusText??"Something went wrong");
+    }
+  }
+
+  Future<void>getTodaySession()async{
+    isUpComingTodaySessionLoading.value= true;
+    Response response = await HomeScreenRepo().getUpcomingSessionToday();
+    isUpComingTodaySessionLoading.value= false;
+    if(response.statusCode==200){
+      SingleSession session = SingleSession.fromJson(response.body);
+      todaySession.value= session;
+      print("===========================${session.title}");
+      print("===========================${session.sId}");
+      print("===========================${todaySession.value!.title}");
+      print("===========================${todaySession.value!.sId}");
     }else{
       showCustomSnackBar(response.statusText??"Something went wrong");
     }

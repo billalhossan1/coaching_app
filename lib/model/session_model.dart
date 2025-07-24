@@ -1,7 +1,7 @@
 class SessionListModel {
 
   Pagination? pagination;
-  List<Data>? data;
+  List<Session>? data;
 
   SessionListModel({ this.pagination, this.data});
 
@@ -11,9 +11,9 @@ class SessionListModel {
         ? Pagination.fromJson(json['pagination'])
         : null;
     if (json['data'] != null) {
-      data = <Data>[];
+      data = <Session>[];
       json['data'].forEach((v) {
-        data!.add(Data.fromJson(v));
+        data!.add(Session.fromJson(v));
       });
     }
   }
@@ -56,7 +56,7 @@ class Pagination {
   }
 }
 
-class Data {
+class Session {
   String? sId;
   String? course;
   String? title;
@@ -68,7 +68,7 @@ class Data {
   String? createdAt;
   String? updatedAt;
 
-  Data(
+  Session(
       {this.sId,
         this.course,
         this.title,
@@ -81,7 +81,7 @@ class Data {
         this.updatedAt,
       });
 
-  Data.fromJson(Map<String, dynamic> json) {
+  Session.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
     course = json['course'];
     title = json['title'];

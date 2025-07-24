@@ -45,7 +45,7 @@ class HomeScreen extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             ),
-            child: Padding(
+            child: Obx(()=>homeController.isUpComingTodaySessionLoading.value?Center(child: CircularProgressIndicator(),):Padding(
               padding: const EdgeInsets.all(20.0),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -58,14 +58,14 @@ class HomeScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Under 15 summer 25',
+                          homeController.todaySession.value?.course?.name??'',
                           style: TextStyles.regular12.copyWith(
                             fontWeight: FontWeight.w500,
                             color: AppColors.green300,
                           ),
                         ),
                         Text(
-                          'Passing Level 1',
+                          homeController.todaySession.value?.title??'',
                           style: TextStyles.regular14.copyWith(
                             fontWeight: FontWeight.w400,
                             color: AppColors.white600,
@@ -96,7 +96,7 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ],
               ),
-            ),
+            ),)
           ),
           Expanded(
             child: SingleChildScrollView(

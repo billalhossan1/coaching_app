@@ -55,6 +55,7 @@ class CustomTextFromFieldWithHeight extends StatelessWidget {
         child: Container(
           height: height ?? 48,
           child: TextFormField(
+            autovalidateMode: AutovalidateMode.onUserInteraction,
             keyboardType: keyboardType,
             maxLength: null,
             style: TextStyles.regular16.copyWith(

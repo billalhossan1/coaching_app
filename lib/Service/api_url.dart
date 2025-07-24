@@ -23,7 +23,7 @@ class ApiConstant {
   static const reset_password = "/auth/reset-password";
   static const resend_otp = "/auth/resend-otp";
   static const get_profile = "/user/profile";
-  static const change_password = "/user/change-password";
+  static const change_password = "/auth/change-password";
   static const update_profile = "/user/profile";
   static const user_info = "/user/info";
   static const create_post = "/post";
@@ -34,6 +34,7 @@ class ApiConstant {
   static const fetch_story = "/story";
   static const make_save = "/bookmark";
   static const getSession = "/session";
+  static const getUpComingSessionToday = "/session/upcomming-toady";
   static const getProfileAnalytics = "/user/couch-analatycs";
   static const getUpComingSession = "/session/upcomming-couch";
   static const delete_account = "/user/delete-account";
