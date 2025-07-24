@@ -16,8 +16,7 @@ class BottomNavController extends GetxController {
 
   @override
   void onInit()  {
-    homeController.getProfile();
-    homeController.getCourses();
+    homeController.homeInit();
     super.onInit();
   }
 

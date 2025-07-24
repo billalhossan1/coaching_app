@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:football_coaching_coach_app/shimmer/course_shimmer.dart';
+import 'package:football_coaching_coach_app/shimmer/row_shimmer.dart';
 import 'package:football_coaching_coach_app/shimmer/shimmer_profile_header.dart';
+import 'package:football_coaching_coach_app/utils/format_time.dart';
 import 'package:football_coaching_coach_app/view/screen/home/controller/home_controller.dart';
 import 'package:football_coaching_coach_app/view/screen/home/profile/model/profile_model.dart';
 import 'package:football_coaching_coach_app/view/screen/home/widget/custom_app_bar.dart';
@@ -12,6 +15,7 @@ import '../../../utils/AppImg/app_img.dart';
 import '../../../utils/Texts/text_style.dart';
 import '../../widget/custom_svg.dart';
 import '../../widget/size.dart';
+import 'package:intl/intl.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -26,8 +30,11 @@ class HomeScreen extends StatelessWidget {
           Obx(
             () => homeController.isProfileLoading.value
                 ? buildShimmerProfileHeader(context)
-                : CustomAppBarWithoutBorder(context,
-                    homeController.profileModel.value?.profileModel?.image??''),
+                : CustomAppBarWithoutBorder(
+                    context,
+                    homeController.profileModel.value?.profileModel?.image ??
+                        '',
+                  ),
           ),
           Container(
             width: double.infinity,
@@ -97,7 +104,9 @@ class HomeScreen extends StatelessWidget {
                 children: [
                   Padding(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 20, vertical: 16),
+                      horizontal: 20,
+                      vertical: 16,
+                    ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -132,78 +141,101 @@ class HomeScreen extends StatelessWidget {
                       top: 0,
                       bottom: 20,
                     ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          '2 Schedule ',
-                          style: TextStyles.regular12.copyWith(
-                            fontWeight: FontWeight.w500,
-                            color: AppColors.white900,
-                          ),
-                        ),
-                        Text(
-                          '25 Jun, 2025',
-                          style: TextStyles.regular14.copyWith(
-                            fontWeight: FontWeight.w500,
-                            color: AppColors.white700,
-                          ),
-                        ),
-                      ],
+                    child: Obx(
+                      () => homeController.isUpComingSessionLoading.value
+                          ? buildShimmerRow()
+                          : Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  "${homeController.upComingSessionList.isNotEmpty ? homeController.upComingSessionList[0].shedules : 0} Schedule",
+                                  style: TextStyles.regular12.copyWith(
+                                    fontWeight: FontWeight.w500,
+                                    color: AppColors.white900,
+                                  ),
+                                ),
+                              // homeController.upComingSessionList.isNotEmpty?  Text(
+                              //
+                              //       "${FormatTime.formateTime(homeController.upComingSessionList[0].sessions)}",
+                              //     style: TextStyles.regular14.copyWith(
+                              //       fontWeight: FontWeight.w500,
+                              //       color: AppColors.white700,
+                              //     ),
+                              //   ):const SizedBox(),
+                              ],
+                            ),
                     ),
                   ),
 
                   /// Schedule
-                  ListView.separated(
-                    itemCount: 2,
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      return Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(16.r),
-                            color: AppColors.grey900),
-                        child: Padding(
-                          padding: const EdgeInsets.all(20.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Under 15 summer 25',
-                                style: TextStyles.regular12.copyWith(
-                                  fontWeight: FontWeight.w500,
-                                  color: AppColors.green500,
+                  Obx(
+                    () => homeController.isUpComingSessionLoading.value
+                        ? Center(child: buildShimmerCourseItem(context))
+                        : homeController.upComingSessionList.isEmpty
+                        ? const Center(
+                            child: Text('No Schedule Available For Today',style: TextStyle(
+                              fontWeight: FontWeight.w500,
+                              color: AppColors.white900,
+                            ),),
+                          )
+                        : ListView.separated(
+                            itemCount:
+                                homeController.upComingSessionList.length,
+                            shrinkWrap: true,
+                            itemBuilder: (context, index) {
+                              final session = homeController
+                                  .upComingSessionList[0]
+                                  .sessions![index];
+                              return Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(16.r),
+                                  color: AppColors.grey900,
                                 ),
-                              ),
-                              HeightGap(height: 16.h),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    'Passing Level 1',
-                                    style: TextStyles.regular12.copyWith(
-                                      fontWeight: FontWeight.w300,
-                                      color: AppColors.white400,
-                                    ),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(20.0),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        session.course?.name ?? '',
+                                        style: TextStyles.regular12.copyWith(
+                                          fontWeight: FontWeight.w500,
+                                          color: AppColors.green500,
+                                        ),
+                                      ),
+                                      HeightGap(height: 16.h),
+                                      Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Text(
+                                            session.title ?? '',
+                                            style: TextStyles.regular12
+                                                .copyWith(
+                                                  fontWeight: FontWeight.w300,
+                                                  color: AppColors.white400,
+                                                ),
+                                          ),
+                                          Text(
+                                            "${FormatTime.formateTime(session.startTime ?? '')} - ${FormatTime.formateTime(session.endTime ?? '')}",
+                                            style: TextStyles.regular12
+                                                .copyWith(
+                                                  fontWeight: FontWeight.w500,
+                                                  color: AppColors.white400,
+                                                ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
                                   ),
-                                  Text(
-                                    '3:00 PM – 4:30 PM',
-                                    style: TextStyles.regular12.copyWith(
-                                      fontWeight: FontWeight.w500,
-                                      color: AppColors.white400,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
+                                ),
+                              );
+                            },
+                            separatorBuilder: (_, __) {
+                              return HeightGap(height: 8.h);
+                            },
                           ),
-                        ),
-                      );
-                    },
-                    separatorBuilder: (_, __) {
-                      return HeightGap(height: 8.h);
-                    },
                   ),
                   HeightGap(height: 12.h),
                   Text(
@@ -216,62 +248,78 @@ class HomeScreen extends StatelessWidget {
                   HeightGap(height: 12.h),
 
                   /// Courses
-                  ListView.separated(
-                    itemCount: 2,
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) {
-                      return GestureDetector(
-                        onTap: () {
-                          Get.toNamed(AppRoute.homeCourseDetails);
-                        },
-                        child: Container(
-                          height: 90.h,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(16.r),
-                              image: const DecorationImage(
-                                  image: AssetImage(AppImages.blueBg),
-                                  fit: BoxFit.cover)),
-                          child: Padding(
-                            padding: const EdgeInsets.all(20.0),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      'Under 20 summer 25',
-                                      style: TextStyles.regular14.copyWith(
-                                        fontWeight: FontWeight.w400,
-                                        color: AppColors.white600,
-                                      ),
+                  Obx(
+                    () => homeController.isCourseLoading.value
+                        ? buildShimmerCourseItem(context)
+                        : homeController.courseList.isEmpty
+                        ? const Center(child: Text("No Course Available",style: TextStyle(
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.white900,
+                    ),))
+                        : ListView.separated(
+                            itemCount: homeController.courseList.length,
+                            controller: homeController.courseScrollController,
+                            shrinkWrap: true,
+                            itemBuilder: (context, index) {
+                              final course = homeController.courseList[index];
+                              return GestureDetector(
+                                onTap: () {
+                                  Get.toNamed(AppRoute.homeCourseDetails);
+                                },
+                                child: Container(
+                                  height: 90.h,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(16.r),
+                                    image: const DecorationImage(
+                                      image: AssetImage(AppImages.blueBg),
+                                      fit: BoxFit.cover,
                                     ),
-                                    Text(
-                                      '25 Jun, 2025 - 25 Jun, 2025   ',
-                                      style: TextStyles.regular14.copyWith(
-                                        fontWeight: FontWeight.w400,
-                                        color: AppColors.white600,
-                                      ),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(20.0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              course.name ?? '',
+                                              style: TextStyles.regular14
+                                                  .copyWith(
+                                                    fontWeight: FontWeight.w400,
+                                                    color: AppColors.white600,
+                                                  ),
+                                            ),
+                                            Text(
+                                              "${FormatTime.formateDateTimeMonth(course.startDate ?? '')} - ${FormatTime.formateDateTimeMonth(course.endDate ?? '')}",
+                                              style: TextStyles.regular14
+                                                  .copyWith(
+                                                    fontWeight: FontWeight.w400,
+                                                    color: AppColors.white600,
+                                                  ),
+                                            ),
+                                          ],
+                                        ),
+                                        CustomSvgImage(
+                                          imagePath: AppImages.next,
+                                          height: 42.h,
+                                          width: 42.w,
+                                        ),
+                                      ],
                                     ),
-                                  ],
+                                  ),
                                 ),
-                                CustomSvgImage(
-                                  imagePath: AppImages.next,
-                                  height: 42.h,
-                                  width: 42.w,
-                                ),
-                              ],
-                            ),
+                              );
+                            },
+                            separatorBuilder: (_, __) {
+                              return HeightGap(height: 10.h);
+                            },
                           ),
-                        ),
-                      );
-                    },
-                    separatorBuilder: (_, __) {
-                      return HeightGap(height: 10.h);
-                    },
                   ),
                 ],
               ),

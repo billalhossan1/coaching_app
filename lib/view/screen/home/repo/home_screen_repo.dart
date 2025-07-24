@@ -25,13 +25,36 @@ class HomeScreenRepo{
 
   }
 
-  Future<Response>getCourse()async{
+  Future<Response>getCourse(int page)async{
 
     try{
+      Map<String,dynamic>query={
+        "page":page,
+      };
 
       Response response;
       response = await ApiClient.getData(
-        ApiConstant.getCourse,
+        ApiConstant.getCourse,query: query
+      );
+      return response;
+
+    }catch(e){
+      return Response(statusCode: 1, statusText: "Error: ${e.toString()}");
+    }
+
+  }
+
+  Future<Response>getUpcomingSession(int page,{bool? all})async{
+
+    try{
+      Map<String,dynamic>query={
+        "page":page,
+        "all": all??''
+      };
+
+      Response response;
+      response = await ApiClient.getData(
+        ApiConstant.getUpComingSession,query: query
       );
       return response;
 

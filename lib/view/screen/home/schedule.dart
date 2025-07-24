@@ -1,89 +1,129 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:football_coaching_coach_app/view/screen/home/controller/scedule_controller.dart';
 import 'package:football_coaching_coach_app/view/widget/size.dart';
 import 'package:get/get.dart';
 
 import '../../../utils/AppColors/app_colors.dart';
 import '../../../utils/Texts/text_style.dart';
+import '../../../utils/format_time.dart';
 
 class Schedule extends StatelessWidget {
   const Schedule({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final ScheduleController controller = Get.find<ScheduleController>();
     return Scaffold(
       body: SafeArea(
         child: Column(
           children: [
             _customAppBar(),
-            Expanded(
-              child: SingleChildScrollView(
-                child: ListView.separated(
-                  shrinkWrap: true,
-                  physics: NeverScrollableScrollPhysics(),
-                  itemCount: 4,
-                  itemBuilder: (context, index) {
-                    return Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 16.0, top: 8, bottom: 8),
-                          child: Text('2 Schedule', style: TextStyles.regular12.copyWith(
-                            fontWeight: FontWeight.w400,
-                            color: AppColors.white900
-                          ),),
-                        ),
-                        ListView.separated(
+            Obx(
+              () => controller.isLoading.value
+                  ? Center(child: CircularProgressIndicator())
+                  : controller.scheduleList.isEmpty
+                  ? Center(child: Text("No Schedule Available"))
+                  : Expanded(
+                      child: SingleChildScrollView(
+                        child: ListView.separated(
                           shrinkWrap: true,
                           physics: NeverScrollableScrollPhysics(),
-                          itemCount: 2,
-                          itemBuilder: (context, index){
-                            return Container(
-                              height: 88.h,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(16.r),
-                                color: AppColors.grey900
-                              ),
-                              child: Padding(
-                                padding: const EdgeInsets.all(16.0),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text('Under 20 summer 25', style: TextStyles.regular12.copyWith(
-                                      fontWeight: FontWeight.w500,
-                                      color: AppColors.green500
-                                    ),),
-                                    Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Text('Under 20 summer 25', style: TextStyles.regular12.copyWith(
-                                            fontWeight: FontWeight.w500,
-                                            color: AppColors.white700
-                                        ),),
-                                        Text('4:30 PM - 6:00 PM', style: TextStyles.regular12.copyWith(
-                                            fontWeight: FontWeight.w500,
-                                            color: AppColors.white600
-                                        ),),
-                                      ],
-                                    )
-                                  ],
+                          itemCount: controller.scheduleList.length,
+                          itemBuilder: (context, index) {
+                            final schedule = controller.scheduleList[index];
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(
+                                    left: 16.0,
+                                    top: 8,
+                                    bottom: 8,
+                                  ),
+                                  child: Text(
+                                    "${schedule.shedules} Schedule",
+                                    style: TextStyles.regular12.copyWith(
+                                      fontWeight: FontWeight.w400,
+                                      color: AppColors.white900,
+                                    ),
+                                  ),
                                 ),
-                              ),
+                                ListView.separated(
+                                  shrinkWrap: true,
+                                  physics: NeverScrollableScrollPhysics(),
+                                  itemCount: schedule.sessions?.length ?? 0,
+                                  itemBuilder: (context, index) {
+                                    final session = schedule.sessions![index];
+                                    return Container(
+                                      height: 88.h,
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(
+                                          16.r,
+                                        ),
+                                        color: AppColors.grey900,
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(16.0),
+                                        child: Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              session.course?.name ?? '',
+                                              style: TextStyles.regular12
+                                                  .copyWith(
+                                                    fontWeight: FontWeight.w500,
+                                                    color: AppColors.green500,
+                                                  ),
+                                            ),
+                                            Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                Text(
+                                                  session.title ?? '',
+                                                  style: TextStyles.regular12
+                                                      .copyWith(
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        color:
+                                                            AppColors.white700,
+                                                      ),
+                                                ),
+                                                Text(
+                                                  "${FormatTime.formateTime(session.startTime ?? '')} - ${FormatTime.formateTime(session.endTime ?? '')}",
+                                                  style: TextStyles.regular12
+                                                      .copyWith(
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                        color:
+                                                            AppColors.white400,
+                                                      ),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  },
+                                  separatorBuilder: (_, __) {
+                                    return HeightGap(height: 8.h);
+                                  },
+                                ),
+                              ],
                             );
                           },
-                          separatorBuilder: (_,__){
+                          separatorBuilder: (_, __) {
                             return HeightGap(height: 8.h);
                           },
                         ),
-                      ],
-                    );
-                  },
-                  separatorBuilder: (_, __) {
-                    return HeightGap(height: 8.h);
-                  },
-                ),
-              ),
+                      ),
+                    ),
             ),
           ],
         ),
