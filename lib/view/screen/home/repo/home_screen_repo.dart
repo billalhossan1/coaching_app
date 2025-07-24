@@ -49,6 +49,22 @@ class HomeScreenRepo{
 
   }
 
+  Future<Response>getProfileOverView()async{
+
+    try{
+
+      Response response;
+      response = await ApiClient.getData(
+        ApiConstant.getProfileAnalytics,
+      );
+      return response;
+
+    }catch(e){
+      return Response(statusCode: 1, statusText: "Error: ${e.toString()}");
+    }
+
+  }
+
   Future<Response>getUpcomingSession(int page,{bool? all})async{
 
     try{

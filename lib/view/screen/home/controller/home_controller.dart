@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:football_coaching_coach_app/model/course_model.dart';
+import 'package:football_coaching_coach_app/model/profile_analytics_model.dart';
 import 'package:football_coaching_coach_app/model/upcomming_session_list_model.dart' hide Course;
 import 'package:football_coaching_coach_app/view/screen/home/repo/home_screen_repo.dart';
 import 'package:get/get.dart';
@@ -19,6 +20,7 @@ class HomeController extends GetxController {
   RxBool isCourseLoading = false.obs;
   RxBool isUpComingSessionLoading = false.obs;
   Rxn<ProfileModel> profileModel = Rxn<ProfileModel>();
+  Rxn<ProfileAnalytics> profileAnalytics = Rxn<ProfileAnalytics>();
   RxList<Course> courseList = RxList<Course>();
   RxList<UpComingSessionModel> upComingSessionList = RxList<UpComingSessionModel>();
   int coursePage = 1;
@@ -36,6 +38,7 @@ class HomeController extends GetxController {
     getCourses();
     getUpcomingSession();
     await getProfile();
+    getProfileAnalytics();
     setTextEditingController();
     courseScrollController.addListener(_getCourseListener);
     upComingSessionScrollController.addListener(_getUpComingSessionListener);
@@ -180,5 +183,16 @@ void setTextEditingController(){
       showCustomSnackBar(response.statusText??"Something went wrong");
     }
     isUpdateProfileLoading.value=false;
+  }
+
+
+  Future<void>getProfileAnalytics()async{
+    Response response = await HomeScreenRepo().getProfileOverView();
+    if(response.statusCode==200){
+      ProfileAnalyticsModel profileAnalyticsModel = ProfileAnalyticsModel.fromJson(response.body);
+      profileAnalytics.value = profileAnalyticsModel.profileAnalytics;
+    }else{
+      showCustomSnackBar(response.statusText??"Something went wrong");
+    }
   }
 }

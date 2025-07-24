@@ -35,19 +35,39 @@ class Schedule extends StatelessWidget {
                             return Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Padding(
-                                  padding: const EdgeInsets.only(
-                                    left: 16.0,
-                                    top: 8,
-                                    bottom: 8,
-                                  ),
-                                  child: Text(
-                                    "${schedule.shedules} Schedule",
-                                    style: TextStyles.regular12.copyWith(
-                                      fontWeight: FontWeight.w400,
-                                      color: AppColors.white900,
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                        left: 16.0,
+                                        top: 8,
+                                        bottom: 8,
+                                      ),
+                                      child: Text(
+                                        "${schedule.shedules} Schedule",
+                                        style: TextStyles.regular12.copyWith(
+                                          fontWeight: FontWeight.w400,
+                                          color: AppColors.white900,
+                                        ),
+                                      ),
                                     ),
-                                  ),
+                                    Padding(
+                                      padding: const EdgeInsets.only(
+                                        left: 16.0,
+                                        top: 8,
+                                        bottom: 8,
+                                      ),
+                                      child: Text(
+                                        "${schedule.sId}",
+                                        style: TextStyles.regular12.copyWith(
+                                          fontWeight: FontWeight.w400,
+                                          color: AppColors.white400,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                                 ListView.separated(
                                   shrinkWrap: true,
@@ -71,14 +91,20 @@ class Schedule extends StatelessWidget {
                                           mainAxisAlignment:
                                               MainAxisAlignment.spaceBetween,
                                           children: [
-                                            Text(
-                                              session.course?.name ?? '',
-                                              style: TextStyles.regular12
-                                                  .copyWith(
-                                                    fontWeight: FontWeight.w500,
-                                                    color: AppColors.green500,
-                                                  ),
-                                            ),
+                                          Row(
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                session.course?.name ?? '',
+                                                style: TextStyles.regular12
+                                                    .copyWith(
+                                                  fontWeight: FontWeight.w500,
+                                                  color: AppColors.green500,
+                                                ),
+                                              ),
+
+                                            ],
+                                          ),
                                             Row(
                                               mainAxisAlignment:
                                                   MainAxisAlignment

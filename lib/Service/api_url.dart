@@ -34,6 +34,7 @@ class ApiConstant {
   static const fetch_story = "/story";
   static const make_save = "/bookmark";
   static const getSession = "/session";
+  static const getProfileAnalytics = "/user/couch-analatycs";
   static const getUpComingSession = "/session/upcomming-couch";
   static const delete_account = "/user/delete-account";
   static const interest_selection = "/user/interest";

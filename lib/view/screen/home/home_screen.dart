@@ -155,14 +155,14 @@ class HomeScreen extends StatelessWidget {
                                     color: AppColors.white900,
                                   ),
                                 ),
-                              // homeController.upComingSessionList.isNotEmpty?  Text(
-                              //
-                              //       "${FormatTime.formateTime(homeController.upComingSessionList[0].sessions)}",
-                              //     style: TextStyles.regular14.copyWith(
-                              //       fontWeight: FontWeight.w500,
-                              //       color: AppColors.white700,
-                              //     ),
-                              //   ):const SizedBox(),
+                              homeController.upComingSessionList.isNotEmpty?  Text(
+
+                                    homeController.upComingSessionList[0].sId ?? '',
+                                  style: TextStyles.regular14.copyWith(
+                                    fontWeight: FontWeight.w500,
+                                    color: AppColors.white700,
+                                  ),
+                                ):const SizedBox(),
                               ],
                             ),
                     ),

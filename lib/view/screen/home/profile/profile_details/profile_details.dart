@@ -166,18 +166,18 @@ class ProfileDetails extends StatelessWidget {
               ],
             ),
           ),
-          const Padding(
+          Obx(()=>Padding(
             padding: EdgeInsets.only(left: 16.0, right: 16, bottom: 16),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                CoachActivity(totalValue: '20', title: 'Total Sessions'),
-                CoachActivity(totalValue: '3', title: 'Present Course'),
-                CoachActivity(totalValue: '150', title: 'Total Players'),
-                CoachActivity(totalValue: '95%', title: 'Activity'),
+                CoachActivity(totalValue: '${controller.profileAnalytics.value?.overView?.totalCourse??0}', title: 'Total Sessions'),
+                CoachActivity(totalValue: '${controller.profileAnalytics.value?.overView?.currentCourse??0}', title: 'Present Course'),
+                CoachActivity(totalValue: '${controller.profileAnalytics.value?.overView?.totalStudents??0}', title: 'Total Players'),
+                CoachActivity(totalValue: '${controller.profileAnalytics.value?.overView?.currentCourse??0}%', title: 'Activity'),
               ],
             ),
-          ),
+          ),)
         ],
       ),
     );
