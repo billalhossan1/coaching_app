@@ -1,11 +1,11 @@
-class SessionModel {
+class SessionListModel {
 
   Pagination? pagination;
   List<Data>? data;
 
-  SessionModel({ this.pagination, this.data});
+  SessionListModel({ this.pagination, this.data});
 
-  SessionModel.fromJson(Map<String, dynamic> json) {
+  SessionListModel.fromJson(Map<String, dynamic> json) {
 
     pagination = json['pagination'] != null
         ? Pagination.fromJson(json['pagination'])

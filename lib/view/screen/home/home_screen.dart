@@ -27,7 +27,7 @@ class HomeScreen extends StatelessWidget {
             () => homeController.isProfileLoading.value
                 ? buildShimmerProfileHeader(context)
                 : CustomAppBarWithoutBorder(context,
-                    homeController.profileModel.value!.profileModel!.image!),
+                    homeController.profileModel.value?.profileModel?.image??''),
           ),
           Container(
             width: double.infinity,

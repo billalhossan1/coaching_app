@@ -11,7 +11,7 @@ class CustomSvgImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SvgPicture.asset(
+    return Image.network(
       imagePath,
       width: width,
       height: height,

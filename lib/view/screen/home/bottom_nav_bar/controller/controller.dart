@@ -15,8 +15,9 @@ class BottomNavController extends GetxController {
   RxInt selectedIndex = 0.obs;
 
   @override
-  Future<void> onInit() async {
-   await homeController.getProfile();
+  void onInit()  {
+    homeController.getProfile();
+    homeController.getCourses();
     super.onInit();
   }
 

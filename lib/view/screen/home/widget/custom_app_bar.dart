@@ -11,7 +11,7 @@ import '../../../widget/size.dart';
 Container CustomAppBar(BuildContext context) {
   return Container(
     height: Responsive.height(context, 65),
-    decoration: BoxDecoration(
+    decoration: const BoxDecoration(
         borderRadius: BorderRadius.only(
             bottomLeft: Radius.circular(16),
             bottomRight: Radius.circular(16)),
@@ -53,25 +53,25 @@ Container CustomAppBar(BuildContext context) {
               GestureDetector(
                 onTap: () {
                 },
-                child: CustomSvgImage(
+                child: const CustomSvgImage(
                   imagePath: AppImages.search,
                   height: 24,
                   width: 24,
                 ),
               ),
-              WidthGap(width: 16),
+              const WidthGap(width: 16),
               GestureDetector(
                 onTap: () {},
-                child: CustomSvgImage(
+                child: const CustomSvgImage(
                   imagePath: AppImages.cart,
                   height: 24,
                   width: 24,
                 ),
               ),
-              WidthGap(width: 16),
+              const WidthGap(width: 16),
               GestureDetector(
                 onTap: () {},
-                child: CustomSvgImage(
+                child: const CustomSvgImage(
                   imagePath: AppImages.notification,
                   height: 24,
                   width: 24,
@@ -128,11 +128,11 @@ Container  CustomAppBarWithoutBorder(BuildContext context,String imageUrl) {
           ),
           Row(
             children: [
-              WidthGap(width: 16),
+              const WidthGap(width: 16),
               GestureDetector(
                 onTap: () {},
-                child: CustomSvgImage(
-                  imagePath: AppImages.notification,
+                child: const CustomSvgImage(
+                  imagePath: "assets/svg/notification.svg",
                   height: 24,
                   width: 24,
                 ),
