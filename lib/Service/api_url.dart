@@ -24,7 +24,7 @@ class ApiConstant {
   static const resend_otp = "/auth/resend-otp";
   static const get_profile = "/user/profile";
   static const change_password = "/user/change-password";
-  static const update_profile = "/user";
+  static const update_profile = "/user/profile";
   static const user_info = "/user/info";
   static const create_post = "/post";
   static const fetch_post = "/post";

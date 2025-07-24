@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_phoenix/flutter_phoenix.dart' show Phoenix;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:football_coaching_coach_app/Helper/shared_prefe/shared_prefe.dart';
+import 'package:football_coaching_coach_app/Service/api_url.dart';
 import 'package:football_coaching_coach_app/utils/AppConst/app_const.dart';
 import 'package:football_coaching_coach_app/view/screen/home/controller/home_controller.dart';
 import 'package:football_coaching_coach_app/view/screen/home/profile/model/profile_model.dart';
@@ -36,14 +37,14 @@ class ProfileScreen extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  ProfileCart1(
+                  Obx(()=>ProfileCart1(
                     screenWidth: screenWidth,
-                    img: profileModel.value?.profileModel?.image??'',
+                    img: "${ApiConstant.imageUrl}${profileModel.value?.profileModel?.image??''}",
                     text: 'Profile Details',
                     onTap: () {
                       Get.toNamed(AppRoute.profileDetails);
                     },
-                  ),
+                  ),),
                   ProfileCart(
                     screenWidth: screenWidth,
                     img: AppImages.courseHistory,

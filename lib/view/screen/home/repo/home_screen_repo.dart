@@ -1,5 +1,10 @@
 
+
+
+import 'dart:io';
+
 import 'package:get/get_connect/http/src/response/response.dart';
+
 
 import '../../../../Service/api_client.dart';
 import '../../../../Service/api_url.dart';
@@ -84,6 +89,36 @@ class HomeScreenRepo{
       return Response(statusCode: 1, statusText: "Error: ${e.toString()}");
     }
 
+  }
+
+
+
+
+
+  Future<Response>updateProfile({required String name,required String contact,required String nationality,required String address,File? image})async{
+
+
+      try {
+        Map<String, String> body = {
+          "name": name,
+          "contact": contact,
+          "nationality": nationality,
+          "address": address,
+        };
+        List<MultipartBody> multipartBody = [];
+        if (image != null) {
+          multipartBody.add(MultipartBody("image", image));
+        }
+        Response response;
+        response = await ApiClient.patchMultipartData(
+          ApiConstant.update_profile,
+          body,
+          multipartBody: multipartBody,
+        );
+        return response;
+      } catch (e) {
+        return Response(statusCode: 1, statusText: "Error: ${e.toString()}");
+      }
   }
 
 }

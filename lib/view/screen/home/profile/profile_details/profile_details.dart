@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:football_coaching_coach_app/Service/api_url.dart';
 import 'package:football_coaching_coach_app/utils/short_text.dart';
 import 'package:football_coaching_coach_app/view/screen/home/controller/home_controller.dart';
 import 'package:football_coaching_coach_app/view/screen/home/profile/edit_profile_bottom_shit.dart';
@@ -23,7 +24,7 @@ class ProfileDetails extends StatelessWidget {
     HomeController homeController = Get.find<HomeController>();
     return Scaffold(
       body: SafeArea(
-        child: Column(
+        child: Obx(()=>Column(
           children: [
             _customAppBar(),
             Expanded(
@@ -31,40 +32,77 @@ class ProfileDetails extends StatelessWidget {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    _profileData(profileModel.value,homeController),
+                    _profileData(profileModel.value, homeController),
                     HeightGap(height: 8.h),
                     Container(
                       width: double.infinity,
                       decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(16.r),
-                          color: AppColors.grey800
+                        borderRadius: BorderRadius.circular(16.r),
+                        color: AppColors.grey800,
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(20.0),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text('Personal Informations', style: TextStyles.regular16.copyWith(
+                            Text(
+                              'Personal Informations',
+                              style: TextStyles.regular16.copyWith(
                                 fontWeight: FontWeight.w500,
-                                color: AppColors.white300
-                            ),),
+                                color: AppColors.white300,
+                              ),
+                            ),
                             HeightGap(height: 12.h),
-                            Text('Basic Information', style: TextStyles.regular12.copyWith(
+                            Text(
+                              'Basic Information',
+                              style: TextStyles.regular12.copyWith(
                                 fontWeight: FontWeight.w400,
-                                color: AppColors.white900
-                            ),),
+                                color: AppColors.white900,
+                              ),
+                            ),
                             HeightGap(height: 8.h),
-                             InfoCart(title:'Full Name', contexts: profileModel.value?.profileModel?.name??'Unknown',),
+                            InfoCart(
+                              title: 'Full Name',
+                              contexts:
+                              profileModel.value?.profileModel?.name ??
+                                  'Unknown',
+                            ),
                             HeightGap(height: 8.h),
-                             InfoCart(title:'Employee Id', contexts: "${ShortText.getShortText(profileModel.value?.profileModel?.sId??'',maxLength: 15)}",),
+                            InfoCart(
+                              title: 'Employee Id',
+                              contexts:
+                              "${ShortText.getShortText(profileModel.value?.profileModel?.sId ?? '', maxLength: 15)}",
+                            ),
                             HeightGap(height: 8.h),
-                             InfoCart(title:'Email', contexts: profileModel.value?.profileModel?.email??'',),
+                            InfoCart(
+                              title: 'Email',
+                              contexts:
+                              profileModel.value?.profileModel?.email ??
+                                  '',
+                            ),
                             HeightGap(height: 8.h),
-                             InfoCart(title:'Contact No.', contexts: '${profileModel.value?.profileModel?.contact??''}',),
+                            InfoCart(
+                              title: 'Contact No.',
+                              contexts:
+                              '${profileModel.value?.profileModel?.contact ?? ''}',
+                            ),
                             HeightGap(height: 8.h),
-                             InfoCart(title:'Nationality', contexts: profileModel.value?.profileModel?.nationality??'',),
+                            InfoCart(
+                              title: 'Nationality',
+                              contexts:
+                              profileModel
+                                  .value
+                                  ?.profileModel
+                                  ?.nationality ??
+                                  '',
+                            ),
                             HeightGap(height: 8.h),
-                             InfoCart(title:'Address', contexts: profileModel.value?.profileModel?.address??'',),
+                            InfoCart(
+                              title: 'Address',
+                              contexts:
+                              profileModel.value?.profileModel?.address ??
+                                  '',
+                            ),
                           ],
                         ),
                       ),
@@ -72,15 +110,18 @@ class ProfileDetails extends StatelessWidget {
                   ],
                 ),
               ),
-            )
+            ),
           ],
-        ),
+        ),)
       ),
     );
   }
 
   /// Profile data
-  Container _profileData(ProfileModel? profileModel,HomeController controller) {
+  Container _profileData(
+    ProfileModel? profileModel,
+    HomeController controller,
+  ) {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.only(
@@ -97,7 +138,7 @@ class ProfileDetails extends StatelessWidget {
             child: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _imageUrl(profileModel!,controller),
+                _imageUrl(profileModel!, controller),
                 WidthGap(width: 12.h),
                 Padding(
                   padding: const EdgeInsets.only(top: 8.0),
@@ -105,15 +146,19 @@ class ProfileDetails extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        profileModel.profileModel?.name??'Unknown',
+                        profileModel.profileModel?.name ?? 'Unknown',
                         style: TextStyles.regular16.copyWith(
-                            fontWeight: FontWeight.w500, color: AppColors.white50),
+                          fontWeight: FontWeight.w500,
+                          color: AppColors.white50,
+                        ),
                       ),
                       HeightGap(height: 8.h),
                       Text(
                         'Sr. Coach',
                         style: TextStyles.regular12.copyWith(
-                            fontWeight: FontWeight.w500, color: AppColors.green300),
+                          fontWeight: FontWeight.w500,
+                          color: AppColors.green300,
+                        ),
                       ),
                     ],
                   ),
@@ -126,10 +171,10 @@ class ProfileDetails extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                CoachActivity(totalValue: '20', title: 'Total Sessions',),
-                CoachActivity(totalValue: '3', title: 'Present Course',),
-                CoachActivity(totalValue: '150', title: 'Total Players',),
-                CoachActivity(totalValue: '95%', title: 'Activity',),
+                CoachActivity(totalValue: '20', title: 'Total Sessions'),
+                CoachActivity(totalValue: '3', title: 'Present Course'),
+                CoachActivity(totalValue: '150', title: 'Total Players'),
+                CoachActivity(totalValue: '95%', title: 'Activity'),
               ],
             ),
           ),
@@ -139,7 +184,7 @@ class ProfileDetails extends StatelessWidget {
   }
 
   /// Image url
-  Stack _imageUrl(ProfileModel profileModel,HomeController controller) {
+  Stack _imageUrl(ProfileModel profileModel, HomeController controller) {
     return Stack(
       children: [
         Container(
@@ -150,26 +195,32 @@ class ProfileDetails extends StatelessWidget {
             color: const Color(0xFF212220),
           ),
           child: Padding(
-            padding:  EdgeInsets.all(6.0),
+            padding: EdgeInsets.all(6.0),
             child: Container(
               height: 100.h,
               width: 100.w,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(100),
-                image:  DecorationImage(
-                    image: NetworkImage(
-                        profileModel.profileModel?.image??''),
-                    fit: BoxFit.cover),
+                image: DecorationImage(
+                  image: NetworkImage("${ApiConstant.imageUrl}${profileModel.profileModel?.image ?? ''}"),
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           ),
         ),
-         Positioned(
+        Positioned(
           right: 0,
           bottom: 10,
           child: GestureDetector(
-            onTap: (){
-              Get.bottomSheet(editProfileBottomsheet(profileModel,controller));
+            onTap: () {
+              controller.setTextEditingController();
+              Get.bottomSheet(
+                editProfileBottomsheet(profileModel, controller,Get.context!),
+                enableDrag: true,
+              ).then((_) {
+                controller.selectedImage = null;
+              });
             },
             child: CustomSvgImage(
               imagePath: AppImages.editIcon,
@@ -177,16 +228,16 @@ class ProfileDetails extends StatelessWidget {
               width: 20,
             ),
           ),
-        )
+        ),
       ],
     );
   }
+
   /// Custom AppBar
   Container _customAppBar() {
     return Container(
       height: 64.h,
-      decoration: const BoxDecoration(
-          color: AppColors.appBar,),
+      decoration: const BoxDecoration(color: AppColors.appBar),
       child: Center(
         child: Row(
           children: [
@@ -196,10 +247,7 @@ class ProfileDetails extends StatelessWidget {
                 onTap: () {
                   Get.back();
                 },
-                child: const Icon(
-                  Icons.arrow_back,
-                  color: AppColors.white50,
-                ),
+                child: const Icon(Icons.arrow_back, color: AppColors.white50),
               ),
             ),
             const Spacer(),
@@ -208,7 +256,9 @@ class ProfileDetails extends StatelessWidget {
               child: Text(
                 'Profile Details',
                 style: TextStyles.regular20.copyWith(
-                    fontWeight: FontWeight.w500, color: AppColors.white50),
+                  fontWeight: FontWeight.w500,
+                  color: AppColors.white50,
+                ),
               ),
             ),
             const Spacer(),
@@ -225,22 +275,28 @@ class CoachActivity extends StatelessWidget {
   const CoachActivity({
     super.key,
     required this.totalValue,
-    required this.title
+    required this.title,
   });
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Text(totalValue, style: TextStyles.regular16.copyWith(
-          fontWeight: FontWeight.w500,
-          color: AppColors.white300
-        ),),
+        Text(
+          totalValue,
+          style: TextStyles.regular16.copyWith(
+            fontWeight: FontWeight.w500,
+            color: AppColors.white300,
+          ),
+        ),
         HeightGap(height: 8.h),
-        Text(title, style: TextStyles.regular12.copyWith(
-          fontWeight: FontWeight.w500,
-          color: AppColors.white900
-        ),),
+        Text(
+          title,
+          style: TextStyles.regular12.copyWith(
+            fontWeight: FontWeight.w500,
+            color: AppColors.white900,
+          ),
+        ),
       ],
     );
   }
@@ -249,18 +305,14 @@ class CoachActivity extends StatelessWidget {
 class InfoCart extends StatelessWidget {
   final String title;
   final String contexts;
-  const InfoCart({
-    super.key,
-    required this.title,
-    required this.contexts
-  });
+  const InfoCart({super.key, required this.title, required this.contexts});
 
   @override
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(8.r),
-        color: AppColors.grey700
+        color: AppColors.grey700,
       ),
       child: Column(
         children: [
@@ -269,17 +321,23 @@ class InfoCart extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(title, style: TextStyles.regular14.copyWith(
-                  fontWeight: FontWeight.w400,
-                  color: AppColors.white600
-                ),),
-                Text(contexts, style: TextStyles.regular14.copyWith(
-                  fontWeight: FontWeight.w400,
-                  color: AppColors.white600
-                ),),
+                Text(
+                  title,
+                  style: TextStyles.regular14.copyWith(
+                    fontWeight: FontWeight.w400,
+                    color: AppColors.white600,
+                  ),
+                ),
+                Text(
+                  contexts,
+                  style: TextStyles.regular14.copyWith(
+                    fontWeight: FontWeight.w400,
+                    color: AppColors.white600,
+                  ),
+                ),
               ],
             ),
-          )
+          ),
         ],
       ),
     );
@@ -289,25 +347,27 @@ class InfoCart extends StatelessWidget {
 class AmountCart extends StatelessWidget {
   final String title;
   final String amount;
-  const AmountCart({
-    super.key,
-    required this.title,
-    required this.amount
-  });
+  const AmountCart({super.key, required this.title, required this.amount});
 
   @override
   Widget build(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(title, style: TextStyles.regular14.copyWith(
-          fontWeight: FontWeight.w400,
-          color: AppColors.white300
-        ),),
-        Text('\$$amount', style: TextStyles.regular14.copyWith(
-          fontWeight: FontWeight.w400,
-          color: AppColors.white300
-        ),),
+        Text(
+          title,
+          style: TextStyles.regular14.copyWith(
+            fontWeight: FontWeight.w400,
+            color: AppColors.white300,
+          ),
+        ),
+        Text(
+          '\$$amount',
+          style: TextStyles.regular14.copyWith(
+            fontWeight: FontWeight.w400,
+            color: AppColors.white300,
+          ),
+        ),
       ],
     );
   }
