@@ -28,6 +28,12 @@ class FormatTime {
     String formattedTime = DateFormat('dd/MM/yyyy').format(bstTime); // fixed MM
     return formattedTime;
   }
+  static String formateDateMonth(String dateString) {
+    DateTime utcTime = DateTime.parse(dateString).toUtc();
+    DateTime bstTime = utcTime.add(const Duration(hours: 6));
+    String formattedTime = DateFormat('dd MMM').format(bstTime); // fixed MM
+    return formattedTime;
+  }
 
   static String formateDateMonthYear(String dateString) {
     DateTime utcTime = DateTime.parse(dateString).toUtc();

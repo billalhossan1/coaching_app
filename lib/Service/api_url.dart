@@ -33,7 +33,7 @@ class ApiConstant {
   static const add_story = "/story";
   static const fetch_story = "/story";
   static const make_save = "/bookmark";
-  static const getSession = "/session";
+  static const getSessionById = "/session";
   static const getUpComingSessionToday = "/session/upcomming-toady";
   static const getProfileAnalytics = "/user/couch-analatycs";
   static const getUpComingSession = "/session/upcomming-couch";
@@ -41,6 +41,7 @@ class ApiConstant {
   static const interest_selection = "/user/interest";
   static const info = "/onboarding";
   static String storyDetails(var id)=>"/story/$id";
+  static String sessionDetails(var id)=>"/session/$id";
   static String postData(var id)=>"/post/$id";
 
 

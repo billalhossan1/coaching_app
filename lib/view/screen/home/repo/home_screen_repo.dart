@@ -11,24 +11,7 @@ import '../../../../Service/api_url.dart';
 
 
 class HomeScreenRepo{
-  Future<Response>getSession(String courseId)async{
 
-    try{
-
-      Map<String,dynamic>query={
-        "course":courseId,
-      };
-      Response response;
-      response = await ApiClient.getData(
-        ApiConstant.getSession,query: query
-      );
-      return response;
-
-    }catch(e){
-      return Response(statusCode: 1, statusText: "Error: ${e.toString()}");
-    }
-
-  }
 
   Future<Response>getCourse(int page)async{
 

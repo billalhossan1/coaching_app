@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:football_coaching_coach_app/core/app_route/app_route.dart';
+import 'package:football_coaching_coach_app/model/session_details_model.dart';
+import 'package:football_coaching_coach_app/view/screen/home/controller/course_details_controller.dart';
 import 'package:football_coaching_coach_app/view/widget/network_image_widget.dart';
 import 'package:get/get.dart';
 
@@ -186,75 +188,37 @@ class ScheduleTable extends StatelessWidget {
 
 
 class ScheduleTable2 extends StatelessWidget {
-  const ScheduleTable2 ({super.key});
+  final SessionDetails sessionDetails;
 
-  // Dynamic data
+  const ScheduleTable2({super.key, required this.sessionDetails});
 
   @override
   Widget build(BuildContext context) {
-    final List<Map<String, String>> data = [
-      {
-        'class': 'Asad Ujjaman',
-        'date': '2 Jun, 2025',
-        'performance': '80%',
-        'attendance': '✓',
-      },
-      {
-        'class': 'Kovács Tímea',
-        'date': '2 Jun, 2025',
-        'performance': '80%',
-        'attendance': '✓',
-      },
-      {
-        'class': 'Asad Ujjaman',
-        'date': '2 Jun, 2025',
-        'performance': '80%',
-        'attendance': '✓',
-      },
-      {
-        'class': 'Asad Ujjaman',
-        'date': '2 Jun, 2025',
-        'performance': '80%',
-        'attendance': '✓',
-      },
-      {
-        'class': 'Asad Ujjaman',
-        'date': '2 Jun, 2025',
-        'performance': '80%',
-        'attendance': '✓',
-      },
-      {
-        'class': 'Asad Ujjaman',
-        'date': '2 Jun, 2025',
-        'performance': '80%',
-        'attendance': '✓',
-      },
-      {
-        'class': 'Asad Ujjaman',
-        'date': '2 Jun, 2025',
-        'performance': '80%',
-        'attendance': '✓',
-      },
-      {
-        'class': 'Asad Ujjaman',
-        'date': '2 Jun, 2025',
-        'performance': '80%',
-        'attendance': '✓',
-      },
-    ];
+    // Check if studentList is null or empty
+    if (sessionDetails.studentList == null || sessionDetails.studentList!.isEmpty) {
+      return const Center(
+        child: Text(
+          'No students available',
+          style: TextStyle(color: AppColors.white900),
+        ),
+      );
+    }
+
     return ListView.separated(
       shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
-      itemCount: data.length + 1,  // +1 for the header row
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: sessionDetails.studentList!.length + 1, // +1 for the header row
       separatorBuilder: (context, index) {
-        return index==0? Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
+        return index == 0
+            ? const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 10),
           child: Divider(color: AppColors.white900),
-        ): HeightGap(height: 0.h);
+        )
+            : HeightGap(height: 0.h);
       },
       itemBuilder: (context, index) {
+        // Skip the header row (index 0)
         if (index == 0) {
-          // Header Row
           return Container(
             padding: EdgeInsets.symmetric(vertical: 12),
             child: Row(
@@ -268,14 +232,14 @@ class ScheduleTable2 extends StatelessWidget {
         }
 
         // Data Row
-        var item = data[index - 1];
+        final student = sessionDetails.studentList![index - 1]; // Subtract 1 to get the student index
         return Container(
           padding: EdgeInsets.symmetric(vertical: 8),
           child: Row(
             children: [
-              _buildTableCell(item['class']!),
-              _buildPerformanceCell(item['performance']!),
-              _buildPerformanceCell(item['performance']!),
+              _buildTableCell(student.name ?? ''),
+              _buildPerformanceCell(student.performance ?? ''),
+              _buildPerformanceCell(student.atandance == true ? '✅' : '❌'),
             ],
           ),
         );
@@ -292,12 +256,12 @@ class ScheduleTable2 extends StatelessWidget {
         child: Row(
           children: [
             Text(
-                text,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyles.regular12.copyWith(
-                    fontWeight: FontWeight.w400,
-                    color: AppColors.green300
-                )
+              text,
+              overflow: TextOverflow.ellipsis,
+              style: TextStyles.regular12.copyWith(
+                fontWeight: FontWeight.w400,
+                color: AppColors.green300,
+              ),
             ),
           ],
         ),
@@ -312,11 +276,11 @@ class ScheduleTable2 extends StatelessWidget {
         padding: EdgeInsets.all(12),
         alignment: Alignment.center,
         child: Text(
-            text,
-            style: TextStyles.regular12.copyWith(
-                fontWeight: FontWeight.w400,
-                color: AppColors.white800
-            )
+          text,
+          style: TextStyles.regular12.copyWith(
+            fontWeight: FontWeight.w400,
+            color: AppColors.white800,
+          ),
         ),
       ),
     );
@@ -328,23 +292,22 @@ class ScheduleTable2 extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 8.0),
         child: Container(
-          height:24.h,
+          height: 24.h,
           alignment: Alignment.center,
           decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(90),
-              border: Border.all(
-                  color: AppColors.green500
-              )
+            borderRadius: BorderRadius.circular(90),
+            border: Border.all(color: AppColors.green500),
           ),
           child: Text(
             performance,
-            style: TextStyle(color: Colors.white),
+            style: const TextStyle(color: Colors.white),
           ),
         ),
       ),
     );
   }
 }
+
 
 
 class ScheduleTable3 extends StatelessWidget {

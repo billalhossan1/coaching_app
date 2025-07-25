@@ -1,3 +1,4 @@
+import 'package:football_coaching_coach_app/view/screen/home/controller/course_details_controller.dart';
 import 'package:football_coaching_coach_app/view/screen/home/profile/setting/controller/change_password_controller.dart';
 import 'package:get/get.dart';
 
@@ -22,5 +23,6 @@ class DependencyInjection extends Bindings {
     Get.lazyPut(() => CourseHistoryController(), fenix: true);
     Get.lazyPut(() => ScheduleController(), fenix: true);
     Get.lazyPut(() => ChangePasswordController(), fenix: true);
+    Get.lazyPut(() => CourseDetailsController(), fenix: true);
   }
 }

@@ -102,7 +102,9 @@ void setTextEditingController(){
 
   Future<void> getCourses({int page = 1}) async {
     try {
-      isCourseLoading.value = true;
+      if(page==1){
+        isCourseLoading.value = true;
+      }
       Response response = await HomeScreenRepo().getCourse(page);
       isCourseLoading.value = false;
 
@@ -140,7 +142,9 @@ void setTextEditingController(){
 
   Future<void> getUpcomingSession({int page =1})async{
     try{
-      isUpComingSessionLoading.value=true;
+      if(page==1){
+        isUpComingSessionLoading.value=true;
+      }
       Response response=await HomeScreenRepo().getUpcomingSession(page);
       isUpComingSessionLoading.value=false;
       if(response.statusCode==200){
