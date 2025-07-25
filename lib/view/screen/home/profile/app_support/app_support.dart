@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
+import 'package:football_coaching_coach_app/view/screen/home/profile/app_support/controller/app_supprot_controller.dart';
 import 'package:get/get.dart';
 
 import '../../../../../utils/AppColors/app_colors.dart';
@@ -9,11 +11,17 @@ class AppSupport extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final AppSupportController controller = Get.find<AppSupportController>();
     return Scaffold(
       body: SafeArea(
         child: Column(
           children: [
             _customAppBar(),
+            Obx(()=>controller.isLoading.value?Center(child: CircularProgressIndicator(),):Padding(
+                padding:  const EdgeInsets.symmetric(horizontal: 20),
+                child: HtmlWidget(controller.appSupport.value,textStyle:  TextStyles.regular20.copyWith(
+                    fontWeight: FontWeight.w500, color: AppColors.white50),)
+            ),),
           ],
         ),
       ),

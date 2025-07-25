@@ -74,6 +74,7 @@ class ApiConstant {
   static const term_conditions = "/rule/terms-and-conditions";
   static const about = "/rule/about";
   static const faq = "/faq";
+  static const disclaimer = "/disclaimer";
   static const privacy_policy = "/rule/privacy-policy";
   static const app_support = "/rule/appAndSupport";
 
