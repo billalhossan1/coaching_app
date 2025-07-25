@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:football_coaching_coach_app/Service/api_url.dart';
+import 'package:football_coaching_coach_app/app/utils/strings.dart';
 import 'package:football_coaching_coach_app/shimmer/course_shimmer.dart';
 import 'package:football_coaching_coach_app/shimmer/row_shimmer.dart';
 import 'package:football_coaching_coach_app/shimmer/shimmer_profile_header.dart';
@@ -33,8 +34,7 @@ class HomeScreen extends StatelessWidget {
                 ? buildShimmerProfileHeader(context)
                 : CustomAppBarWithoutBorder(
                     context,
-                    "${ApiConstant.imageUrl}${homeController.profileModel.value?.profileModel?.image ??
-                        ''}",
+                    "${ApiConstant.imageUrl}${homeController.profileModel.value?.profileModel?.image ?? ''}",
                   ),
           ),
           Container(
@@ -45,58 +45,82 @@ class HomeScreen extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             ),
-            child: Obx(()=>homeController.isUpComingTodaySessionLoading.value?Center(child: CircularProgressIndicator(),):Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(top: 4.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          homeController.todaySession.value?.course?.name??'',
-                          style: TextStyles.regular12.copyWith(
-                            fontWeight: FontWeight.w500,
-                            color: AppColors.green300,
+            child: Obx(
+              () => homeController.isUpComingTodaySessionLoading.value
+                  ? Center(child: CircularProgressIndicator())
+                  : Padding(
+                      padding: const EdgeInsets.all(20.0),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(top: 4.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  homeController
+                                          .todaySession
+                                          .value
+                                          ?.course
+                                          ?.name ??
+                                      '',
+                                  style: TextStyles.regular12.copyWith(
+                                    fontWeight: FontWeight.w500,
+                                    color: AppColors.green300,
+                                  ),
+                                ),
+                                Text(
+                                  homeController.todaySession.value?.title ??
+                                      '',
+                                  style: TextStyles.regular14.copyWith(
+                                    fontWeight: FontWeight.w400,
+                                    color: AppColors.white600,
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                        Text(
-                          homeController.todaySession.value?.title??'',
-                          style: TextStyles.regular14.copyWith(
-                            fontWeight: FontWeight.w400,
-                            color: AppColors.white600,
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              homeController.todaySession.value != null
+                                  ? Text(
+                                      FormatTime.formateDateMonthYear(
+                                        homeController
+                                            .todaySession
+                                            .value!
+                                            .date!,
+                                      ),
+                                      style: TextStyles.title20.copyWith(
+                                        fontWeight: FontWeight.w500,
+                                        color: AppColors.green300,
+                                      ),
+                                    )
+                                  : Text(
+                                      'No upcoming session',
+                                      style: TextStyles.title20.copyWith(
+                                        fontWeight: FontWeight.w500,
+                                        color: AppColors.green300,
+                                      ),
+                                    ),
+                              homeController.todaySession.value != null
+                                  ?  Text(
+                                '${FormatTime.formateTime(homeController.todaySession.value!.startTime!)} - ${FormatTime.formateTime(homeController.todaySession.value!.endTime!)}',
+                                style: TextStyles.regular12.copyWith(
+                                  fontWeight: FontWeight.w400,
+                                  color: AppColors.golden700,
+                                ),
+                              ):Text('Not Available'),
+                            ],
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
-                  ),
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        '25 Jun, 2025',
-                        style: TextStyles.title20.copyWith(
-                          fontWeight: FontWeight.w500,
-                          color: AppColors.green300,
-                        ),
-                      ),
-                      Text(
-                        '3:00 PM – 4:30 PM',
-                        style: TextStyles.regular12.copyWith(
-                          fontWeight: FontWeight.w400,
-                          color: AppColors.golden700,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ),)
+            ),
           ),
           Expanded(
             child: SingleChildScrollView(
@@ -155,14 +179,18 @@ class HomeScreen extends StatelessWidget {
                                     color: AppColors.white900,
                                   ),
                                 ),
-                              homeController.upComingSessionList.isNotEmpty?  Text(
-
-                                    homeController.upComingSessionList[0].sId ?? '',
-                                  style: TextStyles.regular14.copyWith(
-                                    fontWeight: FontWeight.w500,
-                                    color: AppColors.white700,
-                                  ),
-                                ):const SizedBox(),
+                                homeController.upComingSessionList.isNotEmpty
+                                    ? Text(
+                                        homeController
+                                                .upComingSessionList[0]
+                                                .sId ??
+                                            '',
+                                        style: TextStyles.regular14.copyWith(
+                                          fontWeight: FontWeight.w500,
+                                          color: AppColors.white700,
+                                        ),
+                                      )
+                                    : const SizedBox(),
                               ],
                             ),
                     ),
@@ -174,10 +202,13 @@ class HomeScreen extends StatelessWidget {
                         ? Center(child: buildShimmerCourseItem(context))
                         : homeController.upComingSessionList.isEmpty
                         ? const Center(
-                            child: Text('No Schedule Available For Today',style: TextStyle(
-                              fontWeight: FontWeight.w500,
-                              color: AppColors.white900,
-                            ),),
+                            child: Text(
+                              'No Schedule Available For Today',
+                              style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                color: AppColors.white900,
+                              ),
+                            ),
                           )
                         : ListView.separated(
                             itemCount:
@@ -253,10 +284,15 @@ class HomeScreen extends StatelessWidget {
                     () => homeController.isCourseLoading.value
                         ? buildShimmerCourseItem(context)
                         : homeController.courseList.isEmpty
-                        ? const Center(child: Text("No Course Available",style: TextStyle(
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.white900,
-                    ),))
+                        ? const Center(
+                            child: Text(
+                              "No Course Available",
+                              style: TextStyle(
+                                fontWeight: FontWeight.w500,
+                                color: AppColors.white900,
+                              ),
+                            ),
+                          )
                         : ListView.separated(
                             itemCount: homeController.courseList.length,
                             controller: homeController.courseScrollController,

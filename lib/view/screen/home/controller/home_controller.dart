@@ -24,7 +24,7 @@ class HomeController extends GetxController {
   RxBool isUpComingTodaySessionLoading = false.obs;
   Rxn<ProfileModel> profileModel = Rxn<ProfileModel>();
   Rxn<ProfileAnalytics> profileAnalytics = Rxn<ProfileAnalytics>();
-  Rxn<SingleSession> todaySession = Rxn<SingleSession>();
+  Rxn<Sessions> todaySession = Rxn<Sessions>();
   RxList<Course> courseList = RxList<Course>();
   RxList<UpComingSessionModel> upComingSessionList = RxList<UpComingSessionModel>();
   int coursePage = 1;
@@ -206,7 +206,7 @@ void setTextEditingController(){
     Response response = await HomeScreenRepo().getUpcomingSessionToday();
     isUpComingTodaySessionLoading.value= false;
     if(response.statusCode==200){
-      SingleSession session = SingleSession.fromJson(response.body);
+      Sessions session = Sessions.fromJson(response.body['data']);
       todaySession.value= session;
       print("===========================${session.title}");
       print("===========================${session.sId}");
