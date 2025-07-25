@@ -291,7 +291,7 @@ class HomeCourseDetails extends StatelessWidget {
                       ),
                       child: Padding(
                         padding: const EdgeInsets.all(20.0),
-                        child: Column(
+                        child: Obx(()=>controller.isVideosLoading.value?Center(child: CircularProgressIndicator(),):controller.videoList.isEmpty?Center(child: Text("No vedio available",style: TextStyle(color: Colors.white)),):Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
@@ -303,7 +303,7 @@ class HomeCourseDetails extends StatelessWidget {
                             ),
                             HeightGap(height: 12.h),
                             Text(
-                              '8 Contents',
+                              '${controller.videoList.length} Contents',
                               style: TextStyles.regular12.copyWith(
                                 fontWeight: FontWeight.w400,
                                 color: AppColors.white800,
@@ -311,10 +311,23 @@ class HomeCourseDetails extends StatelessWidget {
                             ),
                             HeightGap(height: 12.h),
                             ListView.separated(
-                              itemCount: 10,
+                              itemCount: controller.isSessionPaginationLoading.value
+                                  ? controller.videoList.length + 1 // Add 1 for loading indicator
+                                  : controller.videoList.length,
                               shrinkWrap: true,
                               physics: const NeverScrollableScrollPhysics(),
-                              itemBuilder: (_, __) {
+                              itemBuilder: (_, index) {
+                                if (controller.isSessionPaginationLoading.value && index == controller.videoList.length) {
+                                  // Show the circular progress indicator when loading
+                                  return Padding(
+                                    padding: const EdgeInsets.symmetric(vertical: 10.0),
+                                    child: Center(
+                                      child: CircularProgressIndicator(),
+                                    ),
+                                  );
+                                }
+
+                                final video = controller.videoList[index];
                                 return GestureDetector(
                                   onTap: () {
                                     Get.toNamed(AppRoute.trainingVideoScreen);
@@ -327,19 +340,15 @@ class HomeCourseDetails extends StatelessWidget {
                                     child: Padding(
                                       padding: const EdgeInsets.all(12.0),
                                       child: Row(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           Flexible(
                                             flex: 1,
                                             child: Container(
                                               decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(16),
-                                                image: const DecorationImage(
-                                                  image: NetworkImage(
-                                                    'https://cdn.pixabay.com/photo/2016/04/15/20/28/football-1331838_640.jpg',
-                                                  ),
+                                                borderRadius: BorderRadius.circular(16),
+                                                image: DecorationImage(
+                                                  image: NetworkImage(video.thumbnail ?? ''),
                                                   fit: BoxFit.cover,
                                                 ),
                                               ),
@@ -350,44 +359,31 @@ class HomeCourseDetails extends StatelessWidget {
                                           Flexible(
                                             flex: 2,
                                             child: Column(
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
+                                              crossAxisAlignment: CrossAxisAlignment.start,
                                               children: [
                                                 Text(
-                                                  'Trap A Soccer Ball Like A PRO',
-                                                  style: TextStyles.regular14
-                                                      .copyWith(
-                                                        fontWeight:
-                                                            FontWeight.w400,
-                                                        color:
-                                                            AppColors.white500,
-                                                      ),
+                                                  video.title ?? '',
+                                                  style: TextStyles.regular14.copyWith(
+                                                    fontWeight: FontWeight.w400,
+                                                    color: AppColors.white500,
+                                                  ),
                                                 ),
                                                 HeightGap(height: 30.h),
                                                 Row(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
+                                                  crossAxisAlignment: CrossAxisAlignment.start,
                                                   children: [
                                                     const Icon(
                                                       Icons.play_arrow,
                                                       color: AppColors.white900,
                                                     ),
                                                     Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                            top: 2.0,
-                                                          ),
+                                                      padding: const EdgeInsets.only(top: 2.0),
                                                       child: Text(
-                                                        ' 2:50',
-                                                        style: TextStyles
-                                                            .regular14
-                                                            .copyWith(
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w400,
-                                                              color: AppColors
-                                                                  .white500,
-                                                            ),
+                                                        ' 2:50', // Example time, replace with actual duration if needed
+                                                        style: TextStyles.regular14.copyWith(
+                                                          fontWeight: FontWeight.w400,
+                                                          color: AppColors.white500,
+                                                        ),
                                                       ),
                                                     ),
                                                   ],
@@ -401,12 +397,13 @@ class HomeCourseDetails extends StatelessWidget {
                                   ),
                                 );
                               },
-                              separatorBuilder: (_, __) {
+                              separatorBuilder: (_, index) {
                                 return HeightGap(height: 10.h);
                               },
                             ),
+
                           ],
-                        ),
+                        ),)
                       ),
                     ),
                   ],

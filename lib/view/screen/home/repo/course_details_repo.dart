@@ -42,4 +42,25 @@ class CourseDetailsRepo{
     }
 
   }
+
+
+  Future<Response>getVideos({required String courseId,required int page})async{
+
+    try{
+      Map<String,dynamic>query={
+        "topic":courseId,
+        "page":page
+      };
+
+
+      Response response;
+      response = await ApiClient.getData(
+          ApiConstant.getVideo,query: query);
+      return response;
+
+    }catch(e){
+      return Response(statusCode: 1, statusText: "Error: ${e.toString()}");
+    }
+
+  }
 }

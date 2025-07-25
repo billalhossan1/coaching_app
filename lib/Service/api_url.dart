@@ -40,6 +40,7 @@ class ApiConstant {
   static const delete_account = "/user/delete-account";
   static const interest_selection = "/user/interest";
   static const info = "/onboarding";
+  static const getVideo = "/tutorial";
   static String storyDetails(var id)=>"/story/$id";
   static String sessionDetails(var id)=>"/session/$id";
   static String postData(var id)=>"/post/$id";
