@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:football_coaching_coach_app/model/course_overview_model.dart';
 import 'package:football_coaching_coach_app/model/session_details_model.dart';
 import 'package:football_coaching_coach_app/model/vedio_list_model.dart';
 import 'package:get/get.dart';
@@ -10,12 +11,14 @@ import '../repo/course_details_repo.dart';
 class CourseDetailsController extends GetxController{
   RxBool isSessionIsLoading = false.obs;
   RxBool isVideosLoading = false.obs;
+  RxBool isOverviewLoading = false.obs;
   RxBool isSessionDetailsLoading = false.obs;
   RxBool isSessionPaginationLoading = false.obs;
   RxBool isVideoPaginationLoading = false.obs;
   RxList<SessionItem> sessionList = RxList<SessionItem>();
   RxList<VideoModel> videoList = RxList<VideoModel>();
   Rxn<SessionDetails>sessionDetails = Rxn<SessionDetails>();
+  Rxn<CourseOverview>courseOverview = Rxn<CourseOverview>();
   String courseId = '';
   int page = 1;
   int videoPage = 1;
@@ -28,6 +31,7 @@ class CourseDetailsController extends GetxController{
   Future<void> onInit() async {
     courseId = Get.arguments['courseId'];
     await getSessionList(courseId);
+    getOverview();
     sessionScrollController.addListener(sessionScrollListener);
     if(sessionList.isNotEmpty){
       getSessionDetails(sessionList[0].sId??'');
@@ -115,6 +119,23 @@ class CourseDetailsController extends GetxController{
     }
     else{
       showCustomSnackBar(response.statusText??"Something went wrong");
+    }
+  }
+
+  Future<void>getOverview()async{
+    try{
+      isOverviewLoading.value = true;
+      Response response = await CourseDetailsRepo().courseOverView(courseId);
+      isOverviewLoading.value = false;
+      if(response.statusCode==200){
+        CourseOverViewModel courseOverViewModel = CourseOverViewModel.fromJson(response.body);
+        courseOverview.value = courseOverViewModel.courseOverview;
+      }
+      else{
+        showCustomSnackBar(response.statusText??"Something went wrong");
+      }
+    }catch(e){
+      debugPrint(e.toString());
     }
   }
 

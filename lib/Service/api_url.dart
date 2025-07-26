@@ -43,6 +43,7 @@ class ApiConstant {
   static const getVideo = "/tutorial";
   static String storyDetails(var id)=>"/story/$id";
   static String sessionDetails(var id)=>"/session/$id";
+  static String courseOverviewUrl(var id)=>"/course/course-overview/$id";
   static String postData(var id)=>"/post/$id";
 
 

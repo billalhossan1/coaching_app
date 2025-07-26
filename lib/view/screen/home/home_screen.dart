@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:football_coaching_coach_app/Service/api_url.dart';
-import 'package:football_coaching_coach_app/app/utils/strings.dart';
 import 'package:football_coaching_coach_app/shimmer/course_shimmer.dart';
 import 'package:football_coaching_coach_app/shimmer/row_shimmer.dart';
 import 'package:football_coaching_coach_app/shimmer/shimmer_profile_header.dart';
 import 'package:football_coaching_coach_app/utils/format_time.dart';
 import 'package:football_coaching_coach_app/view/screen/home/controller/home_controller.dart';
-import 'package:football_coaching_coach_app/view/screen/home/profile/model/profile_model.dart';
 import 'package:football_coaching_coach_app/view/screen/home/widget/custom_app_bar.dart';
 import 'package:get/get.dart';
 
@@ -17,7 +15,6 @@ import '../../../utils/AppImg/app_img.dart';
 import '../../../utils/Texts/text_style.dart';
 import '../../widget/custom_svg.dart';
 import '../../widget/size.dart';
-import 'package:intl/intl.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -114,7 +111,7 @@ class HomeScreen extends StatelessWidget {
                                   fontWeight: FontWeight.w400,
                                   color: AppColors.golden700,
                                 ),
-                              ):Text('Not Available'),
+                              ):const Text('Not Available'),
                             ],
                           ),
                         ],
@@ -334,7 +331,7 @@ class HomeScreen extends StatelessWidget {
                                             ),
                                             Text(
                                               "${FormatTime.formateDateTimeMonth(course.startDate ?? '')} - ${FormatTime.formateDateTimeMonth(course.endDate ?? '')}",
-                                              style: TextStyles.regular14
+                                              style: TextStyles.regular12
                                                   .copyWith(
                                                     fontWeight: FontWeight.w400,
                                                     color: AppColors.white600,

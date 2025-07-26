@@ -48,7 +48,7 @@ class CourseDetailsRepo{
 
     try{
       Map<String,dynamic>query={
-        "topic":courseId,
+        "course":courseId,
         "page":page
       };
 
@@ -56,6 +56,22 @@ class CourseDetailsRepo{
       Response response;
       response = await ApiClient.getData(
           ApiConstant.getVideo,query: query);
+      return response;
+
+    }catch(e){
+      return Response(statusCode: 1, statusText: "Error: ${e.toString()}");
+    }
+
+  }
+
+  Future<Response>courseOverView(String courseId)async{
+
+    try{
+
+      Response response;
+      response = await ApiClient.getData(
+          ApiConstant.courseOverviewUrl(courseId)
+      );
       return response;
 
     }catch(e){

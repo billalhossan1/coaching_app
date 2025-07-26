@@ -1,3 +1,4 @@
+import 'package:football_coaching_coach_app/view/screen/home/video_player/video_player_screen.dart';
 import 'package:get/get.dart';
 
 import '../../view/screen/auth/sign_in_screen.dart';
@@ -59,6 +60,7 @@ class AppRoute {
   static const String schedule = "/schedule";
   static const String studentDetails = "/studentDetails";
   static const String trainingVideoScreen = "/trainingVideoScreen";
+  static const String videoPlayerScreen = "/videoPlayer";
 
   static List<GetPage> routes = [
     ///==================== Initial Routes ====================
@@ -92,6 +94,7 @@ class AppRoute {
     GetPage(name: about, page: () =>  About()),
     GetPage(name: appSupport, page: () =>  AppSupport()),
     GetPage(name: termsCondition, page: () =>  TermsCondition()),
+
 
   ];
 }
