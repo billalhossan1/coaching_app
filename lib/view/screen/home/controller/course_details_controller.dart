@@ -19,6 +19,7 @@ class CourseDetailsController extends GetxController{
   RxList<VideoModel> videoList = RxList<VideoModel>();
   Rxn<SessionDetails>sessionDetails = Rxn<SessionDetails>();
   Rxn<CourseOverview>courseOverview = Rxn<CourseOverview>();
+  int selectedIndex = 0;
   String courseId = '';
   int page = 1;
   int videoPage = 1;

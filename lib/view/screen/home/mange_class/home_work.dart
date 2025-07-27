@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:football_coaching_coach_app/view/screen/home/controller/assign_home_work_controller.dart';
 import 'package:football_coaching_coach_app/view/widget/custom_button.dart';
 import 'package:football_coaching_coach_app/view/widget/custom_text_form_field.dart';
 import 'package:football_coaching_coach_app/view/widget/custom_text_form_field_with_height.dart';
@@ -10,19 +11,27 @@ import '../../../../utils/AppColors/app_colors.dart';
 import '../../../../utils/AppImg/app_img.dart';
 import '../../../../utils/Texts/text_style.dart';
 import '../../../widget/custom_svg.dart';
+
 class HomeWork extends StatelessWidget {
   const HomeWork({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final AssignHomeWorkController controller =
+        Get.find<AssignHomeWorkController>();
     return Scaffold(
       bottomNavigationBar: Padding(
         padding: const EdgeInsets.only(left: 16.0, right: 16, bottom: 24),
-        child: CustomButton(text: 'Confirm Home Work', onTap: (){
-          Get.dialog(
-              successfulDialogue()
-          );
-        }),
+        child: Obx(
+          () => controller.isLoading.value
+              ? Center(child: CircularProgressIndicator())
+              : CustomButton(
+                  text: 'Confirm Home Work',
+                  onTap: () {
+                    controller.assignHomeWork();
+                  },
+                ),
+        ),
       ),
       body: SafeArea(
         child: Column(
@@ -32,49 +41,66 @@ class HomeWork extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: SingleChildScrollView(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text('Assign your home work', style: TextStyles.regular14.copyWith(
-                            fontWeight: FontWeight.w400,
-                            color: AppColors.white300
-                          ),),
-                          Text('2 Jun, 2025', style: TextStyles.regular12.copyWith(
-                            fontWeight: FontWeight.w400,
-                            color: AppColors.green50
-                          ),),
-                        ],
-                      ),
-                      HeightGap(height: 20.h),
-                      Text('''In this Treaming Session eget Donec porta hendrerit ac vehicula, ex sodales. leo. libero, sit Donec amet, sapien id ''',
-                        style: TextStyles.regular12.copyWith(
-                          fontWeight: FontWeight.w400,
-                          color: AppColors.white700
+                  child: Form(
+                    key: controller.formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Assign your home work',
+                              style: TextStyles.regular14.copyWith(
+                                fontWeight: FontWeight.w400,
+                                color: AppColors.white300,
+                              ),
+                            ),
+                            Text(
+                              '2 Jun, 2025',
+                              style: TextStyles.regular12.copyWith(
+                                fontWeight: FontWeight.w400,
+                                color: AppColors.green50,
+                              ),
+                            ),
+                          ],
                         ),
-                      ),
-                      HeightGap(height: 20.h),
-                      CustomTextFromFieldWithHeight(hintText: 'Title', height: 44.h,),
-                      HeightGap(height: 12.h),
-                      CustomTextFromFieldMaxLine(hintText: 'Details', maxLine: 10,),
-                    ],
+                        HeightGap(height: 20.h),
+                        Text(
+                          '''In this Treaming Session eget Donec porta hendrerit ac vehicula, ex sodales. leo. libero, sit Donec amet, sapien id ''',
+                          style: TextStyles.regular12.copyWith(
+                            fontWeight: FontWeight.w400,
+                            color: AppColors.white700,
+                          ),
+                        ),
+                        HeightGap(height: 20.h),
+                        CustomTextFromFieldWithHeight(
+                          controller: controller.tittleController,
+                          hintText: 'Title',
+                          height: 44.h,
+                        ),
+                        HeightGap(height: 12.h),
+                        CustomTextFromFieldMaxLine(
+                          controller: controller.descriptionController,
+                          hintText: 'Details',
+                          maxLine: 10,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            )
+            ),
           ],
         ),
       ),
     );
   }
+
   /// Successful Dialogue
   Dialog successfulDialogue() {
     return Dialog(
-      insetPadding: EdgeInsets.symmetric(
-        horizontal: 20,
-      ),
+      insetPadding: EdgeInsets.symmetric(horizontal: 20),
       child: Container(
         height: 300.h,
         decoration: BoxDecoration(
@@ -89,7 +115,7 @@ class HomeWork extends StatelessWidget {
                 onPressed: () {
                   Get.back();
                 },
-                icon: Icon(Icons.close, color: AppColors.white300,),
+                icon: Icon(Icons.close, color: AppColors.white300),
               ),
             ),
             CustomSvgImage(
@@ -127,8 +153,9 @@ class HomeWork extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.only(
           bottomRight: Radius.circular(16.r),
-          bottomLeft: Radius.circular(16.r)
-        ), color: AppColors.appBar,
+          bottomLeft: Radius.circular(16.r),
+        ),
+        color: AppColors.appBar,
       ),
       child: Center(
         child: Row(

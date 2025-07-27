@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:football_coaching_coach_app/Service/api_url.dart';
 import 'package:football_coaching_coach_app/utils/AppImg/app_img.dart';
+import 'package:football_coaching_coach_app/view/screen/home/controller/update_marks_controller.dart';
 import 'package:football_coaching_coach_app/view/widget/custom_button.dart';
 import 'package:football_coaching_coach_app/view/widget/custom_svg.dart';
 import 'package:football_coaching_coach_app/view/widget/custom_text_form_field_with_height.dart';
@@ -16,6 +18,7 @@ class Performance extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    UpdateMarksController controller = Get.find<UpdateMarksController>();
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -26,100 +29,132 @@ class Performance extends StatelessWidget {
               child: SingleChildScrollView(
                 child: Padding(
                   padding: const EdgeInsets.all(20.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        'Give your performance mark',
-                        style: TextStyles.regular14.copyWith(
-                          fontWeight: FontWeight.w500,
-                          color: AppColors.white300,
+                  child: Form(
+                    key: controller.formKey,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          'Give your performance mark',
+                          style: TextStyles.regular14.copyWith(
+                            fontWeight: FontWeight.w500,
+                            color: AppColors.white300,
+                          ),
                         ),
-                      ),
-                      HeightGap(height: 14.h),
-                      Row(
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(30.r),
-                            child: NetworkImageWidget(
-                              imageUrl:
-                                  "https://cdn.pixabay.com/photo/2017/02/23/13/05/avatar-2092113_640.png",
-                              height: 30.h,
-                              width: 30.w,
+                        HeightGap(height: 14.h),
+                        Row(
+                          children: [
+                            ClipRRect(
+                              borderRadius: BorderRadius.circular(30.r),
+                              child: NetworkImageWidget(
+                                imageUrl:
+                                    '${ApiConstant.imageUrl}${controller.userImage}',
+                                height: 30.h,
+                                width: 30.w,
+                              ),
                             ),
-                          ),
-                          WidthGap(width: 8.w),
-                          Text(
-                            'Asad Ujjaman',
-                            style: TextStyles.regular12.copyWith(
-                              fontWeight: FontWeight.w400,
-                              color: AppColors.white500,
+                            WidthGap(width: 8.w),
+                            Text(
+                              controller.userName,
+                              style: TextStyles.regular12.copyWith(
+                                fontWeight: FontWeight.w400,
+                                color: AppColors.white500,
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                      HeightGap(height: 36.h),
-                      CustomTextFromFieldWithHeight(
-                        hintText: 'PAC /100',
-                        height: 44.h,
-                      ),
-                      HeightGap(height: 12.h),
-                      CustomTextFromFieldWithHeight(
-                        hintText: 'SHO /100',
-                        height: 44.h,
-                      ),
-                      HeightGap(height: 12.h),
-                      CustomTextFromFieldWithHeight(
-                        hintText: 'PAS /100',
-                        height: 44.h,
-                      ),
-                      HeightGap(height: 12.h),
-                      CustomTextFromFieldWithHeight(
-                        hintText: 'DRI /100',
-                        height: 44.h,
-                      ),
-                      HeightGap(height: 12.h),
-                      CustomTextFromFieldWithHeight(
-                        hintText: 'COO /100',
-                        height: 44.h,
-                      ),
-                      HeightGap(height: 12.h),
-                      CustomTextFromFieldWithHeight(
-                        hintText: 'PHY /100',
-                        height: 44.h,
-                      ),
-                      HeightGap(height: 25.h),
-                      Divider(color: AppColors.white900, thickness: 0.6),
-                      HeightGap(height: 25.h),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Average Performance',
-                            style: TextStyles.regular12.copyWith(
-                              fontWeight: FontWeight.w400,
-                              color: AppColors.white300,
+                          ],
+                        ),
+                        HeightGap(height: 36.h),
+                        CustomTextFromFieldWithHeight(
+                          keyboardType: TextInputType.number,
+                          controller: controller.pacController,
+                          hintText: controller.pacController.text.isNotEmpty
+                              ? controller.pacController.text
+                              : 'PAC /100',
+                          height: 44.h,
+                        ),
+                        HeightGap(height: 12.h),
+                        CustomTextFromFieldWithHeight(
+                          controller: controller.shoController,
+                          keyboardType: TextInputType.number,
+                          hintText: controller.shoController.text.isNotEmpty
+                              ? controller.shoController.text
+                              : 'SHO /100',
+                          height: 44.h,
+                        ),
+                        HeightGap(height: 12.h),
+                        CustomTextFromFieldWithHeight(
+                          controller: controller.pasController,
+                          keyboardType: TextInputType.number,
+
+                          hintText: controller.pasController.text.isNotEmpty
+                              ? controller.pasController.text
+                              : 'PAS /100',
+                          height: 44.h,
+                        ),
+                        HeightGap(height: 12.h),
+                        CustomTextFromFieldWithHeight(
+                          controller: controller.driController,
+                          keyboardType: TextInputType.number,
+
+                          hintText: controller.driController.text.isNotEmpty
+                              ? controller.driController.text
+                              : 'DRI /100',
+                          height: 44.h,
+                        ),
+                        HeightGap(height: 12.h),
+                        CustomTextFromFieldWithHeight(
+                          keyboardType: TextInputType.number,
+
+                          controller: controller.cooController,
+                          hintText: controller.cooController.text.isNotEmpty
+                              ? controller.cooController.text
+                              : 'COO /10',
+                          height: 44.h,
+                        ),
+                        HeightGap(height: 12.h),
+                        CustomTextFromFieldWithHeight(
+                          keyboardType: TextInputType.number,
+                          controller: controller.phyController,
+                          hintText: controller.phyController.text.isNotEmpty
+                              ? controller.phyController.text
+                              : 'PHY /100',
+                          height: 44.h,
+                        ),
+                        HeightGap(height: 25.h),
+                        const Divider(color: AppColors.white900, thickness: 0.6),
+                        HeightGap(height: 25.h),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Average Performance',
+                              style: TextStyles.regular12.copyWith(
+                                fontWeight: FontWeight.w400,
+                                color: AppColors.white300,
+                              ),
                             ),
-                          ),
-                          Text(
-                            '80%',
-                            style: TextStyles.regular20.copyWith(
-                              fontWeight: FontWeight.w400,
-                              color: AppColors.white300,
+                            Text(
+                              '80%',
+                              style: TextStyles.regular20.copyWith(
+                                fontWeight: FontWeight.w400,
+                                color: AppColors.white300,
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                      HeightGap(height: 42.h),
-                      CustomButton(
-                        text: 'Submit Mark',
-                        onTap: () {
-                          Get.dialog(
-                            successfulDialogue(),
-                          );
-                        },
-                      ),
-                    ],
+                          ],
+                        ),
+                        HeightGap(height: 42.h),
+                        Obx(
+                          () => controller.updateIsLoading.value
+                              ? const Center(child: CircularProgressIndicator())
+                              : CustomButton(
+                                  text: 'Submit Mark',
+                                  onTap: () {
+                                    controller.updatePerformance();
+                                  },
+                                ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -132,9 +167,7 @@ class Performance extends StatelessWidget {
 
   Dialog successfulDialogue() {
     return Dialog(
-      insetPadding: EdgeInsets.symmetric(
-        horizontal: 20,
-      ),
+      insetPadding: const EdgeInsets.symmetric(horizontal: 20),
       child: Container(
         height: 300.h,
         decoration: BoxDecoration(
@@ -149,7 +182,7 @@ class Performance extends StatelessWidget {
                 onPressed: () {
                   Get.back();
                 },
-                icon: Icon(Icons.close, color: AppColors.white300,),
+                icon: const Icon(Icons.close, color: AppColors.white300),
               ),
             ),
             CustomSvgImage(
@@ -184,7 +217,7 @@ class Performance extends StatelessWidget {
   Container _customAppBar() {
     return Container(
       height: 64.h,
-      decoration: BoxDecoration(color: AppColors.appBar),
+      decoration: const BoxDecoration(color: AppColors.appBar),
       child: Center(
         child: Row(
           children: [
@@ -194,10 +227,10 @@ class Performance extends StatelessWidget {
                 onTap: () {
                   Get.back();
                 },
-                child: Icon(Icons.arrow_back, color: AppColors.white50),
+                child: const Icon(Icons.arrow_back, color: AppColors.white50),
               ),
             ),
-            Spacer(),
+            const Spacer(),
             Padding(
               padding: const EdgeInsets.only(right: 30.0),
               child: Text(
@@ -208,7 +241,7 @@ class Performance extends StatelessWidget {
                 ),
               ),
             ),
-            Spacer(),
+            const Spacer(),
           ],
         ),
       ),

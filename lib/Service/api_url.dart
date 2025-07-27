@@ -41,9 +41,14 @@ class ApiConstant {
   static const interest_selection = "/user/interest";
   static const info = "/onboarding";
   static const getVideo = "/tutorial";
+  static const assignHomeWork = "/homework";
+  static const updatePerformanceUrl = "/performance/student-mark";
+  static const updateAttandence = "/performance";
+  static const performanceStudentMark = "/performance/student-mark";
   static String storyDetails(var id)=>"/story/$id";
   static String sessionDetails(var id)=>"/session/$id";
   static String courseOverviewUrl(var id)=>"/course/course-overview/$id";
+  static String manageClassByIdUrl(var id)=>"/course/manage-class/$id";
   static String postData(var id)=>"/post/$id";
 
 

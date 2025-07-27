@@ -215,48 +215,54 @@ class HomeScreen extends StatelessWidget {
                               final session = homeController
                                   .upComingSessionList[0]
                                   .sessions![index];
-                              return Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(16.r),
-                                  color: AppColors.grey900,
-                                ),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(20.0),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        session.course?.name ?? '',
-                                        style: TextStyles.regular12.copyWith(
-                                          fontWeight: FontWeight.w500,
-                                          color: AppColors.green500,
+                              return GestureDetector(
+                                onTap: () {
+                                  Get.toNamed(AppRoute.menageClassById,arguments: {"sessionId":session.sId});
+                                },
+
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(16.r),
+                                    color: AppColors.grey900,
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(20.0),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          session.course?.name ?? '',
+                                          style: TextStyles.regular12.copyWith(
+                                            fontWeight: FontWeight.w500,
+                                            color: AppColors.green500,
+                                          ),
                                         ),
-                                      ),
-                                      HeightGap(height: 16.h),
-                                      Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Text(
-                                            session.title ?? '',
-                                            style: TextStyles.regular12
-                                                .copyWith(
-                                                  fontWeight: FontWeight.w300,
-                                                  color: AppColors.white400,
-                                                ),
-                                          ),
-                                          Text(
-                                            "${FormatTime.formateTime(session.startTime ?? '')} - ${FormatTime.formateTime(session.endTime ?? '')}",
-                                            style: TextStyles.regular12
-                                                .copyWith(
-                                                  fontWeight: FontWeight.w500,
-                                                  color: AppColors.white400,
-                                                ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
+                                        HeightGap(height: 16.h),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              session.title ?? '',
+                                              style: TextStyles.regular12
+                                                  .copyWith(
+                                                    fontWeight: FontWeight.w300,
+                                                    color: AppColors.white400,
+                                                  ),
+                                            ),
+                                            Text(
+                                              "${FormatTime.formateTime(session.startTime ?? '')} - ${FormatTime.formateTime(session.endTime ?? '')}",
+                                              style: TextStyles.regular12
+                                                  .copyWith(
+                                                    fontWeight: FontWeight.w500,
+                                                    color: AppColors.white400,
+                                                  ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               );

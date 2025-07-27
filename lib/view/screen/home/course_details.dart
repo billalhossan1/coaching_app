@@ -114,67 +114,80 @@ class HomeCourseDetails extends StatelessWidget {
                           ),
                         );
                       } else {
-                        return SizedBox(
-                          height: 84.h,
-                          child: ListView.separated(
-                            controller: controller.sessionScrollController,
-                            scrollDirection: Axis.horizontal,
-                            itemCount:
-                                controller.isSessionPaginationLoading.value
-                                ? controller.sessionList.length + 1
-                                : controller.sessionList.length,
-                            itemBuilder: (context, index) {
-                              // Check if it's the last index, and display a loading indicator if pagination is active
-                              if (index == controller.sessionList.length) {
-                                return const Center(
-                                  child: CircularProgressIndicator(),
-                                );
-                              }
+                        return GetBuilder<CourseDetailsController>(
+                          builder: (context) {
+                            return SizedBox(
+                              height: 84.h,
+                              child: ListView.separated(
+                                controller: controller.sessionScrollController,
+                                scrollDirection: Axis.horizontal,
+                                itemCount:
+                                    controller.isSessionPaginationLoading.value
+                                    ? controller.sessionList.length + 1
+                                    : controller.sessionList.length,
+                                itemBuilder: (context, index) {
+                                  // Check if it's the last index, and display a loading indicator if pagination is active
+                                  if (index == controller.sessionList.length) {
+                                    return const Center(
+                                      child: CircularProgressIndicator(),
+                                    );
+                                  }
 
-                              final session = controller.sessionList[index];
+                                  final session = controller.sessionList[index];
 
-                              return GestureDetector(
-                                onTap: () {
-                                  controller.getSessionDetails(session.sId!);
-                                },
-                                child: Container(
-                                  width: 69.w,
-                                  decoration: const BoxDecoration(
-                                    image: DecorationImage(
-                                      image: AssetImage(AppImages.cartBg2),
-                                      fit: BoxFit.cover,
+                                  return GestureDetector(
+                                    onTap: () {
+                                     controller.selectedIndex=index;
+                                      controller.getSessionDetails(session.sId!);
+                                      print("==================selectedIndex${controller.selectedIndex}");
+                                     controller.update();
+                                    },
+                                    child: Container(
+                                      width: 69.w,
+                                      decoration: const BoxDecoration(
+                                        image: DecorationImage(
+                                          image: AssetImage(AppImages.cartBg2),
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        mainAxisAlignment: MainAxisAlignment.center,
+                                        children: [
+                                          Text(
+                                            session.title ?? '',
+                                            style: (controller.selectedIndex==index)?TextStyles.title12.copyWith(
+                                              fontWeight: FontWeight.w800,
+                                              color: AppColors.white500,
+                                            ):TextStyles.title12.copyWith(
+                                              fontWeight: FontWeight.w500,
+                                              color: AppColors.white300,
+                                            ),
+                                          ),
+                                          Text(
+                                            FormatTime.formateDateMonth(
+                                              session.date ?? '',
+                                            ),
+                                            style: (controller.selectedIndex==index)?TextStyles.regular12.copyWith(
+                                              fontWeight: FontWeight.w800,
+                                              color: AppColors.green500,
+                                            ):TextStyles.regular12.copyWith(
+                                              fontWeight: FontWeight.w400,
+                                              color: AppColors.green300,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        session.title ?? '',
-                                        style: TextStyles.title12.copyWith(
-                                          fontWeight: FontWeight.w500,
-                                          color: AppColors.white300,
-                                        ),
-                                      ),
-                                      Text(
-                                        FormatTime.formateDateMonth(
-                                          session.date ?? '',
-                                        ),
-                                        style: TextStyles.regular12.copyWith(
-                                          fontWeight: FontWeight.w400,
-                                          color: AppColors.green300,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              );
-                            },
-                            separatorBuilder: (_, __) {
-                              return WidthGap(width: 4.w);
-                            },
-                          ),
+                                  );
+                                },
+                                separatorBuilder: (_, __) {
+                                  return WidthGap(width: 4.w);
+                                },
+                              ),
+                            );
+                          }
                         );
                       }
                     }),
@@ -472,36 +485,36 @@ class HomeCourseDetails extends StatelessWidget {
                                                               ),
                                                         ),
                                                         HeightGap(height: 30.h),
-                                                        Row(
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            const Icon(
-                                                              Icons.play_arrow,
-                                                              color: AppColors
-                                                                  .white900,
-                                                            ),
-                                                            Padding(
-                                                              padding:
-                                                                  const EdgeInsets.only(
-                                                                    top: 2.0,
-                                                                  ),
-                                                              child: Text(
-                                                                ' 2:50', // Example time, replace with actual duration if needed
-                                                                style: TextStyles
-                                                                    .regular14
-                                                                    .copyWith(
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w400,
-                                                                      color: AppColors
-                                                                          .white500,
-                                                                    ),
-                                                              ),
-                                                            ),
-                                                          ],
-                                                        ),
+                                                        // Row(
+                                                        //   crossAxisAlignment:
+                                                        //       CrossAxisAlignment
+                                                        //           .start,
+                                                        //   children: [
+                                                        //     const Icon(
+                                                        //       Icons.play_arrow,
+                                                        //       color: AppColors
+                                                        //           .white900,
+                                                        //     ),
+                                                        //     // Padding(
+                                                        //     //   padding:
+                                                        //     //       const EdgeInsets.only(
+                                                        //     //         top: 2.0,
+                                                        //     //       ),
+                                                        //     //   child: Text(
+                                                        //     //     ' 2:50', // Example time, replace with actual duration if needed
+                                                        //     //     style: TextStyles
+                                                        //     //         .regular14
+                                                        //     //         .copyWith(
+                                                        //     //           fontWeight:
+                                                        //     //               FontWeight
+                                                        //     //                   .w400,
+                                                        //     //           color: AppColors
+                                                        //     //               .white500,
+                                                        //     //         ),
+                                                        //     //   ),
+                                                        //     // ),
+                                                        //   ],
+                                                        // ),
                                                       ],
                                                     ),
                                                   ),

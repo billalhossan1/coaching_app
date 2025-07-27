@@ -59,32 +59,43 @@ class ApiClient extends GetxService {
 
 
   ///<====================== This is for post methode ========================>
-  static Future<Response> postData(String uri,
-      {Map<String, String>? headers,String? token,dynamic body,}) async {
+
+  static Future<Response> postData(
+      String uri, {
+        Map<String, String>? headers,
+        String? token,
+        dynamic body,
+      }) async {
+    String bodyJson = jsonEncode(body);  // Ensure the body is serialized
+
     bearerToken = await SharePrefsHelper.getString(AppConstants.bearerToken);
 
     var mainHeaders = {
-      'Accept': 'multipart/form-data',
+      'Accept': 'application/json',  // Expecting JSON in response
       'Authorization': token != null ? 'Bearer $token' : 'Bearer $bearerToken',
+      'Content-Type': 'application/json',  // Sending JSON data
     };
+
     try {
       debugPrint('====> API Call: $uri\nHeader: ${headers ?? mainHeaders}');
-      debugPrint('====> API Body: $body');
+      debugPrint('====> API Body: $bodyJson');  // Debug log of the JSON body
 
       http.Response response = await client
           .post(
         Uri.parse(ApiConstant.baseUrl + uri),
-        body: body,
+        body: bodyJson,  // Send the serialized JSON string
         headers: headers ?? mainHeaders,
       )
           .timeout(const Duration(seconds: timeoutInSeconds));
       return handleResponse(response, uri);
     } catch (e) {
       debugPrint('------------${e.toString()}');
-
       return const Response(statusCode: 1, statusText: noInternetMessage);
     }
   }
+
+
+
 
   ///<====================== This is for patch methode ========================>
   static Future<Response> patchData(String uri,

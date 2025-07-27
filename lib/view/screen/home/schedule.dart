@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:football_coaching_coach_app/core/app_route/app_route.dart';
 import 'package:football_coaching_coach_app/view/screen/home/controller/scedule_controller.dart';
 import 'package:football_coaching_coach_app/view/widget/size.dart';
 import 'package:get/get.dart';
@@ -75,64 +76,70 @@ class Schedule extends StatelessWidget {
                                   itemCount: schedule.sessions?.length ?? 0,
                                   itemBuilder: (context, index) {
                                     final session = schedule.sessions![index];
-                                    return Container(
-                                      height: 88.h,
-                                      decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(
-                                          16.r,
-                                        ),
-                                        color: AppColors.grey900,
-                                      ),
-                                      child: Padding(
-                                        padding: const EdgeInsets.all(16.0),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                          Row(
-                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Text(
-                                                session.course?.name ?? '',
-                                                style: TextStyles.regular12
-                                                    .copyWith(
-                                                  fontWeight: FontWeight.w500,
-                                                  color: AppColors.green500,
-                                                ),
-                                              ),
-
-                                            ],
+                                    return GestureDetector(
+                                      onTap: (){
+                                        print("session Id==============${session.sId}");
+                                        Get.toNamed(AppRoute.menageClassById,arguments: {"sessionId":session.sId});
+                                      },
+                                      child: Container(
+                                        height: 88.h,
+                                        decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(
+                                            16.r,
                                           ),
+                                          color: AppColors.grey900,
+                                        ),
+                                        child: Padding(
+                                          padding: const EdgeInsets.all(16.0),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
                                             Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                               children: [
                                                 Text(
-                                                  session.title ?? '',
+                                                  session.course?.name ?? '',
                                                   style: TextStyles.regular12
                                                       .copyWith(
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                        color:
-                                                            AppColors.white700,
-                                                      ),
+                                                    fontWeight: FontWeight.w500,
+                                                    color: AppColors.green500,
+                                                  ),
                                                 ),
-                                                Text(
-                                                  "${FormatTime.formateTime(session.startTime ?? '')} - ${FormatTime.formateTime(session.endTime ?? '')}",
-                                                  style: TextStyles.regular12
-                                                      .copyWith(
-                                                        fontWeight:
-                                                            FontWeight.w500,
-                                                        color:
-                                                            AppColors.white400,
-                                                      ),
-                                                ),
+
                                               ],
                                             ),
-                                          ],
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
+                                                children: [
+                                                  Text(
+                                                    session.title ?? '',
+                                                    style: TextStyles.regular12
+                                                        .copyWith(
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          color:
+                                                              AppColors.white700,
+                                                        ),
+                                                  ),
+                                                  Text(
+                                                    "${FormatTime.formateTime(session.startTime ?? '')} - ${FormatTime.formateTime(session.endTime ?? '')}",
+                                                    style: TextStyles.regular12
+                                                        .copyWith(
+                                                          fontWeight:
+                                                              FontWeight.w500,
+                                                          color:
+                                                              AppColors.white400,
+                                                        ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
                                         ),
                                       ),
                                     );
