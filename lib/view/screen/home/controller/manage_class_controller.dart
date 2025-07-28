@@ -72,11 +72,12 @@ class ManageClassController extends GetxController{
 
     Future<void>manageClassById()async{
       isLoading.value = true;
-      Response response = await ManageClassRepo().manageClassById(selectedCourseId.value!);
+      Response response = await ManageClassRepo().manageClassById(selectedClassId.value!);
       isLoading.value = false;
       if(response.statusCode==200){
         ManageClassModel manageClassModel = ManageClassModel.fromJson(response.body);
         sessionItemDetails.value = manageClassModel.data;
+        update();
       }
   }
 
@@ -171,6 +172,7 @@ class ManageClassController extends GetxController{
       if(response.statusCode==200){
         SessionDetailsModel sessionDetailsModel = SessionDetailsModel.fromJson(response.body);
         sessionDetails.value = sessionDetailsModel.sessionDetails;
+        update();
       }
       else{
         showCustomSnackBar(response.statusText??"Something went wrong");

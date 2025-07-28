@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:football_coaching_coach_app/utils/format_time.dart';
 import 'package:football_coaching_coach_app/view/screen/home/controller/assign_home_work_controller.dart';
 import 'package:football_coaching_coach_app/view/widget/custom_button.dart';
 import 'package:football_coaching_coach_app/view/widget/custom_text_form_field.dart';
 import 'package:football_coaching_coach_app/view/widget/custom_text_form_field_with_height.dart';
 import 'package:football_coaching_coach_app/view/widget/size.dart';
 import 'package:get/get.dart';
-
+import 'package:intl/intl.dart';
 import '../../../../utils/AppColors/app_colors.dart';
 import '../../../../utils/AppImg/app_img.dart';
 import '../../../../utils/Texts/text_style.dart';
@@ -57,7 +58,7 @@ class HomeWork extends StatelessWidget {
                               ),
                             ),
                             Text(
-                              '2 Jun, 2025',
+                              DateFormat('d MMM, yyyy').format(DateTime.now()),  // e.g. 28 Jul, 2025
                               style: TextStyles.regular12.copyWith(
                                 fontWeight: FontWeight.w400,
                                 color: AppColors.green50,

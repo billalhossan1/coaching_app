@@ -65,6 +65,13 @@ class Performance extends StatelessWidget {
                         ),
                         HeightGap(height: 36.h),
                         CustomTextFromFieldWithHeight(
+                          validator: (value) {
+                            if(value!.isEmpty){
+                              return 'Enter PAC Mark';
+                            }else{
+                              return null;
+                            }
+                          },
                           keyboardType: TextInputType.number,
                           controller: controller.pacController,
                           hintText: controller.pacController.text.isNotEmpty
@@ -74,6 +81,13 @@ class Performance extends StatelessWidget {
                         ),
                         HeightGap(height: 12.h),
                         CustomTextFromFieldWithHeight(
+                          validator: (value) {
+                            if(value!.isEmpty){
+                              return 'Enter SHO Mark';
+                            }else{
+                              return null;
+                            }
+                          },
                           controller: controller.shoController,
                           keyboardType: TextInputType.number,
                           hintText: controller.shoController.text.isNotEmpty
@@ -83,6 +97,13 @@ class Performance extends StatelessWidget {
                         ),
                         HeightGap(height: 12.h),
                         CustomTextFromFieldWithHeight(
+                          validator: (value) {
+                            if(value!.isEmpty){
+                              return 'Enter PAS Mark';
+                            }else{
+                              return null;
+                            }
+                          },
                           controller: controller.pasController,
                           keyboardType: TextInputType.number,
 
@@ -93,6 +114,13 @@ class Performance extends StatelessWidget {
                         ),
                         HeightGap(height: 12.h),
                         CustomTextFromFieldWithHeight(
+                          validator: (value) {
+                            if(value!.isEmpty){
+                              return 'Enter DRI Mark';
+                            }else{
+                              return null;
+                            }
+                          },
                           controller: controller.driController,
                           keyboardType: TextInputType.number,
 
@@ -103,6 +131,13 @@ class Performance extends StatelessWidget {
                         ),
                         HeightGap(height: 12.h),
                         CustomTextFromFieldWithHeight(
+                          validator: (value) {
+                            if(value!.isEmpty){
+                              return 'Enter COO Mark';
+                            }else{
+                              return null;
+                            }
+                          },
                           keyboardType: TextInputType.number,
 
                           controller: controller.cooController,
@@ -113,6 +148,13 @@ class Performance extends StatelessWidget {
                         ),
                         HeightGap(height: 12.h),
                         CustomTextFromFieldWithHeight(
+                          validator: (value) {
+                            if(value!.isEmpty){
+                              return 'Enter PHY Mark';
+                            }else{
+                              return null;
+                            }
+                          },
                           keyboardType: TextInputType.number,
                           controller: controller.phyController,
                           hintText: controller.phyController.text.isNotEmpty
@@ -133,12 +175,16 @@ class Performance extends StatelessWidget {
                                 color: AppColors.white300,
                               ),
                             ),
-                            Text(
-                              '80%',
-                              style: TextStyles.regular20.copyWith(
-                                fontWeight: FontWeight.w400,
-                                color: AppColors.white300,
-                              ),
+                            GetBuilder<UpdateMarksController>(
+                              builder: (context) {
+                                return Text(
+                                  '${controller.avarageMark}',
+                                  style: TextStyles.regular20.copyWith(
+                                    fontWeight: FontWeight.w400,
+                                    color: AppColors.white300,
+                                  ),
+                                );
+                              }
                             ),
                           ],
                         ),

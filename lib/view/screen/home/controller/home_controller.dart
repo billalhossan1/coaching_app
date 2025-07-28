@@ -219,8 +219,12 @@ void setTextEditingController(){
     Response response = await HomeScreenRepo().getUpcomingSessionToday();
     isUpComingTodaySessionLoading.value= false;
     if(response.statusCode==200){
-      Sessions session = Sessions.fromJson(response.body['data']);
-      todaySession.value= session;
+
+     if(response.body['data']!=null){
+       Sessions session = Sessions.fromJson(response.body['data']);
+       todaySession.value= session;
+     }
+
     }else{
       showCustomSnackBar(response.statusText??"Something went wrong");
     }

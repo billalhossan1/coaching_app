@@ -77,8 +77,8 @@ class ScheduleTable extends StatelessWidget {
     return ListView.separated(
       itemCount: data.length + 1,  // +1 for the header row
       separatorBuilder: (context, index) {
-        return index==0? Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
+        return index==0? const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 10),
           child: Divider(color: AppColors.white900),
         ): HeightGap(height: 0.h);
       },
@@ -86,7 +86,7 @@ class ScheduleTable extends StatelessWidget {
         if (index == 0) {
           // Header Row
           return Container(
-            padding: EdgeInsets.symmetric(vertical: 12),
+            padding: const EdgeInsets.symmetric(vertical: 12),
             child: Row(
               children: [
                 _buildHeaderCell('Session'),
@@ -101,7 +101,7 @@ class ScheduleTable extends StatelessWidget {
         // Data Row
         var item = data[index - 1];
         return Container(
-          padding: EdgeInsets.symmetric(vertical: 8),
+          padding: const EdgeInsets.symmetric(vertical: 8),
           child: Row(
             children: [
               _buildTableCell(item['class']!),
@@ -119,7 +119,7 @@ class ScheduleTable extends StatelessWidget {
   Widget _buildHeaderCell(String text) {
     return Expanded(
       child: Container(
-        padding: EdgeInsets.all(12),
+        padding: const EdgeInsets.all(12),
         alignment: Alignment.center,
         child: Text(
             text,
@@ -137,7 +137,7 @@ class ScheduleTable extends StatelessWidget {
   Widget _buildTableCell(String text) {
     return Expanded(
       child: Container(
-        padding: EdgeInsets.all(12),
+        padding: const EdgeInsets.all(12),
         alignment: Alignment.center,
         child: Text(
             text,
@@ -164,7 +164,7 @@ class ScheduleTable extends StatelessWidget {
         ),
         child: Text(
           performance,
-          style: TextStyle(color: Colors.white),
+          style: const TextStyle(color: Colors.white),
         ),
       ),
     );
@@ -177,14 +177,14 @@ class ScheduleTable extends StatelessWidget {
         height: 28.h,
         width: 28.w,
         alignment: Alignment.center,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           shape: BoxShape.circle,
           color: AppColors.green500,
         ),
         child: Center(
           child: Text(
             attendance,
-            style: TextStyle(color: Colors.white),
+            style: const TextStyle(color: Colors.white),
           ),
         ),
       ),
@@ -226,7 +226,7 @@ class ScheduleTable2 extends StatelessWidget {
         // Skip the header row (index 0)
         if (index == 0) {
           return Container(
-            padding: EdgeInsets.symmetric(vertical: 12),
+            padding: const EdgeInsets.symmetric(vertical: 12),
             child: Row(
               children: [
                 _buildHeaderCell('Student Name'),
@@ -240,12 +240,15 @@ class ScheduleTable2 extends StatelessWidget {
         // Data Row
         final student = sessionDetails.studentList![index - 1]; // Subtract 1 to get the student index
         return Container(
-          padding: EdgeInsets.symmetric(vertical: 8),
+          padding: const EdgeInsets.symmetric(vertical: 8),
           child: Row(
             children: [
               _buildTableCell(student.name ?? ''),
               _buildPerformanceCell(student.performance ?? ''),
+            WidthGap(width: 40.w),
             GestureDetector(child: AttendanceCell(attendance: student.atandance??false)),
+              WidthGap(width: 40.w),
+
             ],
           ),
         );
@@ -257,7 +260,7 @@ class ScheduleTable2 extends StatelessWidget {
   Widget _buildHeaderCell(String text) {
     return Expanded(
       child: Container(
-        padding: EdgeInsets.all(12),
+        padding: const EdgeInsets.all(12),
         alignment: Alignment.center,
         child: Row(
           children: [
@@ -279,7 +282,7 @@ class ScheduleTable2 extends StatelessWidget {
   Widget _buildTableCell(String text) {
     return Expanded(
       child: Container(
-        padding: EdgeInsets.all(12),
+        padding: const EdgeInsets.all(12),
         alignment: Alignment.center,
         child: Text(
           text,
@@ -459,7 +462,7 @@ class ScheduleTable3 extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 8.w),
         child: GestureDetector(
           onTap: () {
-            Get.toNamed(AppRoute.performance,arguments: {"userId":userId,"sessionId":sessionId,"userName":username,"userImage":userImage});
+            Get.toNamed(AppRoute.performance,arguments: {"userId":userId,"sessionId":sessionId,"userName":username,"userImage":userImage,"manage":"hasdkfjh"});
           },
           child: Container(
             height: 24.h,

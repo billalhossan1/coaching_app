@@ -39,7 +39,7 @@ class CustomDropdown extends StatelessWidget {
                 item,
                 style: TextStyle(
                   fontWeight: FontWeight.w400,
-                  color: Colors.grey,
+                  color: Colors.white70,
                   overflow: TextOverflow.ellipsis,
                 ),
               ),
@@ -57,7 +57,7 @@ class CustomDropdown extends StatelessWidget {
             padding: const EdgeInsets.only(left: 14, right: 14),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(24.r),
-              color: Colors.transparent,
+              color: AppColors.primaryColor,
               border: Border.all(
                   color: Color(0xFFA6ACA4)
               ),
@@ -75,7 +75,7 @@ class CustomDropdown extends StatelessWidget {
             padding: EdgeInsets.all(20),
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(14),
-              color: AppColors.black300,
+              color: AppColors.primaryColor,
             ),
           ),
           menuItemStyleData: const MenuItemStyleData(

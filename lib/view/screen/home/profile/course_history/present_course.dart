@@ -56,7 +56,7 @@ class PresentCourse extends StatelessWidget {
                         ),
                         GestureDetector(
                           onTap: (){
-                            Get.toNamed(AppRoute.homeCourseDetails,arguments:{"courseId":controller.presentCourseList[index].sId} );
+                            Get.toNamed(AppRoute.homeCourseDetails,arguments:{"courseId":controller.presentCourseList[index].sId,"courseName":controller.presentCourseList[index].name} );
                           },
                           child: CustomSvgImage(
                             imagePath: AppImages.next,

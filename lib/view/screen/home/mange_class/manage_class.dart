@@ -55,6 +55,7 @@ class ManageClass extends StatelessWidget {
                               ),
                             ),
                             WidthGap(width: 16.w),
+
                             Obx(()=>Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -101,6 +102,8 @@ class ManageClass extends StatelessWidget {
                                     }
                                     return Text('Loading...');
                                   }),
+
+
                                 ],
                               ),
                             ),)
@@ -244,13 +247,38 @@ class ManageClass extends StatelessWidget {
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text(
-                                'Session Info',
-                                style: TextStyles.title14.copyWith(
-                                  fontWeight: FontWeight.w500,
-                                  color: AppColors.white300,
-                                ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Session Info',
+                                    style: TextStyles.title14.copyWith(
+                                      fontWeight: FontWeight.w500,
+                                      color: AppColors.white300,
+                                    ),
+                                  ),
+                                  GestureDetector(
+                                    onTap: (){
+                                      Get.toNamed(AppRoute.assignHomeWork,arguments: {"sessionId":controller.selectedClassId.value,"manage":"manage"});
+                                    },
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(90.r),
+                                          color: AppColors.green500
+                                      ),
+                                      child: Padding(
+                                        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                                        child: Text('Assign HW', style: TextStyles.regular14.copyWith(
+                                            fontWeight: FontWeight.w400,
+                                            color: AppColors.white50
+                                        ),),
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               ),
+
+
                               HeightGap(height: 12.h),
                               Row(
                                 mainAxisAlignment:
@@ -366,10 +394,14 @@ class ManageClass extends StatelessWidget {
                           color: AppColors.grey800,
                         ),
                         child: controller.sessionDetails.value != null
-                            ? ScheduleTable3(
-                         sessionId: controller.selectedClassId.value,
-                          studentLists: controller.sessionDetails.value?.studentList??[],
-                        )
+                            ? GetBuilder<ManageClassController>(
+                              builder: (context) {
+                                return ScheduleTable3(
+                                                         sessionId: controller.selectedClassId.value,
+                                                          studentLists: controller.sessionDetails.value?.studentList??[],
+                                                        );
+                              }
+                            )
                             : Center(
                           child: Text(
                             'No Student Available',

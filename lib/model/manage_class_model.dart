@@ -134,10 +134,16 @@ class StudentLists {
     image = json['image'];
     name = json['name'];
     totalPerformance = json['totalPerformance'];
-    attandance = json['attandance'];
+
+    // Convert the 'attendance' field to a boolean if it's a string
+    attandance = json['attandance'] is String ? json['attandance'] == 'true' : json['attandance'];
+
     userId = json['userId'];
-    homeWork = json['homeWork'];
+
+    // Convert the 'homeWork' field to a boolean if it's a string
+    homeWork = json['homeWork'] is String ? json['homeWork'] == 'true' : json['homeWork'];
   }
+
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
