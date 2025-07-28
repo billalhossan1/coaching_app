@@ -449,6 +449,7 @@ class ManageClass extends StatelessWidget {
                               ),
                               HeightGap(height: 12.h),
                               ListView.separated(
+                                controller: controller.videoScrollController,
                                 itemCount:
                                 controller
                                     .isSessionPaginationLoading
@@ -457,8 +458,6 @@ class ManageClass extends StatelessWidget {
                                     1 // Add 1 for loading indicator
                                     : controller.videoList.length,
                                 shrinkWrap: true,
-                                physics:
-                                const NeverScrollableScrollPhysics(),
                                 itemBuilder: (_, index) {
                                   if (controller
                                       .isSessionPaginationLoading
