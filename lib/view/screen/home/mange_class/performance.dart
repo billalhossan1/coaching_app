@@ -68,9 +68,21 @@ class Performance extends StatelessWidget {
                           validator: (value) {
                             if(value!.isEmpty){
                               return 'Enter PAC Mark';
-                            }else{
-                              return null;
                             }
+                            final parsedValue = int.tryParse(value);
+                            if (parsedValue == null) {
+                              return 'Enter a valid number';
+                            }
+
+                            if (parsedValue < 0) {
+                              return 'Value must be >= 0';
+                            }
+
+                            if (parsedValue > 100) {
+                              return 'Value must be <= 100';
+                            }
+
+                            return null;
                           },
                           keyboardType: TextInputType.number,
                           controller: controller.pacController,
@@ -84,9 +96,21 @@ class Performance extends StatelessWidget {
                           validator: (value) {
                             if(value!.isEmpty){
                               return 'Enter SHO Mark';
-                            }else{
-                              return null;
                             }
+                            final parsedValue = int.tryParse(value);
+                            if (parsedValue == null) {
+                              return 'Enter a valid number';
+                            }
+
+                            if (parsedValue < 0) {
+                              return 'Value must be >= 0';
+                            }
+
+                            if (parsedValue > 100) {
+                              return 'Value must be <= 100';
+                            }
+
+                            return null;
                           },
                           controller: controller.shoController,
                           keyboardType: TextInputType.number,
@@ -100,9 +124,21 @@ class Performance extends StatelessWidget {
                           validator: (value) {
                             if(value!.isEmpty){
                               return 'Enter PAS Mark';
-                            }else{
-                              return null;
                             }
+                            final parsedValue = int.tryParse(value);
+                            if (parsedValue == null) {
+                              return 'Enter a valid number';
+                            }
+
+                            if (parsedValue < 0) {
+                              return 'Value must be >= 0';
+                            }
+
+                            if (parsedValue > 100) {
+                              return 'Value must be <= 100';
+                            }
+
+                            return null;
                           },
                           controller: controller.pasController,
                           keyboardType: TextInputType.number,
@@ -117,9 +153,21 @@ class Performance extends StatelessWidget {
                           validator: (value) {
                             if(value!.isEmpty){
                               return 'Enter DRI Mark';
-                            }else{
-                              return null;
                             }
+                            final parsedValue = int.tryParse(value);
+                            if (parsedValue == null) {
+                              return 'Enter a valid number';
+                            }
+
+                            if (parsedValue < 0) {
+                              return 'Value must be >= 0';
+                            }
+
+                            if (parsedValue > 100) {
+                              return 'Value must be <= 100';
+                            }
+
+                            return null;
                           },
                           controller: controller.driController,
                           keyboardType: TextInputType.number,
@@ -134,9 +182,21 @@ class Performance extends StatelessWidget {
                           validator: (value) {
                             if(value!.isEmpty){
                               return 'Enter COO Mark';
-                            }else{
-                              return null;
                             }
+                            final parsedValue = int.tryParse(value);
+                            if (parsedValue == null) {
+                              return 'Enter a valid number';
+                            }
+
+                            if (parsedValue < 0) {
+                              return 'Value must be >= 0';
+                            }
+
+                            if (parsedValue > 100) {
+                              return 'Value must be <= 100';
+                            }
+
+                            return null;
                           },
                           keyboardType: TextInputType.number,
 
@@ -151,9 +211,21 @@ class Performance extends StatelessWidget {
                           validator: (value) {
                             if(value!.isEmpty){
                               return 'Enter PHY Mark';
-                            }else{
-                              return null;
                             }
+                            final parsedValue = int.tryParse(value);
+                            if (parsedValue == null) {
+                              return 'Enter a valid number';
+                            }
+
+                            if (parsedValue < 0) {
+                              return 'Value must be >= 0';
+                            }
+
+                            if (parsedValue > 100) {
+                              return 'Value must be <= 100';
+                            }
+
+                            return null;
                           },
                           keyboardType: TextInputType.number,
                           controller: controller.phyController,

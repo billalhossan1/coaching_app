@@ -396,6 +396,7 @@ class ManageClass extends StatelessWidget {
                         child: controller.sessionDetails.value != null
                             ? GetBuilder<ManageClassController>(
                               builder: (context) {
+                                print("update======================performance");
                                 return ScheduleTable3(
                                                          sessionId: controller.selectedClassId.value,
                                                           studentLists: controller.sessionDetails.value?.studentList??[],

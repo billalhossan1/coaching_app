@@ -68,8 +68,7 @@ class UpdateMarksController extends GetxController{
              parseScore(performanceList[3].score) +
              parseScore(performanceList[4].score) +
              parseScore(performanceList[5].score);
-     double average = totalScore / 6;
-     avarageMark = average.ceil();
+     avarageMark = totalScore ~/ 6;
 
      update();
    }
@@ -122,12 +121,14 @@ class UpdateMarksController extends GetxController{
      updateIsLoading.value = true;
      Response response = await ManageClassRepo().updatePerformance(performance:  performance,sessionId:  sessionId,userId: userId);
      if(response.statusCode==200){
-       if(manage==null||manage!.isEmpty){
+       if(manage!.isEmpty){
          await Get.find<ManageClassByIdController>().manageClassById();
        }
 
+      else{
          print("api call===================================");
-         await Get.find<ManageClassController>().manageClassById();
+         await Get.find<ManageClassController>().getSessionDetails(sessionId);
+       }
 
        updateIsLoading.value = false;
        Get.back();
