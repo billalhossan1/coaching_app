@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:football_coaching_coach_app/Service/api_url.dart';
 import 'package:football_coaching_coach_app/utils/AppColors/app_colors.dart';
+import 'package:football_coaching_coach_app/view/widget/conditional_image_widget.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -44,13 +45,8 @@ Widget editProfileBottomsheet(
                 children: [
                   controller.selectedImage == null
                       ? ClipOval(
-                    child: Image.network(
-                      "${ApiConstant.imageUrl}${profileModel?.profileModel?.image ??
-                          ''}", // Placeholder image path
-                      height: 60.h,
-                      width: 60.w,
-                      fit: BoxFit.cover,
-                    ),
+                    child: ConditionalImageWidget(imageUrl: profileModel?.profileModel?.image ??
+                        '', width: 60.w, height: 60.h, baseUrl: ApiConstant.imageUrl)
                   )
                       : ClipOval(
                     child: Image.file(

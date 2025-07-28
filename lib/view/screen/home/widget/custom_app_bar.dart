@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:football_coaching_coach_app/Service/api_url.dart';
 import 'package:football_coaching_coach_app/core/app_route/app_route.dart';
 import 'package:football_coaching_coach_app/view/screen/home/controller/home_controller.dart';
 import 'package:get/get.dart';
@@ -7,6 +8,7 @@ import 'package:get/get.dart';
 import '../../../../utils/AppColors/app_colors.dart';
 import '../../../../utils/AppImg/app_img.dart';
 import '../../../../utils/Texts/text_style.dart';
+import '../../../widget/conditional_image_widget.dart';
 import '../../../widget/custom_svg.dart';
 import '../../../widget/responsive_design.dart';
 import '../../../widget/size.dart';
@@ -101,11 +103,11 @@ Container  CustomAppBarWithoutBorder(BuildContext context,String imageUrl) {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(40),
-                child: Image.network(
-                  imageUrl,
+                child: ConditionalImageWidget(
+                  imageUrl: imageUrl,
                   height: 50.h,
                   width: 50.w,
-                  fit: BoxFit.cover,
+                  baseUrl: ApiConstant.imageUrl,
                 ),
               ),
 

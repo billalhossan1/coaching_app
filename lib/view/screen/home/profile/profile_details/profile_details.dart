@@ -5,6 +5,7 @@ import 'package:football_coaching_coach_app/utils/short_text.dart';
 import 'package:football_coaching_coach_app/view/screen/home/controller/home_controller.dart';
 import 'package:football_coaching_coach_app/view/screen/home/profile/edit_profile_bottom_shit.dart';
 import 'package:football_coaching_coach_app/view/screen/home/profile/model/profile_model.dart';
+import 'package:football_coaching_coach_app/view/widget/conditional_image_widget.dart';
 import 'package:get/get.dart';
 
 import '../../../../../utils/AppColors/app_colors.dart';
@@ -217,13 +218,9 @@ class ProfileDetails extends StatelessWidget {
               width: 100.w,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(100),
-                image: DecorationImage(
-                  image: NetworkImage(
-                    "${ApiConstant.imageUrl}${profileModel.profileModel?.image ?? ''}",
-                  ),
-                  fit: BoxFit.cover,
-                ),
+                color: const Color(0xFF212220),
               ),
+              child: ClipOval(child: ConditionalImageWidget(imageUrl:  profileModel.profileModel?.image ?? '', width: 100, height: 100, baseUrl:'${ApiConstant.imageUrl}')),
             ),
           ),
         ),

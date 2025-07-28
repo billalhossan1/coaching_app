@@ -31,7 +31,7 @@ class HomeScreen extends StatelessWidget {
                 ? buildShimmerProfileHeader(context)
                 : CustomAppBarWithoutBorder(
                     context,
-                    "${ApiConstant.imageUrl}${homeController.profileModel.value?.profileModel?.image ?? ''}",
+                    homeController.profileModel.value?.profileModel?.image ?? '',
                   ),
           ),
           Container(

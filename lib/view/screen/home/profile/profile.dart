@@ -6,6 +6,7 @@ import 'package:football_coaching_coach_app/Service/api_url.dart';
 import 'package:football_coaching_coach_app/utils/AppConst/app_const.dart';
 import 'package:football_coaching_coach_app/view/screen/home/controller/home_controller.dart';
 import 'package:football_coaching_coach_app/view/screen/home/profile/model/profile_model.dart';
+import 'package:football_coaching_coach_app/view/widget/conditional_image_widget.dart';
 import 'package:get/get.dart';
 import '../../../../core/app_route/app_route.dart';
 import '../../../../utils/AppColors/app_colors.dart';
@@ -39,7 +40,7 @@ class ProfileScreen extends StatelessWidget {
                 children: [
                   Obx(()=>ProfileCart1(
                     screenWidth: screenWidth,
-                    img: "${ApiConstant.imageUrl}${profileModel.value?.profileModel?.image??''}",
+                    img: profileModel.value?.profileModel?.image??'',
                     text: 'Profile Details',
                     onTap: () {
                       Get.toNamed(AppRoute.profileDetails);
@@ -220,10 +221,10 @@ class ProfileCart1 extends StatelessWidget {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(30),
-                child: NetworkImageWidget(
+                child: ConditionalImageWidget(
                   imageUrl: img,
                   height: 32.h,
-                  width: 32.w,
+                  width: 32.w, baseUrl: ApiConstant.imageUrl,
                 ),
               ),
               HeightGap(height: 20.h),
