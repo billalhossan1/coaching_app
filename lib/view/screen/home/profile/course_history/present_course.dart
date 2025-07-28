@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:football_coaching_coach_app/view/screen/home/controller/course_history_controller.dart';
 import 'package:get/get.dart';
 
 import '../../../../../core/app_route/app_route.dart';
@@ -10,66 +11,69 @@ import '../../../../widget/custom_svg.dart';
 import '../../../../widget/size.dart';
 
 class PresentCourse extends StatelessWidget {
-  const PresentCourse({super.key});
+
+  const PresentCourse({super.key,});
+
 
   @override
   Widget build(BuildContext context) {
+    final CourseHistoryController controller = Get.find<CourseHistoryController>();
     return Scaffold(
       body: SafeArea(
-        child: ListView.separated(
-          itemCount: 2,
-          itemBuilder: (context, index) {
-            return Container(
-              height: 90.h,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(16.r),
-                  image: DecorationImage(
-                      image: AssetImage(AppImages.blueBg), fit: BoxFit.cover)),
-              child: Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+            child:Obx(()=> controller.isPresentLoading.value?const Center(child: CircularProgressIndicator(),):controller.presentCourseList.isEmpty?Center(child: Text('No Course Available',style: TextStyle(color: Colors.white),),):ListView.separated(
+              itemCount: controller.presentCourseList.length,
+              itemBuilder: (context, index) {
+                return Container(
+                  height: 90.h,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(16.r),
+                      image: const DecorationImage(
+                          image: AssetImage(AppImages.blueBg), fit: BoxFit.cover)),
+                  child: Padding(
+                    padding: const EdgeInsets.all(20.0),
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Text(
-                          'Under 20 summer 25',
-                          style: TextStyles.regular14.copyWith(
-                            fontWeight: FontWeight.w400,
-                            color: AppColors.white600,
-                          ),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Under 20 summer 25',
+                              style: TextStyles.regular14.copyWith(
+                                fontWeight: FontWeight.w400,
+                                color: AppColors.white600,
+                              ),
+                            ),
+                            Text(
+                              '25 Jun, 2025 - 25 Jun, 2025   ',
+                              style: TextStyles.regular14.copyWith(
+                                fontWeight: FontWeight.w400,
+                                color: AppColors.white600,
+                              ),
+                            ),
+                          ],
                         ),
-                        Text(
-                          '25 Jun, 2025 - 25 Jun, 2025   ',
-                          style: TextStyles.regular14.copyWith(
-                            fontWeight: FontWeight.w400,
-                            color: AppColors.white600,
+                        GestureDetector(
+                          onTap: (){
+                            Get.toNamed(AppRoute.homeCourseDetails,arguments:{"courseId":controller.presentCourseList[index].sId} );
+                          },
+                          child: CustomSvgImage(
+                            imagePath: AppImages.next,
+                            height: 42.h,
+                            width: 42.w,
                           ),
-                        ),
+                        )
                       ],
                     ),
-                    GestureDetector(
-                      onTap: (){
-                        Get.toNamed(AppRoute.courseDetails);
-                      },
-                      child: CustomSvgImage(
-                        imagePath: AppImages.next,
-                        height: 42.h,
-                        width: 42.w,
-                      ),
-                    )
-                  ],
-                ),
-              ),
-            );
-          },
-          separatorBuilder: (_, __) {
-            return HeightGap(height: 10.h);
-          },
-        ),
-      ),
+                  ),
+                );
+              },
+              separatorBuilder: (_, __) {
+                return HeightGap(height: 10.h);
+              },
+            )),
+          )
     );
   }
 }

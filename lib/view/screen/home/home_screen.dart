@@ -304,7 +304,7 @@ class HomeScreen extends StatelessWidget {
                               final course = homeController.courseList[index];
                               return GestureDetector(
                                 onTap: () {
-                                  Get.toNamed(AppRoute.homeCourseDetails,arguments: {"courseId":course.sId});
+                                  Get.toNamed(AppRoute.homeCourseDetails,arguments: {"courseId":course.sId,"courseName":course.name});
                                 },
                                 child: Container(
                                   height: 90.h,

@@ -29,7 +29,7 @@ class ProfileScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            CustomAppbarWithTitle(text: 'My Account '),
+            CustomAppbarWithTitle(text: 'My Account ',isBackIcon: false,),
             // Profile details and Course history
             Padding(
               padding:

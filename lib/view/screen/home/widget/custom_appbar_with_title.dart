@@ -7,7 +7,8 @@ import '../../../../utils/AppColors/app_colors.dart';
 import '../../../../utils/Texts/text_style.dart';
 class CustomAppbarWithTitle extends StatelessWidget {
   final String text;
-  const CustomAppbarWithTitle({super.key, required this.text});
+  final bool isBackIcon;
+  const CustomAppbarWithTitle({super.key, required this.text, this.isBackIcon=true});
 
   @override
   Widget build(BuildContext context) {
@@ -21,9 +22,9 @@ class CustomAppbarWithTitle extends StatelessWidget {
           )),
       child: Row(
         children: [
-          IconButton(onPressed: (){
+         isBackIcon? IconButton(onPressed: (){
             Get.back();
-          }, icon: Icon(Icons.arrow_back_ios)),
+          }, icon: Icon(Icons.arrow_back_ios)):SizedBox(),
           Spacer(),
           Center(
             child: Text(

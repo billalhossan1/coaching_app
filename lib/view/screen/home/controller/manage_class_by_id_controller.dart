@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 class ManageClassByIdController extends GetxController{
   Rxn<ManageClass>manageClass = Rxn<ManageClass>();
   String sessionId= '';
+  String courseName= '';
   bool? attendance;
   RxBool isLoading = false.obs;
 
@@ -19,7 +20,8 @@ class ManageClassByIdController extends GetxController{
   }
 
   void _initial(){
-    sessionId = Get.arguments['sessionId'];
+    sessionId = Get.arguments?['sessionId']??'';
+    courseName = Get.arguments?['courseName']??'';
 
     manageClassById();
   }

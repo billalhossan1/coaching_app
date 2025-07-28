@@ -69,7 +69,7 @@ class ManageClassById extends StatelessWidget {
                                       ),
                                     ),
                                     Text(
-                                      'Under 15 summer 25',
+                                      controller.courseName,
                                       style: TextStyles.title16.copyWith(
                                         fontWeight: FontWeight.w500,
                                         color: AppColors.green500,

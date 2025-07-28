@@ -24,7 +24,7 @@ class HomeWork extends StatelessWidget {
         padding: const EdgeInsets.only(left: 16.0, right: 16, bottom: 24),
         child: Obx(
           () => controller.isLoading.value
-              ? Center(child: CircularProgressIndicator())
+              ? const Center(child: CircularProgressIndicator())
               : CustomButton(
                   text: 'Confirm Home Work',
                   onTap: () {
@@ -100,7 +100,7 @@ class HomeWork extends StatelessWidget {
   /// Successful Dialogue
   Dialog successfulDialogue() {
     return Dialog(
-      insetPadding: EdgeInsets.symmetric(horizontal: 20),
+      insetPadding: const EdgeInsets.symmetric(horizontal: 20),
       child: Container(
         height: 300.h,
         decoration: BoxDecoration(
@@ -115,7 +115,7 @@ class HomeWork extends StatelessWidget {
                 onPressed: () {
                   Get.back();
                 },
-                icon: Icon(Icons.close, color: AppColors.white300),
+                icon: const Icon(Icons.close, color: AppColors.white300),
               ),
             ),
             CustomSvgImage(
@@ -166,10 +166,10 @@ class HomeWork extends StatelessWidget {
                 onTap: () {
                   Get.back();
                 },
-                child: Icon(Icons.arrow_back, color: AppColors.white50),
+                child: const Icon(Icons.arrow_back, color: AppColors.white50),
               ),
             ),
-            Spacer(),
+            const Spacer(),
             Padding(
               padding: const EdgeInsets.only(right: 30.0),
               child: Text(
@@ -180,7 +180,7 @@ class HomeWork extends StatelessWidget {
                 ),
               ),
             ),
-            Spacer(),
+            const Spacer(),
           ],
         ),
       ),

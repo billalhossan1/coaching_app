@@ -1,4 +1,5 @@
 import 'package:football_coaching_coach_app/view/screen/home/mange_class/manage_class_by_id.dart';
+import 'package:football_coaching_coach_app/view/screen/home/notificaiton/notification.dart';
 import 'package:football_coaching_coach_app/view/screen/home/video_player/video_player_screen.dart';
 import 'package:get/get.dart';
 
@@ -63,6 +64,7 @@ class AppRoute {
   static const String trainingVideoScreen = "/trainingVideoScreen";
   static const String videoPlayerScreen = "/videoPlayer";
   static const String menageClassById = "/videoPlayer";
+  static const String notificationScreen = "/notification";
 
   static List<GetPage> routes = [
     ///==================== Initial Routes ====================
@@ -97,6 +99,7 @@ class AppRoute {
     GetPage(name: menageClassById, page: () =>  ManageClassById()),
     GetPage(name: appSupport, page: () =>  AppSupport()),
     GetPage(name: termsCondition, page: () =>  TermsCondition()),
+    GetPage(name: notificationScreen, page: () =>  Notification()),
 
 
   ];

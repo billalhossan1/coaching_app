@@ -21,6 +21,7 @@ class CourseDetailsController extends GetxController{
   Rxn<CourseOverview>courseOverview = Rxn<CourseOverview>();
   int selectedIndex = 0;
   String courseId = '';
+  String courseName = '';
   int page = 1;
   int videoPage = 1;
   int totalPage = 1;
@@ -31,6 +32,7 @@ class CourseDetailsController extends GetxController{
   @override
   Future<void> onInit() async {
     courseId = Get.arguments['courseId'];
+    courseName = Get.arguments['courseName'];
     await getSessionList(courseId);
     getOverview();
     sessionScrollController.addListener(sessionScrollListener);

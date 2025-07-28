@@ -8,7 +8,7 @@ class CourseListModel {
   CourseListModel.fromJson(Map<String, dynamic> json) {
 
     pagination = json['pagination'] != null
-        ? new Pagination.fromJson(json['pagination'])
+        ? Pagination.fromJson(json['pagination'])
         : null;
     if (json['data'] != null) {
       courseList = <Course>[];

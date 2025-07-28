@@ -21,4 +21,24 @@ class ProfileRepo{
 
   }
 
+
+  Future<Response>getCourseHistory(bool isPrevious,int page)async{
+
+    try{
+      Map<String,dynamic>query={
+        "previous":isPrevious,
+        "page":page
+      };
+      Response response;
+      response = await ApiClient.getData(
+        ApiConstant.getCourse,query: query
+      );
+      return response;
+
+    }catch(e){
+      return Response(statusCode: 1, statusText: "Error: ${e.toString()}");
+    }
+
+  }
+
 }

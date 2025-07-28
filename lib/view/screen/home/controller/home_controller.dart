@@ -1,7 +1,8 @@
 import 'dart:io';
 
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' hide Notification;
 import 'package:football_coaching_coach_app/model/course_model.dart';
+import 'package:football_coaching_coach_app/model/notification_list_model.dart';
 import 'package:football_coaching_coach_app/model/profile_analytics_model.dart';
 import 'package:football_coaching_coach_app/model/proile_today_session_model.dart';
 import 'package:football_coaching_coach_app/model/session_model.dart';
@@ -20,12 +21,14 @@ class HomeController extends GetxController {
   RxBool isProfileLoading = false.obs;
   RxBool isUpdateProfileLoading = false.obs;
   RxBool isCourseLoading = false.obs;
+  RxBool isNotificationLoading = false.obs;
   RxBool isUpComingSessionLoading = false.obs;
   RxBool isUpComingTodaySessionLoading = false.obs;
   Rxn<ProfileModel> profileModel = Rxn<ProfileModel>();
   Rxn<ProfileAnalytics> profileAnalytics = Rxn<ProfileAnalytics>();
   Rxn<Sessions> todaySession = Rxn<Sessions>();
   RxList<Course> courseList = RxList<Course>();
+  RxList<Notification> notificationList = RxList<Notification>();
   RxList<UpComingSessionModel> upComingSessionList = RxList<UpComingSessionModel>();
   int coursePage = 1;
   int courseTotalPage = 1;
@@ -45,6 +48,8 @@ class HomeController extends GetxController {
     await getProfile();
     getProfileAnalytics();
     setTextEditingController();
+    getAllNotification();
+    notificationScrollController.addListener(notificationListener);
     courseScrollController.addListener(_getCourseListener);
     upComingSessionScrollController.addListener(_getUpComingSessionListener);
 }
@@ -216,12 +221,43 @@ void setTextEditingController(){
     if(response.statusCode==200){
       Sessions session = Sessions.fromJson(response.body['data']);
       todaySession.value= session;
-      print("===========================${session.title}");
-      print("===========================${session.sId}");
-      print("===========================${todaySession.value!.title}");
-      print("===========================${todaySession.value!.sId}");
     }else{
       showCustomSnackBar(response.statusText??"Something went wrong");
     }
   }
+
+
+  ScrollController notificationScrollController = ScrollController();
+  int notificationPage =1;
+  int notificationTotalPage =1;
+  RxBool isPaginationLoading = false.obs;
+
+
+  Future<void> notificationListener() async {
+   if(notificationScrollController.position.pixels == notificationScrollController.position.maxScrollExtent){
+     if(notificationPage<notificationTotalPage){
+       isPaginationLoading.value= true;
+       notificationPage++;
+       await getAllNotification(page: notificationPage);
+       isPaginationLoading.value= false;
+     }else{
+       return;
+     }
+   }
+  }
+
+  Future<void>getAllNotification({int page =1})async{
+    isNotificationLoading.value = false;
+    Response response = await HomeScreenRepo().getAllNotification(page);
+    if(response.statusCode==200){
+      NotificationListModel notificationListModel = NotificationListModel.fromJson(response.body);
+      notificationList.addAll( notificationListModel.notification!.notificationList??[]);
+      notificationTotalPage = notificationListModel.pagination?.totalPage??1;
+    }else{
+      showCustomSnackBar(response.statusText??"Something went wrong");
+    }
+  }
+
+
+
 }

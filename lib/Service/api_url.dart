@@ -1,7 +1,7 @@
 class ApiConstant {
 
-  static const baseUrl="http://10.10.7.6:6005/api/v1";
-  static const imageUrl="http://10.10.7.6:6005";
+  static const baseUrl="http://10.10.7.6:5000/api/v1";
+  static const imageUrl="http://10.10.7.6:5000";
   static const socketUrl="https://azizul3000.binarybards.online";
 
 
@@ -33,6 +33,7 @@ class ApiConstant {
   static const add_story = "/story";
   static const fetch_story = "/story";
   static const make_save = "/bookmark";
+  static const notification = "/notification";
   static const getSessionById = "/session";
   static const getUpComingSessionToday = "/session/upcomming-toady";
   static const getProfileAnalytics = "/user/couch-analatycs";

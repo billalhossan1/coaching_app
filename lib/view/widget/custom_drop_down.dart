@@ -22,6 +22,7 @@ class CustomDropdown extends StatelessWidget {
   Widget build(BuildContext context) {
     return DropdownButtonHideUnderline(
       child: Obx(() {
+        final value = selectedValue.value;
         return DropdownButton2<String>(
           isExpanded: true,
           hint: Text(
@@ -44,7 +45,7 @@ class CustomDropdown extends StatelessWidget {
               ),
             );
           }).toList(),
-          value: selectedValue.value,
+          value: items.contains(value) ? value : null, // ✅ Safe value binding
           onChanged: (String? value) {
             if (value != null) {
               onChanged(value);
@@ -58,15 +59,13 @@ class CustomDropdown extends StatelessWidget {
               borderRadius: BorderRadius.circular(24.r),
               color: Colors.transparent,
               border: Border.all(
-                color: Color(0xFFA6ACA4)
-              )
+                  color: Color(0xFFA6ACA4)
+              ),
             ),
             elevation: 0,
           ),
           iconStyleData: IconStyleData(
-            icon: const Icon(
-              Icons.keyboard_arrow_down_outlined,
-            ),
+            icon: const Icon(Icons.keyboard_arrow_down_outlined),
             iconSize: 24,
             iconEnabledColor: Colors.grey,
             iconDisabledColor: Colors.grey,

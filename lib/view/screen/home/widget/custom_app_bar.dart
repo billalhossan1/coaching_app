@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:football_coaching_coach_app/core/app_route/app_route.dart';
+import 'package:football_coaching_coach_app/view/screen/home/controller/home_controller.dart';
+import 'package:get/get.dart';
 
 import '../../../../utils/AppColors/app_colors.dart';
 import '../../../../utils/AppImg/app_img.dart';
@@ -130,7 +133,9 @@ Container  CustomAppBarWithoutBorder(BuildContext context,String imageUrl) {
             children: [
               const WidthGap(width: 16),
               GestureDetector(
-                onTap: () {},
+                onTap: () {
+                  Get.toNamed(AppRoute.notificationScreen);
+                },
                 child: const CustomSvgImage(
                   imagePath: "assets/svg/notification.svg",
                   height: 24,

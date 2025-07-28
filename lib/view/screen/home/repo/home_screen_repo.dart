@@ -86,6 +86,25 @@ class HomeScreenRepo{
 
   }
 
+  Future<Response>getAllNotification(int page)async{
+
+    try{
+      Map<String,dynamic>query={
+        "page":page,
+      };
+
+      Response response;
+      response = await ApiClient.getData(
+        ApiConstant.notification,query: query
+      );
+      return response;
+
+    }catch(e){
+      return Response(statusCode: 1, statusText: "Error: ${e.toString()}");
+    }
+
+  }
+
   Future<Response>createHomeWork({required String sessionId,required String tittle,required String description,required String deadline})async{
 
     try{

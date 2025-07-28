@@ -1,56 +1,75 @@
 import 'package:intl/intl.dart';
 
+import 'package:intl/intl.dart';
+
 class FormatTime {
-  static String formateTime(String dateString) {
+  static String formateTime(String? dateString) {
+    if (dateString == null || dateString.isEmpty) return '';
     try {
-      DateTime utcTime = DateTime.parse(dateString).toUtc(); // Input must be UTC
+      DateTime utcTime = DateTime.parse(dateString).toUtc();
       DateTime bstTime = utcTime.add(const Duration(hours: 6));
-      return DateFormat('hh:mm a').format(bstTime); // or 'h:mm a'
+      return DateFormat('hh:mm a').format(bstTime);
     } catch (e) {
-      return 'Invalid Time';
+      return '';
     }
   }
 
-
-  static String formateDateTimeMonth(String isoString) {
+  static String formateDateTimeMonth(String? isoString) {
+    if (isoString == null || isoString.isEmpty) return '';
     try {
       DateTime utcTime = DateTime.parse(isoString).toUtc();
       DateTime bstTime = utcTime.add(const Duration(hours: 6));
       return DateFormat('MMM d, y, h:mma').format(bstTime);
     } catch (e) {
-      return 'Invalid date';
+      return '';
     }
   }
 
-  static String formateDate(String dateString) {
-    DateTime utcTime = DateTime.parse(dateString).toUtc();
-    DateTime bstTime = utcTime.add(const Duration(hours: 6));
-    String formattedTime = DateFormat('dd/MM/yyyy').format(bstTime); // fixed MM
-    return formattedTime;
-  }
-  static String formateDateMonth(String dateString) {
-    DateTime utcTime = DateTime.parse(dateString).toUtc();
-    DateTime bstTime = utcTime.add(const Duration(hours: 6));
-    String formattedTime = DateFormat('dd MMM').format(bstTime); // fixed MM
-    return formattedTime;
+  static String formateDate(String? dateString) {
+    if (dateString == null || dateString.isEmpty) return '';
+    try {
+      DateTime utcTime = DateTime.parse(dateString).toUtc();
+      DateTime bstTime = utcTime.add(const Duration(hours: 6));
+      return DateFormat('dd/MM/yyyy').format(bstTime);
+    } catch (e) {
+      return '';
+    }
   }
 
-  static String formateDateMonthYear(String dateString) {
-    DateTime utcTime = DateTime.parse(dateString).toUtc();
-    DateTime bstTime = utcTime.add(const Duration(hours: 6));
-    String formattedTime = DateFormat('dd MMM,yyyy').format(bstTime);
-    return formattedTime;
+  static String formateDateMonth(String? dateString) {
+    if (dateString == null || dateString.isEmpty) return '';
+    try {
+      DateTime utcTime = DateTime.parse(dateString).toUtc();
+      DateTime bstTime = utcTime.add(const Duration(hours: 6));
+      return DateFormat('dd MMM').format(bstTime);
+    } catch (e) {
+      return '';
+    }
   }
 
-  static String profileDateOfBirth(String dateString) {
-    DateTime utcTime = DateTime.parse(dateString).toUtc();
-    DateTime bstTime = utcTime.add(const Duration(hours: 6));
-    String formattedTime = DateFormat('yyyy-MM-dd').format(bstTime);
-    return formattedTime;
+  static String formateDateMonthYear(String? dateString) {
+    if (dateString == null || dateString.isEmpty) return '';
+    try {
+      DateTime utcTime = DateTime.parse(dateString).toUtc();
+      DateTime bstTime = utcTime.add(const Duration(hours: 6));
+      return DateFormat('dd MMM, yyyy').format(bstTime);
+    } catch (e) {
+      return '';
+    }
   }
 
-
+  static String profileDateOfBirth(String? dateString) {
+    if (dateString == null || dateString.isEmpty) return '';
+    try {
+      DateTime utcTime = DateTime.parse(dateString).toUtc();
+      DateTime bstTime = utcTime.add(const Duration(hours: 6));
+      return DateFormat('yyyy-MM-dd').format(bstTime);
+    } catch (e) {
+      return '';
+    }
+  }
 }
+
 class ShortText {
   static String getShortText(String? text, {int maxLength = 20}) {
     if (text == null) return '';

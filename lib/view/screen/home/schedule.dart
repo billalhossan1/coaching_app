@@ -78,8 +78,7 @@ class Schedule extends StatelessWidget {
                                     final session = schedule.sessions![index];
                                     return GestureDetector(
                                       onTap: (){
-                                        print("session Id==============${session.sId}");
-                                        Get.toNamed(AppRoute.menageClassById,arguments: {"sessionId":session.sId});
+                                        Get.toNamed(AppRoute.menageClassById,arguments: {"sessionId":session.sId,"courseName":session.course?.name});
                                       },
                                       child: Container(
                                         height: 88.h,

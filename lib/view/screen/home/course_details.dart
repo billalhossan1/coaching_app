@@ -7,6 +7,7 @@ import 'package:football_coaching_coach_app/view/screen/home/controller/course_d
 import 'package:football_coaching_coach_app/view/screen/home/profile/course_history/widget/schedule_table.dart';
 import 'package:football_coaching_coach_app/view/screen/home/video_player/video_player_screen.dart';
 import 'package:football_coaching_coach_app/view/screen/home/widget/activity_info_widget.dart';
+import 'package:football_coaching_coach_app/view/widget/conditional_image_widget.dart';
 import 'package:get/get.dart';
 
 import '../../../../utils/AppColors/app_colors.dart';
@@ -63,7 +64,7 @@ class HomeCourseDetails extends StatelessWidget {
                                   ),
                                 ),
                                 Text(
-                                  'Under 15 summer 25',
+                                  controller.courseName,
                                   style: TextStyles.title16.copyWith(
                                     fontWeight: FontWeight.w500,
                                     color: AppColors.green500,
@@ -171,7 +172,7 @@ class HomeCourseDetails extends StatelessWidget {
                                             ),
                                             style: (controller.selectedIndex==index)?TextStyles.regular12.copyWith(
                                               fontWeight: FontWeight.w800,
-                                              color: AppColors.green500,
+                                              color: AppColors.white400,
                                             ):TextStyles.regular12.copyWith(
                                               fontWeight: FontWeight.w400,
                                               color: AppColors.green300,
@@ -254,14 +255,7 @@ class HomeCourseDetails extends StatelessWidget {
                                           borderRadius: BorderRadius.circular(
                                             100,
                                           ),
-                                          child: Image(
-                                            image: NetworkImage(
-                                              '${ApiConstant.imageUrl}${controller.sessionDetails.value?.sessionInfo?.couch?.image ?? ''}',
-                                            ),
-                                            height: 30,
-                                            width: 30,
-                                            fit: BoxFit.cover,
-                                          ),
+                                          child:ConditionalImageWidget(imageUrl: controller.sessionDetails.value?.sessionInfo?.couch?.image??'', width: 30, height: 30, baseUrl: ApiConstant.imageUrl)
                                         ),
                                         WidthGap(width: 8.w),
                                         Text(
@@ -485,36 +479,36 @@ class HomeCourseDetails extends StatelessWidget {
                                                               ),
                                                         ),
                                                         HeightGap(height: 30.h),
-                                                        // Row(
-                                                        //   crossAxisAlignment:
-                                                        //       CrossAxisAlignment
-                                                        //           .start,
-                                                        //   children: [
-                                                        //     const Icon(
-                                                        //       Icons.play_arrow,
-                                                        //       color: AppColors
-                                                        //           .white900,
-                                                        //     ),
-                                                        //     // Padding(
-                                                        //     //   padding:
-                                                        //     //       const EdgeInsets.only(
-                                                        //     //         top: 2.0,
-                                                        //     //       ),
-                                                        //     //   child: Text(
-                                                        //     //     ' 2:50', // Example time, replace with actual duration if needed
-                                                        //     //     style: TextStyles
-                                                        //     //         .regular14
-                                                        //     //         .copyWith(
-                                                        //     //           fontWeight:
-                                                        //     //               FontWeight
-                                                        //     //                   .w400,
-                                                        //     //           color: AppColors
-                                                        //     //               .white500,
-                                                        //     //         ),
-                                                        //     //   ),
-                                                        //     // ),
-                                                        //   ],
-                                                        // ),
+                                                        Row(
+                                                          crossAxisAlignment:
+                                                              CrossAxisAlignment
+                                                                  .start,
+                                                          children: [
+                                                            const Icon(
+                                                              Icons.play_arrow,
+                                                              color: AppColors
+                                                                  .white900,
+                                                            ),
+                                                            Padding(
+                                                              padding:
+                                                                  const EdgeInsets.only(
+                                                                    top: 2.0,
+                                                                  ),
+                                                              child: Text(
+                                                                'Play', // Example time, replace with actual duration if needed
+                                                                style: TextStyles
+                                                                    .regular14
+                                                                    .copyWith(
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w400,
+                                                                      color: AppColors
+                                                                          .white500,
+                                                                    ),
+                                                              ),
+                                                            ),
+                                                          ],
+                                                        ),
                                                       ],
                                                     ),
                                                   ),

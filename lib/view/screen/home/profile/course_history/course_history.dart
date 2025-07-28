@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import '../../../../../utils/AppColors/app_colors.dart';
 import '../../../../../utils/Texts/text_style.dart';
 import '../../../../widget/size.dart';
+import '../../controller/course_history_controller.dart';
 import '../../widget/tab_widget.dart';
 import 'present_course.dart';
 
@@ -82,7 +83,7 @@ class CourseHistory extends StatelessWidget {
   }
   // Everything of TabBar
   Widget buildTabBar() {
-    return GetBuilder<CourseHistoryController>(
+    return GetBuilder<CoursesHistoryController>(
       builder: (controller) => Align(
         alignment: Alignment.centerLeft,
         child: _buildTabBar(controller),
@@ -91,7 +92,7 @@ class CourseHistory extends StatelessWidget {
   }
 
   // TabBar and Tabs
-  Container _buildTabBar(CourseHistoryController courseHistoryController) {
+  Container _buildTabBar(CoursesHistoryController courseHistoryController) {
     return Container(
       decoration: BoxDecoration(
           color: AppColors.appBg, borderRadius: BorderRadius.circular(30)),
@@ -129,7 +130,7 @@ class CourseHistory extends StatelessWidget {
 
   // TabBar view
   Expanded buildTabBarView(context) {
-    return const Expanded(
+    return  Expanded(
       child: TabBarView(
         physics: NeverScrollableScrollPhysics(),
         children: [

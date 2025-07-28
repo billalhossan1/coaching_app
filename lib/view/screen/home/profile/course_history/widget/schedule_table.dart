@@ -7,6 +7,7 @@ import 'package:football_coaching_coach_app/model/session_details_model.dart';
 import 'package:football_coaching_coach_app/utils/format_time.dart';
 import 'package:football_coaching_coach_app/view/screen/home/controller/course_details_controller.dart';
 import 'package:football_coaching_coach_app/view/screen/home/controller/manage_class_by_id_controller.dart';
+import 'package:football_coaching_coach_app/view/screen/home/controller/manage_class_controller.dart';
 import 'package:football_coaching_coach_app/view/screen/home/widget/attandence_widget.dart';
 import 'package:football_coaching_coach_app/view/widget/network_image_widget.dart';
 import 'package:get/get.dart';
@@ -244,7 +245,7 @@ class ScheduleTable2 extends StatelessWidget {
             children: [
               _buildTableCell(student.name ?? ''),
               _buildPerformanceCell(student.performance ?? ''),
-              AttendanceCell(attendance: student.atandance??false),
+            GestureDetector(child: AttendanceCell(attendance: student.atandance??false)),
             ],
           ),
         );
@@ -316,96 +317,76 @@ class ScheduleTable2 extends StatelessWidget {
 
 
 class ScheduleTable3 extends StatelessWidget {
-  const ScheduleTable3 ({super.key});
-
-  // Dynamic data
+  final List<StudentList>? studentLists;
+  final String? sessionId;
+  const ScheduleTable3({super.key, this.studentLists, this.sessionId});
 
   @override
   Widget build(BuildContext context) {
-    final List<Map<String, String>> data = [
-      {
-        'class': 'Asad Ujjaman',
-        'date': '2 Jun, 2025',
-        'performance': '80%',
-        'attendance': '✓',
-      },
-      {
-        'class': 'Kovács Tímea',
-        'date': '2 Jun, 2025',
-        'performance': '80%',
-        'attendance': '✓',
-      },
-      {
-        'class': 'Asad Ujjaman',
-        'date': '2 Jun, 2025',
-        'performance': '80%',
-        'attendance': '✓',
-      },
-      {
-        'class': 'Asad Ujjaman',
-        'date': '2 Jun, 2025',
-        'performance': '80%',
-        'attendance': '✓',
-      },
-      {
-        'class': 'Asad Ujjaman',
-        'date': '2 Jun, 2025',
-        'performance': '80%',
-        'attendance': '✓',
-      },
-      {
-        'class': 'Asad Ujjaman',
-        'date': '2 Jun, 2025',
-        'performance': '80%',
-        'attendance': '✓',
-      },
-      {
-        'class': 'Asad Ujjaman',
-        'date': '2 Jun, 2025',
-        'performance': '80%',
-        'attendance': '✓',
-      },
-      {
-        'class': 'Asad Ujjaman',
-        'date': '2 Jun, 2025',
-        'performance': '80%',
-        'attendance': '✓',
-      },
-    ];
     return ListView.separated(
       shrinkWrap: true,
-      physics: NeverScrollableScrollPhysics(),
-      itemCount: data.length + 1,  // +1 for the header row
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: (studentLists?.length ?? 0) + 1, // +1 for the header row
       separatorBuilder: (context, index) {
-        return index==0? Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: Divider(color: AppColors.white900),
-        ): HeightGap(height: 0.h);
+        return index == 0
+            ? Padding(
+          padding: EdgeInsets.symmetric(horizontal: 10.w),
+          child: const Divider(color: AppColors.white900),
+        )
+            : HeightGap(height: 0.h);
       },
       itemBuilder: (context, index) {
         if (index == 0) {
           // Header Row
           return Container(
-            padding: EdgeInsets.symmetric(vertical: 12),
+            padding: EdgeInsets.symmetric(vertical: 12.h),
             child: Row(
               children: [
-                _buildHeaderCell('Student Name'),
-                _buildHeaderCell('Performance         '),
-                _buildHeaderCell('      Attendance'),
+                _buildHeaderCell('Player name'),
+                _buildHeaderCell('Performance'),
+                _buildHeaderCell('Attendance'),
               ],
             ),
           );
         }
 
         // Data Row
-        var item = data[index - 1];
+        var student = studentLists![index - 1];
         return Container(
-          padding: EdgeInsets.symmetric(vertical: 8),
+          padding: EdgeInsets.symmetric(vertical: 8.h),
           child: Row(
             children: [
-              _buildTableCell(item['class']!),
-              _buildPerformanceCell(item['performance']!),
-              _buildAttendanceCell(item['attendance']!),
+              _buildTableCell(student.name!, '${ApiConstant.imageUrl}${student.image}'),
+              _buildPerformanceCell(student.performance ?? '',userId:student.sId!,sessionId:sessionId!,userImage: student.image!,username: student.name??''),
+              GetBuilder<ManageClassController>(
+                  builder: (controller) {
+                    return Flexible(
+                      flex: 2,
+                      child: GestureDetector(
+                        onTap: () {
+                          student.atandance = student.atandance == true ? false : true;
+                          controller.update();
+                          controller.updateAttandence(student.atandance!, student.sId!);
+                        },
+                        child: Center(
+                          child: Container(
+                            height: 28.h,
+                            width: 28.w,
+                            alignment: Alignment.center,
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: AppColors.green500,
+                            ),
+                            child: Text(
+                              student.atandance! ? '✓' : '✗',
+                              style: TextStyles.regular12.copyWith(color: Colors.white),
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  }
+              ),
             ],
           ),
         );
@@ -413,96 +394,107 @@ class ScheduleTable3 extends StatelessWidget {
     );
   }
 
-  // Build header cell with blue color
+  // Build header cell
   Widget _buildHeaderCell(String text) {
-    return Expanded(
+    return Flexible(
+      flex: text == 'Player name' ? 3 : 2,
       child: Container(
-        padding: EdgeInsets.all(12),
+        padding: EdgeInsets.all(12.w),
         alignment: Alignment.center,
-        child: Row(
-          children: [
-            Text(
-                text,
-                overflow: TextOverflow.ellipsis,
-                style: TextStyles.regular12.copyWith(
-                    fontWeight: FontWeight.w400,
-                    color: AppColors.green300
-                )
-            ),
-          ],
+        child: Text(
+          text,
+          overflow: TextOverflow.ellipsis,
+          style: TextStyles.regular12.copyWith(
+            fontWeight: FontWeight.w400,
+            color: AppColors.green300,
+          ),
         ),
       ),
     );
   }
 
-  // Build the table cells with centered text
-  Widget _buildTableCell(String text) {
-    return Expanded(
-      child: Container(
-        padding: EdgeInsets.all(12),
-        alignment: Alignment.center,
-        child: Row(
-          children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(30.r),
-              child: NetworkImageWidget(imageUrl: 'https://cdn.pixabay.com/photo/2016/08/08/09/17/avatar-1577909_640.png',
-                height: 20,
-                width: 20,
-              ),
-            ),
-            WidthGap(width: 8.w),
-            Text(
-                text,
-                style: TextStyles.regular12.copyWith(
-                    fontWeight: FontWeight.w400,
-                    color: AppColors.white800
+  // Build table cell with student name and image
+  Widget _buildTableCell(String text, String image) {
+    return Flexible(
+      flex: 3,
+      child: GestureDetector(
+        onTap: () {
+          Get.toNamed(AppRoute.studentDetails);
+        },
+        child: Container(
+          padding: EdgeInsets.all(12.w),
+          alignment: Alignment.centerLeft,
+          child: Row(
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(30.r),
+                child: NetworkImageWidget(
+                  imageUrl: image,
+                  height: 20.h,
+                  width: 20.w,
                 ),
+              ),
+              WidthGap(width: 8.w),
+              Expanded(
+                child: Text(
+                  ShortText.getShortText(text),
+                  style: TextStyles.regular12.copyWith(
+                    fontWeight: FontWeight.w400,
+                    color: AppColors.white800,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  // Build performance cell
+  Widget _buildPerformanceCell(String performance,{required String sessionId,required String userId,required String userImage,required String username}) {
+    return Flexible(
+      flex: 2,
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 8.w),
+        child: GestureDetector(
+          onTap: () {
+            Get.toNamed(AppRoute.performance,arguments: {"userId":userId,"sessionId":sessionId,"userName":username,"userImage":userImage});
+          },
+          child: Container(
+            height: 24.h,
+            alignment: Alignment.center,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(90.r),
+              border: Border.all(color: AppColors.green500),
+            ),
+            child: Text(
+              performance,
+              style: TextStyles.regular12.copyWith(color: Colors.white),
               overflow: TextOverflow.ellipsis,
             ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  // Build performance container with a custom style
-  Widget _buildPerformanceCell(String performance) {
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-        child: Container(
-          height:24.h,
-          alignment: Alignment.center,
-          decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(90),
-              border: Border.all(
-                  color: AppColors.green500
-              )
-          ),
-          child:Text(
-            performance,
-            style: TextStyle(color: Colors.white),
           ),
         ),
       ),
     );
   }
 
-  // Build attendance container with a custom style
+  // Build attendance cell - removed since it's now inline
   Widget _buildAttendanceCell(String attendance) {
-    return Expanded(
-      child: Container(
-        height: 28.h,
-        width: 28.w,
-        alignment: Alignment.center,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: AppColors.green500,
-        ),
-        child: Center(
-          child:  Text(
+    return Flexible(
+      flex: 2,
+      child: Center(
+        child: Container(
+          height: 28.h,
+          width: 28.w,
+          alignment: Alignment.center,
+          decoration: const BoxDecoration(
+            shape: BoxShape.circle,
+            color: AppColors.green500,
+          ),
+          child: Text(
             attendance,
-            style: TextStyle(color: Colors.white),
+            style: TextStyles.regular12.copyWith(color: Colors.white),
           ),
         ),
       ),
