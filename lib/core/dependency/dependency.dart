@@ -3,6 +3,7 @@ import 'package:football_coaching_coach_app/view/screen/home/controller/course_d
 import 'package:football_coaching_coach_app/view/screen/home/controller/course_history_controller.dart';
 import 'package:football_coaching_coach_app/view/screen/home/controller/manage_class_by_id_controller.dart';
 import 'package:football_coaching_coach_app/view/screen/home/controller/manage_class_controller.dart';
+import 'package:football_coaching_coach_app/view/screen/home/controller/student_details_controller.dart';
 import 'package:football_coaching_coach_app/view/screen/home/controller/update_marks_controller.dart';
 import 'package:football_coaching_coach_app/view/screen/home/profile/setting/controller/change_password_controller.dart';
 import 'package:football_coaching_coach_app/view/screen/home/profile/terms_condition/controller/terms_and_condition_controller.dart';
@@ -40,5 +41,6 @@ class DependencyInjection extends Bindings {
     Get.lazyPut(() => AssignHomeWorkController(), fenix: true);
     Get.lazyPut(() => CourseHistoryController(), fenix: true);
     Get.lazyPut(() => ManageClassController(), fenix: true);
+    Get.lazyPut(() => StudentDetailsController(), fenix: true);
   }
 }

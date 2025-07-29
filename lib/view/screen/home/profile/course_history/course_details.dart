@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:football_coaching_coach_app/model/student_details_model.dart';
 import 'package:football_coaching_coach_app/view/screen/home/profile/course_history/widget/schedule_table.dart';
 import 'package:get/get.dart';
 
@@ -148,7 +149,8 @@ class CourseDetails extends StatelessWidget {
                     ),
                     color: AppColors.grey800
                 ),
-                child: ScheduleTable(),
+                //TODO
+                child: ScheduleTable(studentDetails: StudentDetails(),),
               ),
             )
           ],

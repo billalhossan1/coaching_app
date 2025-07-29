@@ -44,7 +44,7 @@ class HomeScreen extends StatelessWidget {
             ),
             child: Obx(
               () => homeController.isUpComingTodaySessionLoading.value
-                  ? Center(child: CircularProgressIndicator())
+                  ? const Center(child: CircularProgressIndicator())
                   : Padding(
                       padding: const EdgeInsets.all(20.0),
                       child: Row(

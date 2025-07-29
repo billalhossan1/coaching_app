@@ -45,6 +45,7 @@ class ApiConstant {
   static const assignHomeWork = "/homework";
   static const updatePerformanceUrl = "/performance/student-mark";
   static const updateAttandence = "/performance";
+  static const studentDetails = "/performance/student";
   static const performanceStudentMark = "/performance/student-mark";
   static String storyDetails(var id)=>"/story/$id";
   static String sessionDetails(var id)=>"/session/$id";

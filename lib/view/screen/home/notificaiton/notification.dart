@@ -23,6 +23,7 @@ class Notification extends StatelessWidget {
                 child: Obx((){
                   final controller = Get.find<HomeController>();
                   return ListView.separated(
+                    controller: controller.notificationScrollController,
                     itemCount: controller.notificationList.length + (controller.isPaginationLoading.value ? 1 : 0),
                     itemBuilder: (context, index){
                       final notificationData = controller.notificationList[index];

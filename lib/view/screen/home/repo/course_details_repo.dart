@@ -79,4 +79,25 @@ class CourseDetailsRepo{
     }
 
   }
+
+
+  Future<Response>studentDetails({required String userId, required String sessionId})async{
+
+    try{
+      Map<String,dynamic>query={
+        "user":userId,
+        "session":sessionId
+      };
+
+      Response response;
+      response = await ApiClient.getData(
+          ApiConstant.studentDetails,query: query
+      );
+      return response;
+
+    }catch(e){
+      return Response(statusCode: 1, statusText: "Error: ${e.toString()}");
+    }
+
+  }
 }

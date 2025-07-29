@@ -4,11 +4,14 @@ import 'package:football_coaching_coach_app/Service/api_url.dart';
 import 'package:football_coaching_coach_app/core/app_route/app_route.dart';
 import 'package:football_coaching_coach_app/model/manage_class_model.dart' hide SessionDetails;
 import 'package:football_coaching_coach_app/model/session_details_model.dart';
+import 'package:football_coaching_coach_app/model/student_details_model.dart';
 import 'package:football_coaching_coach_app/utils/format_time.dart';
 import 'package:football_coaching_coach_app/view/screen/home/controller/course_details_controller.dart';
 import 'package:football_coaching_coach_app/view/screen/home/controller/manage_class_by_id_controller.dart';
 import 'package:football_coaching_coach_app/view/screen/home/controller/manage_class_controller.dart';
+import 'package:football_coaching_coach_app/view/screen/home/controller/student_details_controller.dart';
 import 'package:football_coaching_coach_app/view/screen/home/widget/attandence_widget.dart';
+import 'package:football_coaching_coach_app/view/widget/conditional_image_widget.dart';
 import 'package:football_coaching_coach_app/view/widget/network_image_widget.dart';
 import 'package:get/get.dart';
 
@@ -18,64 +21,17 @@ import '../../../../../widget/size.dart';
 
 
 class ScheduleTable extends StatelessWidget {
-  const ScheduleTable({super.key});
+  final StudentDetails studentDetails;
+
+  const ScheduleTable({super.key, required this.studentDetails});
 
   // Dynamic data
 
   @override
   Widget build(BuildContext context) {
-    final List<Map<String, String>> data = [
-      {
-        'class': '1',
-        'date': '2 Jun, 2025',
-        'performance': '80%',
-        'attendance': '✓',
-      },
-      {
-        'class': '2',
-        'date': '2 Jun, 2025',
-        'performance': '80%',
-        'attendance': '✓',
-      },
-      {
-        'class': '3',
-        'date': '2 Jun, 2025',
-        'performance': '80%',
-        'attendance': '✓',
-      },
-      {
-        'class': '4',
-        'date': '2 Jun, 2025',
-        'performance': '80%',
-        'attendance': '✓',
-      },
-      {
-        'class': '5',
-        'date': '2 Jun, 2025',
-        'performance': '80%',
-        'attendance': '✓',
-      },
-      {
-        'class': '6',
-        'date': '2 Jun, 2025',
-        'performance': '80%',
-        'attendance': '✓',
-      },
-      {
-        'class': '7',
-        'date': '2 Jun, 2025',
-        'performance': '80%',
-        'attendance': '✓',
-      },
-      {
-        'class': '8',
-        'date': '2 Jun, 2025',
-        'performance': '80%',
-        'attendance': '✓',
-      },
-    ];
+    print("============================${studentDetails.performance!.length}");
     return ListView.separated(
-      itemCount: data.length + 1,  // +1 for the header row
+      itemCount: (studentDetails.performance?.length??0) + 1,  // +1 for the header row
       separatorBuilder: (context, index) {
         return index==0? const Padding(
           padding: EdgeInsets.symmetric(horizontal: 10),
@@ -99,15 +55,15 @@ class ScheduleTable extends StatelessWidget {
         }
 
         // Data Row
-        var item = data[index - 1];
+        var item = studentDetails.performance![index - 1];
         return Container(
           padding: const EdgeInsets.symmetric(vertical: 8),
           child: Row(
             children: [
-              _buildTableCell(item['class']!),
-              _buildTableCell(item['date']!),
-              _buildPerformanceCell(item['performance']!),
-              _buildAttendanceCell(item['attendance']!),
+              _buildTableCell('${item.Class??0}'),
+              _buildTableCell(FormatTime.formateDateMonthYear(item.date??'')),
+              _buildPerformanceCell(item.performance??''),
+              _buildAttendanceCell(item.attandance! ? '✓' : '✗'),
             ],
           ),
         );
@@ -243,10 +199,10 @@ class ScheduleTable2 extends StatelessWidget {
           padding: const EdgeInsets.symmetric(vertical: 8),
           child: Row(
             children: [
-              _buildTableCell(student.name ?? ''),
+              _buildTableCell(student.name ?? '', '${student.image}', studentId: student.sId!, sessionId: sessionDetails.sessionInfo!.sId!),
               _buildPerformanceCell(student.performance ?? ''),
             WidthGap(width: 40.w),
-            GestureDetector(child: AttendanceCell(attendance: student.atandance??false)),
+           AttendanceCell(attendance: student.atandance??false),
               WidthGap(width: 40.w),
 
             ],
@@ -258,7 +214,7 @@ class ScheduleTable2 extends StatelessWidget {
 
   // Build header cell with blue color
   Widget _buildHeaderCell(String text) {
-    return Expanded(
+    return Flexible(
       child: Container(
         padding: const EdgeInsets.all(12),
         alignment: Alignment.center,
@@ -279,37 +235,59 @@ class ScheduleTable2 extends StatelessWidget {
   }
 
   // Build the table cells with centered text
-  Widget _buildTableCell(String text) {
-    return Expanded(
-      child: Container(
-        padding: const EdgeInsets.all(12),
-        alignment: Alignment.center,
-        child: Text(
-          text,
-          style: TextStyles.regular12.copyWith(
-            fontWeight: FontWeight.w400,
-            color: AppColors.white800,
+  Widget _buildTableCell(String text, String image,{required String studentId,required String sessionId}) {
+    return Flexible(
+      flex: 3,
+      child: GestureDetector(
+        onTap: () {
+          Get.toNamed(AppRoute.studentDetails, arguments: {'userId': studentId,"sessionId":sessionId});
+        },
+        child: Container(
+          padding: EdgeInsets.all(12.w),
+          alignment: Alignment.centerLeft,
+          child: Row(
+            children: [
+              ClipRRect(
+                borderRadius: BorderRadius.circular(30.r),
+                child: ConditionalImageWidget(
+                  imageUrl: image,
+                  height: 20.h,
+                  width: 20.w, baseUrl: ApiConstant.imageUrl,
+                ),
+              ),
+              WidthGap(width: 8.w),
+              Expanded(
+                child: Text(
+                  ShortText.getShortText(text),
+                  style: TextStyles.regular12.copyWith(
+                    fontWeight: FontWeight.w400,
+                    color: AppColors.white800,
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
       ),
     );
   }
-
   // Build performance container with a custom style
   Widget _buildPerformanceCell(String performance) {
-    return Expanded(
+    return Flexible(
+      flex: 2,
       child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        padding: EdgeInsets.symmetric(horizontal: 8.w),
         child: Container(
           height: 24.h,
           alignment: Alignment.center,
           decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(90),
+            borderRadius: BorderRadius.circular(90.r),
             border: Border.all(color: AppColors.green500),
           ),
           child: Text(
             performance,
-            style: const TextStyle(color: Colors.white),
+            style: TextStyles.regular12.copyWith(color: Colors.white),
+            overflow: TextOverflow.ellipsis,
           ),
         ),
       ),
@@ -359,7 +337,7 @@ class ScheduleTable3 extends StatelessWidget {
           padding: EdgeInsets.symmetric(vertical: 8.h),
           child: Row(
             children: [
-              _buildTableCell(student.name!, '${ApiConstant.imageUrl}${student.image}'),
+              _buildTableCell(student.name!, '${ApiConstant.imageUrl}${student.image}',sessionId: sessionId!,userId: student.sId!),
               _buildPerformanceCell(student.performance ?? '',userId:student.sId!,sessionId:sessionId!,userImage: student.image!,username: student.name??''),
               GetBuilder<ManageClassController>(
                   builder: (controller) {
@@ -417,12 +395,12 @@ class ScheduleTable3 extends StatelessWidget {
   }
 
   // Build table cell with student name and image
-  Widget _buildTableCell(String text, String image) {
+  Widget _buildTableCell(String text, String image,{required String sessionId,required String userId}) {
     return Flexible(
       flex: 3,
       child: GestureDetector(
         onTap: () {
-          Get.toNamed(AppRoute.studentDetails);
+          Get.toNamed(AppRoute.studentDetails,arguments: {"sessionId":sessionId,"userId":userId});
         },
         child: Container(
           padding: EdgeInsets.all(12.w),
@@ -547,7 +525,7 @@ class ScheduleTable4 extends StatelessWidget {
           padding: EdgeInsets.symmetric(vertical: 8.h),
           child: Row(
             children: [
-              _buildTableCell(student.name!, '${ApiConstant.imageUrl}${student.image}'),
+              _buildTableCell(student.name!, '${ApiConstant.imageUrl}${student.image}',sessionId: sessionId!,userId: student.userId!),
               _buildPerformanceCell(student.totalPerformance ?? '',userId:student.userId!,sessionId:sessionId!,userImage: student.image!,username: student.name??''),
               GetBuilder<ManageClassByIdController>(
                   builder: (controller) {
@@ -605,12 +583,12 @@ class ScheduleTable4 extends StatelessWidget {
   }
 
   // Build table cell with student name and image
-  Widget _buildTableCell(String text, String image) {
+  Widget _buildTableCell(String text, String image,{required String sessionId,required String userId}) {
     return Flexible(
       flex: 3,
       child: GestureDetector(
         onTap: () {
-          Get.toNamed(AppRoute.studentDetails);
+          Get.toNamed(AppRoute.studentDetails,arguments: {"sessionId":sessionId,"userId":userId});
         },
         child: Container(
           padding: EdgeInsets.all(12.w),
