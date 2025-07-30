@@ -420,7 +420,7 @@ class HomeCourseDetails extends StatelessWidget {
                                                 builder: (context) =>
                                                     InteractiveVideoPlayer(
                                                       videoUrl:
-                                                          video.video ?? "",
+                                                     "${ApiConstant.videoUrl}${video.video}",
                                                     ),
                                               ),
                                             );

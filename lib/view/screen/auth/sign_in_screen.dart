@@ -156,19 +156,19 @@ class SignInScreen extends StatelessWidget {
             ),
           ),
         ),
-        GestureDetector(
-          onTap: () {
-
-          },
-          child: Text(
-            'Forgot password?',
-            style: TextStyles.regular12.copyWith(
-                color: AppColors.green500,
-                fontWeight: FontWeight.w500,
-                decoration: TextDecoration.underline,
-                decorationColor:AppColors.green500,),
-          ),
-        ),
+        // GestureDetector(
+        //   onTap: () {
+        //
+        //   },
+        //   child: Text(
+        //     'Forgot password?',
+        //     style: TextStyles.regular12.copyWith(
+        //         color: AppColors.green500,
+        //         fontWeight: FontWeight.w500,
+        //         decoration: TextDecoration.underline,
+        //         decorationColor:AppColors.green500,),
+        //   ),
+        // ),
       ],
     );
   }

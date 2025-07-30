@@ -24,7 +24,7 @@ class Schedule extends StatelessWidget {
               () => controller.isLoading.value
                   ? Center(child: CircularProgressIndicator())
                   : controller.scheduleList.isEmpty
-                  ? Center(child: Text("No Schedule Available"))
+                  ? Center(child: Text("No Schedule Available",style: TextStyle(color: Colors.white70),))
                   : Expanded(
                       child: SingleChildScrollView(
                         child: ListView.separated(
