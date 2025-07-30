@@ -7,6 +7,7 @@ import '../../../../../core/app_route/app_route.dart';
 import '../../../../../utils/AppColors/app_colors.dart';
 import '../../../../../utils/AppImg/app_img.dart';
 import '../../../../../utils/Texts/text_style.dart';
+import '../../../../../utils/format_time.dart';
 import '../../../../widget/custom_svg.dart';
 import '../../../../widget/size.dart';
 
@@ -39,14 +40,14 @@ class PresentCourse extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
-                              'Under 20 summer 25',
+                             controller.presentCourseList[index].name ?? '',
                               style: TextStyles.regular14.copyWith(
                                 fontWeight: FontWeight.w400,
                                 color: AppColors.white600,
                               ),
                             ),
                             Text(
-                              '25 Jun, 2025 - 25 Jun, 2025   ',
+                              "${FormatTime.formateDateTimeMonth(controller.presentCourseList[index].startDate ?? '')} - ${FormatTime.formateDateTimeMonth(controller.presentCourseList[index].endDate ?? '')}",
                               style: TextStyles.regular14.copyWith(
                                 fontWeight: FontWeight.w400,
                                 color: AppColors.white600,

@@ -153,7 +153,6 @@ void setTextEditingController(){
         isUpComingSessionLoading.value=true;
       }
       Response response=await HomeScreenRepo().getUpcomingSession(page);
-      isUpComingSessionLoading.value=false;
       if(response.statusCode==200){
         if(page==1){
           upComingSessionList.clear();
@@ -161,13 +160,20 @@ void setTextEditingController(){
         UpcomingSessionListModel upcomingSessionListModel=UpcomingSessionListModel.fromJson(response.body);
         upComingSessionList.value=upcomingSessionListModel.upComingSessionList??[];
         upComingSessionTotalPage=upcomingSessionListModel.pagination?.totalPage??1;
+        isUpComingSessionLoading.value=false;
+
       }else{
         showCustomSnackBar(response.statusText??"Something went wrong");
+        isUpComingSessionLoading.value=false;
+
       }
+      isUpComingSessionLoading.value=false;
+
 
     }catch(e){
       debugPrint(e.toString());
     }
+
   }
 
 
@@ -215,17 +221,21 @@ void setTextEditingController(){
   Future<void>getTodaySession()async{
     isUpComingTodaySessionLoading.value= true;
     Response response = await HomeScreenRepo().getUpcomingSessionToday();
-    isUpComingTodaySessionLoading.value= false;
+
     if(response.statusCode==200){
 
      if(response.body['data']!=null){
        Sessions session = Sessions.fromJson(response.body['data']);
        todaySession.value= session;
+       isUpComingTodaySessionLoading.value= false;
      }
+     isUpComingTodaySessionLoading.value= false;
 
     }else{
       showCustomSnackBar(response.statusText??"Something went wrong");
+      isUpComingTodaySessionLoading.value= false;
     }
+    isUpComingTodaySessionLoading.value= false;
   }
 
 

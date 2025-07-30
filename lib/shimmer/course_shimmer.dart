@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shimmer/shimmer.dart';
-import '../utils/AppColors/app_colors.dart';
 import '../utils/AppImg/app_img.dart';
-import '../utils/Texts/text_style.dart';
-import '../view/widget/custom_svg.dart';
+
 
 
 Widget buildShimmerCourseItem(BuildContext context) {
@@ -18,8 +16,8 @@ Widget buildShimmerCourseItem(BuildContext context) {
       ),
     ),
     child: Shimmer.fromColors(
-      baseColor: Colors.grey[300]!,  // Color for the shimmer's base
-      highlightColor: Colors.white,  // Color for the shimmer highlight
+      baseColor: Colors.grey[300]!,
+      highlightColor: Colors.white,
       child: Padding(
         padding: const EdgeInsets.all(20.0),
         child: Row(
@@ -29,26 +27,25 @@ Widget buildShimmerCourseItem(BuildContext context) {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(
-                  'Under 20 summer 25',
-                  style: TextStyles.regular14.copyWith(
-                    fontWeight: FontWeight.w400,
-                    color: AppColors.white600,
-                  ),
+                Container(
+                  width: 120.w,
+                  height: 14.h,
+                  color: Colors.white,
                 ),
-                Text(
-                  '25 Jun, 2025 - 25 Jun, 2025   ',
-                  style: TextStyles.regular14.copyWith(
-                    fontWeight: FontWeight.w400,
-                    color: AppColors.white600,
-                  ),
+                Container(
+                  width: 180.w,
+                  height: 14.h,
+                  color: Colors.white,
                 ),
               ],
             ),
-            CustomSvgImage(
-              imagePath: AppImages.next,
+            Container(
               height: 42.h,
               width: 42.w,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(8.r),
+              ),
             ),
           ],
         ),
