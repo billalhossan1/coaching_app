@@ -19,7 +19,7 @@ class VideoPlayerControllerX extends GetxController {
   }
 
   void _initializePlayer() {
-    videoController = VideoPlayerController.network(videoUrl)
+    videoController = VideoPlayerController.networkUrl(Uri.parse(videoUrl))
       ..initialize().then((_) {
         update();
       });
