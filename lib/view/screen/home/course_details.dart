@@ -5,6 +5,7 @@ import 'package:football_coaching_coach_app/core/app_route/app_route.dart';
 import 'package:football_coaching_coach_app/utils/format_time.dart';
 import 'package:football_coaching_coach_app/view/screen/home/controller/course_details_controller.dart';
 import 'package:football_coaching_coach_app/view/screen/home/profile/course_history/widget/schedule_table.dart';
+import 'package:football_coaching_coach_app/view/screen/home/video_player/get_video_player.dart';
 import 'package:football_coaching_coach_app/view/screen/home/video_player/video_player_screen.dart';
 import 'package:football_coaching_coach_app/view/screen/home/widget/activity_info_widget.dart';
 import 'package:football_coaching_coach_app/view/widget/conditional_image_widget.dart';
@@ -414,16 +415,17 @@ class HomeCourseDetails extends StatelessWidget {
                                             controller.videoList[index];
                                         return GestureDetector(
                                           onTap: () {
-                                            Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                builder: (context) =>
-                                                    InteractiveVideoPlayer(
-                                                      videoUrl:
-                                                     "${ApiConstant.videoUrl}${video.video}",
-                                                    ),
-                                              ),
-                                            );
+                                            // Navigator.push(
+                                            //   context,
+                                            //   MaterialPageRoute(
+                                            //     builder: (context) =>
+                                            //         InteractiveVideoPlayer(
+                                            //           videoUrl:
+                                            //          "${ApiConstant.videoUrl}${video.video}",
+                                            //         ),
+                                            //   ),
+                                            // );
+                                            Get.to(() => VideoPlayerPage(videoUrl: '${ApiConstant.baseUrl}${video.video!}', text: video.description??'',),);
                                           },
                                           child: Container(
                                             decoration: BoxDecoration(
