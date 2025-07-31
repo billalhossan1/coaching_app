@@ -8,6 +8,7 @@ import 'package:football_coaching_coach_app/model/upcomming_session_list_model.d
 import 'package:football_coaching_coach_app/view/screen/home/repo/home_screen_repo.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 
 import '../../../../utils/ToastMsg/toast_message.dart';
 import '../profile/model/profile_model.dart';
@@ -181,15 +182,59 @@ void setTextEditingController(){
   ////Update Profile
 
   File? selectedImage;
-  final ImagePicker _imagePicker = ImagePicker();
 
   Future<void> pickImage(ImageSource source) async {
-    final XFile? image = await _imagePicker.pickImage(source: source);
-    if (image != null) {
-      selectedImage = File(image.path);
-      update();
+    final ImagePicker _imagePicker = ImagePicker();
+
+    bool permissionGranted = false;
+
+    if (Platform.isIOS) {
+      final photoStatus = await Permission.photos.request();
+
+      if ( photoStatus.isGranted) {
+        permissionGranted = true;
+      } else if (photoStatus.isDenied) {
+        showCustomSnackBar("Please grant camera and photo access.");
+        return;
+      } else if (photoStatus.isPermanentlyDenied) {
+        openAppSettings();
+        return;
+      }
+    } else if (Platform.isAndroid) {
+      final photoStatus = await Permission.photos.request();
+
+      if (photoStatus.isGranted) {
+        permissionGranted = true;
+      } else if (photoStatus.isDenied ) {
+        showCustomSnackBar("Please grant storage/photo permission.");
+        return;
+      } else if (photoStatus.isPermanentlyDenied) {
+        openAppSettings();
+        return;
+      }
+    }
+
+    if (!permissionGranted) return;
+
+    await Future.delayed(const Duration(milliseconds: 300));
+
+    try {
+      final XFile? image = await _imagePicker.pickImage(
+        source: source,
+        imageQuality: 100,
+      );
+
+      if (image != null) {
+        selectedImage = File(image.path);
+        update();
+      } else {
+        showCustomSnackBar("No image selected.");
+      }
+    } catch (e) {
+      showCustomSnackBar("Failed to pick image: ${e.toString()}");
     }
   }
+
 
 
   Future<void>onTapUpdate(BuildContext context)async{

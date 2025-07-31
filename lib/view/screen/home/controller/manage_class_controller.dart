@@ -152,6 +152,7 @@ class ManageClassController extends GetxController{
         SessionsListByIdModel upcomingSessionListModel = SessionsListByIdModel.fromJson(response.body);
         sessionList.addAll(upcomingSessionListModel.sessionList??[]);
         totalPage = upcomingSessionListModel.pagination?.totalPage??1;
+        await getSessionDetails(sessionList[0].sId!);
       }else{
         showCustomSnackBar(response.statusText??"Something went wrong");
       }
