@@ -1,3 +1,5 @@
+import 'course_details_model.dart';
+
 class SessionsListByIdModel {
 
   Pagination? pagination;
@@ -59,7 +61,7 @@ class Pagination {
 
 class SessionItem {
   String? sId;
-  String? course;
+  CourseModel? course;
   String? title;
   String? status;
   String? startTime;
@@ -70,28 +72,37 @@ class SessionItem {
   String? updatedAt;
   int? iV;
 
-  SessionItem(
-      {this.sId,
-        this.course,
-        this.title,
-        this.status,
-        this.startTime,
-        this.endTime,
-        this.date,
-        this.couch,
-        this.createdAt,
-        this.updatedAt,
-        this.iV});
+  SessionItem({
+    this.sId,
+    this.course,
+    this.title,
+    this.status,
+    this.startTime,
+    this.endTime,
+    this.date,
+    this.couch,
+    this.createdAt,
+    this.updatedAt,
+    this.iV,
+  });
 
   SessionItem.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
-    course = json['course'];
+    course = json['course'] != null ? CourseModel.fromJson(json['course']) : null;
     title = json['title'];
     status = json['status'];
     startTime = json['startTime'];
     endTime = json['endTime'];
     date = json['date'];
-    couch = json['couch'];
+
+    if (json['couch'] is String) {
+      couch = json['couch'];
+    } else if (json['couch'] is Map<String, dynamic>) {
+      couch = json['couch']['_id'];
+    } else {
+      couch = null;
+    }
+
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
     iV = json['__v'];
@@ -100,7 +111,9 @@ class SessionItem {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = <String, dynamic>{};
     data['_id'] = sId;
-    data['course'] = course;
+    if (course != null) {
+      data['course'] = course!.toJson();
+    }
     data['title'] = title;
     data['status'] = status;
     data['startTime'] = startTime;
@@ -110,6 +123,24 @@ class SessionItem {
     data['createdAt'] = createdAt;
     data['updatedAt'] = updatedAt;
     data['__v'] = iV;
+    return data;
+  }
+}
+class CourseModel {
+  String? id;
+  String? name;
+
+  CourseModel({this.id, this.name});
+
+  CourseModel.fromJson(Map<String, dynamic> json) {
+    id = json['_id'];
+    name = json['name'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['_id'] = id;
+    data['name'] = name;
     return data;
   }
 }

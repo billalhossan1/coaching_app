@@ -1,8 +1,8 @@
 class ApiConstant {
 
-  static const baseUrl="http://31.97.114.108:5000/api/v1";
-  static const imageUrl="http://31.97.114.108:5000";
-  static const videoUrl="http://31.97.114.108:5000/video";
+  static const baseUrl="http://10.10.7.6:5000/api/v1";//31.97.114.108:5000
+  static const imageUrl="http://10.10.7.6:5000";
+  static const videoUrl="http://10.10.7.6:5000/video";
   static const socketUrl="https://azizul3000.binarybards.online";
 
 

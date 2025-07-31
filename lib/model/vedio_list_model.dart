@@ -61,29 +61,30 @@ class VideoModel {
   String? title;
   String? description;
   String? video;
-  String? topic;
+  TopicModel? topic;
   String? createdAt;
   String? updatedAt;
   int? iV;
   String? thumbnail;
 
-  VideoModel(
-      {this.sId,
-        this.title,
-        this.description,
-        this.video,
-        this.topic,
-        this.createdAt,
-        this.updatedAt,
-        this.iV,
-        this.thumbnail});
+  VideoModel({
+    this.sId,
+    this.title,
+    this.description,
+    this.video,
+    this.topic,
+    this.createdAt,
+    this.updatedAt,
+    this.iV,
+    this.thumbnail,
+  });
 
   VideoModel.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
     title = json['title'];
     description = json['description'];
     video = json['video'];
-    topic = json['topic'];
+    topic = json['topic'] != null ? TopicModel.fromJson(json['topic']) : null;
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
     iV = json['__v'];
@@ -96,11 +97,32 @@ class VideoModel {
     data['title'] = title;
     data['description'] = description;
     data['video'] = video;
-    data['topic'] = topic;
+    if (topic != null) {
+      data['topic'] = topic!.toJson();
+    }
     data['createdAt'] = createdAt;
     data['updatedAt'] = updatedAt;
     data['__v'] = iV;
     data['thumbnail'] = thumbnail;
+    return data;
+  }
+}
+
+class TopicModel {
+  String? id;
+  String? title;
+
+  TopicModel({this.id, this.title});
+
+  TopicModel.fromJson(Map<String, dynamic> json) {
+    id = json['_id'];
+    title = json['title'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data['_id'] = id;
+    data['title'] = title;
     return data;
   }
 }

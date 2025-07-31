@@ -1,3 +1,5 @@
+import 'package:football_coaching_coach_app/model/session_details_model.dart';
+
 class CourseListModel {
 
   Pagination? pagination;
@@ -48,7 +50,7 @@ class Course {
   String? endDate;
   String? createdAt;
   String? updatedAt;
-  String? couch;
+  Couch? couch;
 
   Course(
       {this.sId,
@@ -70,7 +72,7 @@ class Course {
     endDate = json['endDate'];
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
-    couch = json['couch'];
+    couch = json['couch'] != null ? Couch.fromJson(json['couch']) : null;
   }
 
 }

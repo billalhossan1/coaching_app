@@ -9,14 +9,6 @@ class SessionDetailsModel {
     sessionDetails = json['data'] != null ? SessionDetails.fromJson(json['data']) : null;
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-
-    if (this.sessionDetails != null) {
-      data['data'] = this.sessionDetails!.toJson();
-    }
-    return data;
-  }
 }
 
 class SessionDetails {
@@ -39,20 +31,6 @@ class SessionDetails {
         studentList!.add(StudentList.fromJson(v));
       });
     }
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    if (sessionInfo != null) {
-      data['sessionInfo'] = sessionInfo!.toJson();
-    }
-    if (homework != null) {
-      data['homework'] = homework!.toJson();
-    }
-    if (studentList != null) {
-      data['studentList'] = studentList!.map((v) => v.toJson()).toList();
-    }
-    return data;
   }
 }
 
@@ -97,25 +75,6 @@ class SessionInfo {
     iV = json['__v'];
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['_id'] = sId;
-    if (course != null) {
-      data['course'] = course!.toJson();
-    }
-    data['title'] = title;
-    data['status'] = status;
-    data['startTime'] = startTime;
-    data['endTime'] = endTime;
-    data['date'] = date;
-    if (couch != null) {
-      data['couch'] = couch!.toJson();
-    }
-    data['createdAt'] = createdAt;
-    data['updatedAt'] = updatedAt;
-    data['__v'] = iV;
-    return data;
-  }
 }
 
 class Course {
@@ -138,16 +97,18 @@ class Course {
 }
 
 class Couch {
-  String? sId;
-  String? name;
-  String? image;
+ final String sId;
+ final String name;
+ final String image;
 
-  Couch({this.sId, this.name, this.image});
+  Couch({this.sId = "", this.name = "", this.image = ""});
 
-  Couch.fromJson(Map<String, dynamic> json) {
-    sId = json['_id'];
-    name = json['name'];
-    image = json['image'];
+ factory Couch.fromJson(Map<String, dynamic> json) {
+   return Couch(sId: json['_id'] != null &&  json['_id'] is String ?  json['_id'] : "",
+       name: json['name'] != null &&  json['name'] is String ?  json['name'] : "",
+     image: json['image']  != null && json['image'] is String ? json['image'] : ""
+   );
+
   }
 
   Map<String, dynamic> toJson() {
