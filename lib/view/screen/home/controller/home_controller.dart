@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart' hide Notification;
+import 'package:football_coaching_coach_app/Helper/shared_prefe/shared_prefe.dart';
+import 'package:football_coaching_coach_app/Service/api_url.dart';
 import 'package:football_coaching_coach_app/model/course_model.dart';
 import 'package:football_coaching_coach_app/model/notification_list_model.dart';
 import 'package:football_coaching_coach_app/model/profile_analytics_model.dart';
@@ -10,6 +12,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 
+import '../../../../Service/socket_service.dart';
 import '../../../../utils/ToastMsg/toast_message.dart';
 import '../profile/model/profile_model.dart';
 import '../profile/repo/profile_repo.dart';
@@ -27,7 +30,7 @@ class HomeController extends GetxController {
   Rxn<ProfileAnalytics> profileAnalytics = Rxn<ProfileAnalytics>();
   Rxn<Sessions> todaySession = Rxn<Sessions>();
   RxList<Course> courseList = RxList<Course>();
-  RxList<Notification> notificationList = RxList<Notification>();
+  RxList<NotificationItem> notificationList = RxList<NotificationItem>();
   RxList<UpComingSessionModel> upComingSessionList = RxList<UpComingSessionModel>();
   int coursePage = 1;
   int courseTotalPage = 1;
@@ -39,9 +42,21 @@ class HomeController extends GetxController {
   TextEditingController contactTEController = TextEditingController();
   TextEditingController nationalityTEController = TextEditingController();
   TextEditingController addressTEController = TextEditingController();
+  String? userId;
   // Toggle the expansion state
   Future<void> homeInit() async {
+    userId = await SharePrefsHelper.getString(ApiConstant.myid);
     getCourses();
+    AppSocketAllOperation.instance.initializeSocket();
+
+    // Listen for real-time notifications
+    AppSocketAllOperation.instance.readEvent(
+      event: 'get-notification::$userId',
+      handler: (data) {
+        // Handle new notification data
+        handleNewNotification(data);
+      },
+    );
     getUpcomingSession();
     getTodaySession();
     await getProfile();
@@ -61,10 +76,11 @@ void setTextEditingController(){
   addressTEController.text = profileModel.value?.profileModel?.address??'';
 }
 
-  void onRefresh(){
-    getCourses();
-    getUpcomingSession();
+  Future<void> onRefresh() async {
+    await getCourses();
+    await getUpcomingSession();
   }
+
 
   void toggleExpanded() {
     isExpanded.value = !isExpanded.value;
@@ -79,6 +95,7 @@ void setTextEditingController(){
       isProfileLoading.value = false;
       if (response.statusCode == 200) {
         profileModel.value = ProfileModel.fromJson(response.body);
+        SharePrefsHelper.setString(ApiConstant.myid, profileModel.value!.profileModel!.sId);
         update();
       } else {
         showCustomSnackBar(response.statusText ?? "Something went wrong");
@@ -87,6 +104,11 @@ void setTextEditingController(){
       debugPrint(e.toString());
     }
   }
+
+
+
+
+
 
 
   //get course
@@ -313,6 +335,28 @@ void setTextEditingController(){
     }else{
       showCustomSnackBar(response.statusText??"Something went wrong");
     }
+  }
+
+  void handleNewNotification(dynamic data) {
+    try {
+      // Assuming data is the notification item
+      NotificationItem newNotification = NotificationItem.fromJson(data);
+
+      // Add new notification to the top of the list
+      notificationList.insert(0, newNotification);
+     showCustomSnackBar("New notification received");
+      getAllNotification();
+      update();  // To update the UI
+
+    } catch (e) {
+     showCustomSnackBar("Error handling new notification: $e");
+    }
+  }
+
+  @override
+  void onClose() {
+    AppSocketAllOperation.instance.dispose();
+    super.onClose();
   }
 
 

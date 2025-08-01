@@ -16,56 +16,81 @@ class VideoPlayerPage extends StatelessWidget {
   Widget build(BuildContext context) {
     Get.put(VideoPlayerControllerX(videoUrl: videoUrl));
     return Scaffold(
-      body: GetBuilder<VideoPlayerControllerX>(
-        builder: (controller) {
-          if (!controller.videoController.value.isInitialized) {
-            return Center(child: CircularProgressIndicator());
-          }
-          // Create a ChewieController
-          ChewieController chewieController = ChewieController(
-            videoPlayerController: controller.videoController,
-            autoPlay: true,
-            looping: true,
-            allowFullScreen: true,
-            showControls: true,
-            materialProgressColors: ChewieProgressColors(
-              playedColor: Colors.blue,
-              handleColor: Colors.blueAccent,
-              backgroundColor: Colors.grey,
-            ),
-            cupertinoProgressColors: ChewieProgressColors(
-              playedColor: Colors.blue,
-              handleColor: Colors.blueAccent,
-              backgroundColor: Colors.grey,
-            ),
-            allowMuting: true,
-
-          );
-          return Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.center,
+      body: GetBuilder<VideoPlayerControllerX>(builder: (controller) {
+        if (!controller.videoController.value.isInitialized) {
+          return Stack(
             children: [
-              AspectRatio(
-                aspectRatio: controller.videoController.value.aspectRatio,
-                child: Chewie(controller: chewieController),
-              ),
-              HeightGap(height: 20.h),
-              // Video description text
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Text(
-                  text,
-                  style: TextStyles.regular14.copyWith(
-                    fontWeight: FontWeight.w500,
-                    color: AppColors.white600,
-                  ),
+              Center(child: CircularProgressIndicator()),
+              Positioned(
+                top: 40.h, // Adjust this to place the back button where you want
+                left: 16.w, // Adjust this to place the back button
+                child: IconButton(
+                  icon: Icon(Icons.arrow_back, color: Colors.white),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
                 ),
               ),
             ],
           );
-        },
-      ),
+        }
+        // Create a ChewieController
+        ChewieController chewieController = ChewieController(
+          videoPlayerController: controller.videoController,
+          autoPlay: true,
+          looping: true,
+          allowFullScreen: true,
+          showControls: true,
+          materialProgressColors: ChewieProgressColors(
+            playedColor: Colors.blue,
+            handleColor: Colors.blueAccent,
+            backgroundColor: Colors.grey,
+          ),
+          cupertinoProgressColors: ChewieProgressColors(
+            playedColor: Colors.blue,
+            handleColor: Colors.blueAccent,
+            backgroundColor: Colors.grey,
+          ),
+          allowMuting: true,
+        );
+
+        return Stack(
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                AspectRatio(
+                  aspectRatio: controller.videoController.value.aspectRatio,
+                  child: Chewie(controller: chewieController),
+                ),
+                HeightGap(height: 20.h),
+                // Video description text
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Text(
+                    text,
+                    style: TextStyles.regular14.copyWith(
+                      fontWeight: FontWeight.w500,
+                      color: AppColors.white600,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Positioned(
+              top: 40.h, // Adjust this for back button placement
+              left: 16.w, // Adjust this for back button placement
+              child: IconButton(
+                icon: Icon(Icons.arrow_back, color: Colors.white),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ),
+          ],
+        );
+      }),
     );
   }
-
 }

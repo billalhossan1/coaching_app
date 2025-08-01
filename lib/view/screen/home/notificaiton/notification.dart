@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 
 import '../../../../utils/AppColors/app_colors.dart';
 import '../../../../utils/Texts/text_style.dart';
+import '../../../../utils/format_time.dart';
 import '../../../widget/size.dart';
 import '../controller/home_controller.dart';
 
@@ -40,7 +41,7 @@ class Notification extends StatelessWidget {
                               Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(notificationData.title??'', style: TextStyles.regular14.copyWith(
+                                  Text( ShortText.getShortText(notificationData.title??'',maxLength: 34), style: TextStyles.regular14.copyWith(
                                     fontWeight: FontWeight.w400,
                                     color: AppColors.white300,
                                   ),),

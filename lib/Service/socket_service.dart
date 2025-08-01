@@ -1,88 +1,164 @@
-import 'package:football_coaching_coach_app/Service/api_url.dart';
+
 import 'package:socket_io_client/socket_io_client.dart' as io;
 
+import '../utils/log/app_log.dart';
+import '../view/screen/home/widget/error_log.dart';
+import 'api_url.dart';
+
 class AppSocketAllOperation {
-  static final AppSocketAllOperation _instance =
-  AppSocketAllOperation._internal();
-  factory AppSocketAllOperation() => _instance;
+  AppSocketAllOperation._privateConstructor();
+  static final AppSocketAllOperation _instance = AppSocketAllOperation._privateConstructor();
+  static AppSocketAllOperation get instance => _instance;
 
   io.Socket? appRootSocket;
+  bool _isConnecting = false;
+  final Map<String, List<void Function(dynamic)>> _eventHandlers = {};
 
-  AppSocketAllOperation._internal() {
+  bool get isConnected => appRootSocket?.connected == true;
+
+  void initializeSocket() {
+    if (appRootSocket != null) return;
+
     _connectSocketToServer();
   }
 
-  bool _isSocketConnected() {
-    return appRootSocket != null && appRootSocket?.connected == true;
-  }
-
-  void readEvent({
-    required String event,
-    required void Function(dynamic) handler,
-  }) {
+  void readEvent({required String event, required void Function(dynamic) handler}) {
     try {
-      if (_isSocketConnected()) {
-        appRootSocket?.on(event, (data) {
-          print("Received event: $event with data: $data");
-          handler(data);
-        });
+      // Store the handler for reconnection scenarios
+      if (!_eventHandlers.containsKey(event)) {
+        _eventHandlers[event] = [];
+      }
+      _eventHandlers[event]!.add(handler);
+
+      // If already connected, setup the listener immediately
+      if (isConnected) {
+        _setupEventListener(event, handler);
+      } else {
+        // If not connected, initialize the connection
+        initializeSocket();
       }
     } catch (e, stackTrace) {
-      print("readEvent ($event)$e $stackTrace", );
+      errorLog("readEvent ($event)$e", stackTrace);
     }
+  }
+
+  void _setupEventListener(String event, void Function(dynamic) handler) {
+    appRootSocket?.off(event); // Remove existing listeners to avoid duplicates
+    appRootSocket?.on(event, (data) {
+      appLog("Received event: $event ");
+      appLog("with data: $data");
+      handler(data);
+    });
   }
 
   void emitEvent(String event, dynamic data) {
     try {
-      if (_isSocketConnected()) {
+      if (isConnected) {
         appRootSocket?.emit(event, data);
+      } else {
+        // Queue the emit for when connection is established
+        initializeSocket();
+        _onceConnected(() {
+          appRootSocket?.emit(event, data);
+        });
       }
     } catch (e, stackTrace) {
-      print("emitEvent ($event) $e $stackTrace", );
+      errorLog("emitEvent ($event) $e", stackTrace);
     }
   }
 
+  void _onceConnected(void Function() callback) {
+    if (isConnected) {
+      callback();
+      return;
+    }
+
+    void listener(dynamic listener) {
+      try {
+        callback();
+        appRootSocket?.off('connect', listener);
+      } catch (e) {
+        errorLog("listener", e);
+      }
+    }
+
+    appRootSocket?.on('connect', listener);
+  }
+
+  void vendorLiveLocationUpdate({required String orderId, required dynamic latitude, required dynamic longitude}) {
+    try {
+      final data = {"orderId": orderId, "latitude": _convertToDouble(latitude), "longitude": _convertToDouble(longitude)};
+      emitEvent("liveTracking", data);
+    } catch (e, stackTrace) {
+      errorLog("vendorLiveLocationUpdate$e", stackTrace);
+    }
+  }
 
   double _convertToDouble(dynamic value) {
     try {
       return double.parse(value.toString());
     } catch (e, stackTrace) {
-      print("_convertToDouble $e $stackTrace", );
+      errorLog("_convertToDouble $e", stackTrace);
       return 0.0;
     }
   }
 
   void _connectSocketToServer() {
     try {
-      if (_isSocketConnected()) {
-        return;
-      }
+      if (appRootSocket != null || _isConnecting) return;
+
+      _isConnecting = true;
+      appLog("Attempting to connect socket...");
 
       appRootSocket = io.io(
-          ApiConstant.socketUrl,
-          io.OptionBuilder()
-              .setTransports(['websocket']) // for Flutter or Dart VM
-              .disableAutoConnect() // disable auto-connection
-              .setExtraHeaders({'foo': 'bar'}) // optional
-              .build());
-
-      appRootSocket?.connect();
-
-      // Event listeners
-      appRootSocket?.onConnect((_) => print("Socket connected"));
-      appRootSocket?.onDisconnect((data) => print("Socket disconnected $data", ));
-      appRootSocket?.onConnectError((data) => print("Connect error $data", ));
-      appRootSocket?.onError((data) => print("Error $data", ));
-      appRootSocket?.onReconnect((_) => print("Socket reconnected"));
-    } catch (e, stackTrace) {
-      print(
-        "_connectSocketToServer $e $stackTrace",
+        ApiConstant.socketUrl,
+        io.OptionBuilder().setTransports(['websocket']).disableAutoConnect().setExtraHeaders({'foo': 'bar'}).enableReconnection().build(),
       );
+
+      // Setup connection listeners
+      appRootSocket?.onConnect((_) {
+        _isConnecting = false;
+        appLog("Socket connected");
+
+        // Re-establish all event listeners using for loops
+        for (final entry in _eventHandlers.entries) {
+          final event = entry.key;
+          final handlers = entry.value;
+          for (final handler in handlers) {
+            _setupEventListener(event, handler);
+          }
+        }
+      });
+
+      appRootSocket?.onDisconnect((_) {
+        errorLog("Socket disconnected", "");
+        _isConnecting = false;
+      });
+
+      appRootSocket?.onConnectError((data) {
+        errorLog("Connect error", data);
+        _isConnecting = false;
+      });
+
+      appRootSocket?.onError((data) {
+        errorLog("Error", data);
+        _isConnecting = false;
+      });
+
+      appRootSocket?.onReconnect((_) {
+        appLog("Socket reconnected");
+      });
+
+      // Start the connection
+      appRootSocket?.connect();
+    } catch (e, stackTrace) {
+      _isConnecting = false;
+      errorLog("_connectSocketToServer $e", stackTrace);
     }
   }
 
   void reconnect() {
-    if (!_isSocketConnected()) {
+    if (!isConnected && !_isConnecting) {
       _connectSocketToServer();
     }
   }
@@ -93,5 +169,7 @@ class AppSocketAllOperation {
       appRootSocket?.dispose();
       appRootSocket = null;
     }
+    _eventHandlers.clear();
+    _isConnecting = false;
   }
 }

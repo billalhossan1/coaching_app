@@ -120,248 +120,254 @@ class HomeScreen extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: 20,
-                      vertical: 16,
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Session Schedule',
-                          style: TextStyles.regular14.copyWith(
-                            fontWeight: FontWeight.w500,
-                            color: AppColors.white300,
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            Get.toNamed(AppRoute.schedule);
-                          },
-                          child: Text(
-                            'View All',
+            child: RefreshIndicator(
+              onRefresh: () {
+               return homeController.onRefresh();
+              },
+              child: SingleChildScrollView(
+                physics: const AlwaysScrollableScrollPhysics(),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 20,
+                        vertical: 16,
+                      ),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Session Schedule',
                             style: TextStyles.regular14.copyWith(
                               fontWeight: FontWeight.w500,
-                              color: Colors.blue,
-                              decoration: TextDecoration.underline,
-                              decorationColor: Colors.blue,
+                              color: AppColors.white300,
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.only(
-                      left: 16,
-                      right: 16,
-                      top: 0,
-                      bottom: 20,
-                    ),
-                    child: Obx(
-                      () => homeController.isUpComingSessionLoading.value
-                          ? buildShimmerRow()
-                          : Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  "${homeController.upComingSessionList.isNotEmpty ? homeController.upComingSessionList[0].shedules : 0} Schedule",
-                                  style: TextStyles.regular12.copyWith(
-                                    fontWeight: FontWeight.w500,
-                                    color: AppColors.white900,
-                                  ),
-                                ),
-                                homeController.upComingSessionList.isNotEmpty
-                                    ? Text(
-                                        homeController
-                                                .upComingSessionList[0]
-                                                .sId ??
-                                            '',
-                                        style: TextStyles.regular14.copyWith(
-                                          fontWeight: FontWeight.w500,
-                                          color: AppColors.white700,
-                                        ),
-                                      )
-                                    : const SizedBox(),
-                              ],
-                            ),
-                    ),
-                  ),
-
-                  /// Schedule
-                  Obx(
-                    () => homeController.isUpComingSessionLoading.value
-                        ? Center(child: buildShimmerCourseItem(context))
-                        : homeController.upComingSessionList.isEmpty
-                        ? const Center(
+                          GestureDetector(
+                            onTap: () {
+                              Get.toNamed(AppRoute.schedule);
+                            },
                             child: Text(
-                              'No Schedule Available For Today',
-                              style: TextStyle(
+                              'View All',
+                              style: TextStyles.regular14.copyWith(
                                 fontWeight: FontWeight.w500,
-                                color: AppColors.white900,
+                                color: Colors.blue,
+                                decoration: TextDecoration.underline,
+                                decorationColor: Colors.blue,
                               ),
                             ),
-                          )
-                        : ListView.separated(
-                            itemCount:
-                                homeController.upComingSessionList.length,
-                            shrinkWrap: true,
-                            itemBuilder: (context, index) {
-                              final session = homeController
-                                  .upComingSessionList[0]
-                                  .sessions![index];
-                              return GestureDetector(
-                                onTap: () {
-                                  Get.toNamed(AppRoute.menageClassById,arguments: {"sessionId":session.sId});
-                                },
-
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(16.r),
-                                    color: AppColors.grey900,
+                          ),
+                        ],
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        left: 16,
+                        right: 16,
+                        top: 0,
+                        bottom: 20,
+                      ),
+                      child: Obx(
+                        () => homeController.isUpComingSessionLoading.value
+                            ? buildShimmerRow()
+                            : Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    "${homeController.upComingSessionList.isNotEmpty ? homeController.upComingSessionList[0].shedules : 0} Schedule",
+                                    style: TextStyles.regular12.copyWith(
+                                      fontWeight: FontWeight.w500,
+                                      color: AppColors.white900,
+                                    ),
                                   ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(20.0),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          session.course?.name ?? '',
-                                          style: TextStyles.regular12.copyWith(
+                                  homeController.upComingSessionList.isNotEmpty
+                                      ? Text(
+                                          homeController
+                                                  .upComingSessionList[0]
+                                                  .sId ??
+                                              '',
+                                          style: TextStyles.regular14.copyWith(
                                             fontWeight: FontWeight.w500,
-                                            color: AppColors.green500,
+                                            color: AppColors.white700,
                                           ),
-                                        ),
-                                        HeightGap(height: 16.h),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              session.title ?? '',
-                                              style: TextStyles.regular12
-                                                  .copyWith(
-                                                    fontWeight: FontWeight.w300,
-                                                    color: AppColors.white400,
-                                                  ),
-                                            ),
-                                            Text(
-                                              "${FormatTime.formateTime(session.startTime ?? '')} - ${FormatTime.formateTime(session.endTime ?? '')}",
-                                              style: TextStyles.regular12
-                                                  .copyWith(
-                                                    fontWeight: FontWeight.w500,
-                                                    color: AppColors.white400,
-                                                  ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              );
-                            },
-                            separatorBuilder: (_, __) {
-                              return HeightGap(height: 8.h);
-                            },
-                          ),
-                  ),
-                  HeightGap(height: 12.h),
-                  Text(
-                    'Courses',
-                    style: TextStyles.regular16.copyWith(
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.white300,
-                    ),
-                  ),
-                  HeightGap(height: 12.h),
-
-                  /// Courses
-                  Obx(
-                    () => homeController.isCourseLoading.value
-                        ? buildShimmerCourseItem(context)
-                        : homeController.courseList.isEmpty
-                        ? const Center(
-                            child: Text(
-                              "No Course Available",
-                              style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                color: AppColors.white900,
+                                        )
+                                      : const SizedBox(),
+                                ],
                               ),
-                            ),
-                          )
-                        : ListView.separated(
-                            itemCount: homeController.courseList.length,
-                            controller: homeController.courseScrollController,
-                            shrinkWrap: true,
-                            itemBuilder: (context, index) {
-                              final course = homeController.courseList[index];
-                              return GestureDetector(
-                                onTap: () {
-                                  Get.toNamed(AppRoute.homeCourseDetails,arguments: {"courseId":course.sId,"courseName":course.name});
-                                },
-                                child: Container(
-                                  height: 90.h,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(16.r),
-                                    image: const DecorationImage(
-                                      image: AssetImage(AppImages.blueBg),
-                                      fit: BoxFit.cover,
-                                    ),
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(20.0),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Text(
-                                              course.name ?? '',
-                                              style: TextStyles.regular14
-                                                  .copyWith(
-                                                    fontWeight: FontWeight.w400,
-                                                    color: AppColors.white600,
-                                                  ),
-                                            ),
-                                            Text(
-                                              "${FormatTime.formateDateTimeMonth(course.startDate ?? '')} - ${FormatTime.formateDateTimeMonth(course.endDate ?? '')}",
-                                              style: TextStyles.regular12
-                                                  .copyWith(
-                                                    fontWeight: FontWeight.w400,
-                                                    color: AppColors.white600,
-                                                  ),
-                                            ),
-                                          ],
-                                        ),
-                                        CustomSvgImage(
-                                          imagePath: AppImages.next,
-                                          height: 42.h,
-                                          width: 42.w,
-                                        ),
-                                      ],
-                                    ),
-                                  ),
+                      ),
+                    ),
+
+                    /// Schedule
+                    Obx(
+                      () => homeController.isUpComingSessionLoading.value
+                          ? Center(child: buildShimmerCourseItem(context))
+                          : homeController.upComingSessionList.isEmpty
+                          ? const Center(
+                              child: Text(
+                                'No Schedule Available For Today',
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  color: AppColors.white900,
                                 ),
-                              );
-                            },
-                            separatorBuilder: (_, __) {
-                              return HeightGap(height: 10.h);
-                            },
-                          ),
-                  ),
-                ],
+                              ),
+                            )
+                          : ListView.separated(
+                              itemCount:
+                                  homeController.upComingSessionList.length,
+                              shrinkWrap: true,
+                              itemBuilder: (context, index) {
+                                final session = homeController
+                                    .upComingSessionList[0]
+                                    .sessions![index];
+                                return GestureDetector(
+                                  onTap: () {
+                                    Get.toNamed(AppRoute.menageClassById,arguments: {"sessionId":session.sId});
+                                  },
+
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(16.r),
+                                      color: AppColors.grey900,
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(20.0),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            session.course?.name ?? '',
+                                            style: TextStyles.regular12.copyWith(
+                                              fontWeight: FontWeight.w500,
+                                              color: AppColors.green500,
+                                            ),
+                                          ),
+                                          HeightGap(height: 16.h),
+                                          Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                session.title ?? '',
+                                                style: TextStyles.regular12
+                                                    .copyWith(
+                                                      fontWeight: FontWeight.w300,
+                                                      color: AppColors.white400,
+                                                    ),
+                                              ),
+                                              Text(
+                                                "${FormatTime.formateTime(session.startTime ?? '')} - ${FormatTime.formateTime(session.endTime ?? '')}",
+                                                style: TextStyles.regular12
+                                                    .copyWith(
+                                                      fontWeight: FontWeight.w500,
+                                                      color: AppColors.white400,
+                                                    ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                              separatorBuilder: (_, __) {
+                                return HeightGap(height: 8.h);
+                              },
+                            ),
+                    ),
+                    HeightGap(height: 12.h),
+                    Text(
+                      'Courses',
+                      style: TextStyles.regular16.copyWith(
+                        fontWeight: FontWeight.w500,
+                        color: AppColors.white300,
+                      ),
+                    ),
+                    HeightGap(height: 12.h),
+
+                    /// Courses
+                    Obx(
+                      () => homeController.isCourseLoading.value
+                          ? buildShimmerCourseItem(context)
+                          : homeController.courseList.isEmpty
+                          ? const Center(
+                              child: Text(
+                                "No Course Available",
+                                style: TextStyle(
+                                  fontWeight: FontWeight.w500,
+                                  color: AppColors.white900,
+                                ),
+                              ),
+                            )
+                          : ListView.separated(
+                              itemCount: homeController.courseList.length,
+                              controller: homeController.courseScrollController,
+                              shrinkWrap: true,
+                              itemBuilder: (context, index) {
+                                final course = homeController.courseList[index];
+                                return GestureDetector(
+                                  onTap: () {
+                                    Get.toNamed(AppRoute.homeCourseDetails,arguments: {"courseId":course.sId,"courseName":course.name});
+                                  },
+                                  child: Container(
+                                    height: 90.h,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(16.r),
+                                      image: const DecorationImage(
+                                        image: AssetImage(AppImages.blueBg),
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(20.0),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.spaceBetween,
+                                        children: [
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Text(
+                                                course.name ?? '',
+                                                style: TextStyles.regular14
+                                                    .copyWith(
+                                                      fontWeight: FontWeight.w400,
+                                                      color: AppColors.white600,
+                                                    ),
+                                              ),
+                                              Text(
+                                                "${FormatTime.formateDateTimeMonth(course.startDate ?? '')} - ${FormatTime.formateDateTimeMonth(course.endDate ?? '')}",
+                                                style: TextStyles.regular12
+                                                    .copyWith(
+                                                      fontWeight: FontWeight.w400,
+                                                      color: AppColors.white600,
+                                                    ),
+                                              ),
+                                            ],
+                                          ),
+                                          CustomSvgImage(
+                                            imagePath: AppImages.next,
+                                            height: 42.h,
+                                            width: 42.w,
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                              separatorBuilder: (_, __) {
+                                return HeightGap(height: 10.h);
+                              },
+                            ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ),

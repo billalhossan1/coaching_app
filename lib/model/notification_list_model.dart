@@ -36,16 +36,16 @@ class Pagination {
 
 class NotificationModel {
   int? unreadCount;
-  List<Notification>? notificationList;
+  List<NotificationItem>? notificationList;
 
   NotificationModel({this.unreadCount, this.notificationList});
 
   NotificationModel.fromJson(Map<String, dynamic> json) {
     unreadCount = json['unreadCount'];
     if (json['notification'] != null) {
-      notificationList = <Notification>[];
+      notificationList = <NotificationItem>[];
       json['notification'].forEach((v) {
-        notificationList!.add(new Notification.fromJson(v));
+        notificationList!.add(new NotificationItem.fromJson(v));
       });
     }
   }
@@ -53,7 +53,7 @@ class NotificationModel {
 
 }
 
-class Notification {
+class NotificationItem {
   String? sId;
   String? title;
   String? body;
@@ -65,7 +65,7 @@ class Notification {
   bool? read;
   String? timeAgo;
 
-  Notification(
+  NotificationItem(
       {this.sId,
         this.title,
         this.body,
@@ -77,7 +77,7 @@ class Notification {
         this.read,
         this.timeAgo});
 
-  Notification.fromJson(Map<String, dynamic> json) {
+  NotificationItem.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
     title = json['title'];
     body = json['body'];
