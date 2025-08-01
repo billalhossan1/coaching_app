@@ -23,8 +23,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final HomeController homeController = Get.find<HomeController>();
-    final NotificationController notificationController =
-        Get.find<NotificationController>();
+
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -32,14 +31,18 @@ class HomeScreen extends StatelessWidget {
           Obx(
             () => homeController.isProfileLoading.value
                 ? buildShimmerProfileHeader(context)
-                : CustomAppBarWithoutBorder(
-                    context,
-                    homeController.profileModel.value?.profileModel?.image ??
-                        '',
-                    notificationCount:
-                        notificationController.notificationCount.value,
-                    onTap: notificationController.readAllNotification,
-                  ),
+                : GetBuilder<NotificationController>(
+                  builder: (notificationController) {
+                    return CustomAppBarWithoutBorder(
+                        context,
+                        homeController.profileModel.value?.profileModel?.image ??
+                            '',
+                        onTap: (){
+                          notificationController.readAllNotification();
+                        },
+                      );
+                  }
+                ),
           ),
           Container(
             width: double.infinity,

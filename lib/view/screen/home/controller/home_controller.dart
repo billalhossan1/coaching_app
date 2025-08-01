@@ -7,6 +7,7 @@ import 'package:football_coaching_coach_app/model/course_model.dart';
 import 'package:football_coaching_coach_app/model/notification_list_model.dart';
 import 'package:football_coaching_coach_app/model/profile_analytics_model.dart';
 import 'package:football_coaching_coach_app/model/upcomming_session_list_model.dart' hide Course;
+import 'package:football_coaching_coach_app/view/screen/home/notificaiton/notification_controller.dart';
 import 'package:football_coaching_coach_app/view/screen/home/repo/home_screen_repo.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';

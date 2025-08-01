@@ -14,18 +14,28 @@ class NotificationController extends GetxController{
   RxList<NotificationItem> notificationList = RxList<NotificationItem>();
   int notificationPage =1;
   int notificationTotalPage =1;
-  RxInt notificationCount = 0.obs;
+  int notificationCount = 0;
   String? userId;
 
   @override
   void onInit() {
+    print("=====================================================================ajfhsdjkhasdkjfhksadjhkjasdf");
     intial();
     super.onInit();
   }
   void intial()async{
+    print("afgijadsfijaisdjf");
+    AppSocketAllOperation.instance.initializeSocket();
+    // Listen for real-time notifications
     userId = await SharePrefsHelper.getString(ApiConstant.myid);
-    getAllNotification();
 
+    AppSocketAllOperation.instance.readEvent(
+      event: 'get-notification::$userId',
+      handler: (data) {
+        // Handle new notification data
+        handleNewNotification(data);
+      },
+    );
   }
 
   Future<void>getAllNotification({int page =1})async{
@@ -35,8 +45,8 @@ class NotificationController extends GetxController{
       NotificationListModel notificationListModel = NotificationListModel.fromJson(response.body);
       notificationList.addAll( notificationListModel.notification!.notificationList??[]);
       notificationTotalPage = notificationListModel.pagination?.totalPage??1;
-      notificationCount.value = notificationListModel.notification?.unreadCount??0;
-      print("===========================${notificationCount.value}");
+      notificationCount = notificationListModel.notification?.unreadCount??0;
+      print("===========================${notificationCount}");
     }else{
       showCustomSnackBar(response.statusText??"Something went wrong");
     }
@@ -57,8 +67,10 @@ class NotificationController extends GetxController{
   }
 
   Future<void>readAllNotification()async{
+    print("read call");
     Response response = await HomeScreenRepo().readAllNotification();
     if(response.statusCode!=200){
+      notificationCount=0;
       showCustomSnackBar("Something went wrong");    }
   }
 

@@ -15,7 +15,6 @@ class Notification extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final NotificationController notificationController = Get.find<NotificationController>();
-    final controller = Get.find<HomeController>();
     return Scaffold(
       body: SafeArea(
         child: Column(
@@ -26,11 +25,12 @@ class Notification extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10),
                 child: Obx((){
 
+
                   return ListView.separated(
                     controller: notificationController.notificationScrollController,
-                    itemCount: controller.notificationList.length + (notificationController.isPaginationLoading.value ? 1 : 0),
+                    itemCount: notificationController.notificationList.length + (notificationController.isPaginationLoading.value ? 1 : 0),
                     itemBuilder: (context, index){
-                      final notificationData = controller.notificationList[index];
+                      final notificationData = notificationController.notificationList[index];
                       return Container(
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(16.r),

@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:football_coaching_coach_app/Service/api_url.dart';
 import 'package:football_coaching_coach_app/core/app_route/app_route.dart';
 import 'package:football_coaching_coach_app/view/screen/home/controller/home_controller.dart';
+import 'package:football_coaching_coach_app/view/screen/home/notificaiton/notification_controller.dart';
 import 'package:get/get.dart';
 
 import '../../../../utils/AppColors/app_colors.dart';
@@ -90,7 +91,7 @@ Container CustomAppBar(BuildContext context) {
   );
 }
 
-Container  CustomAppBarWithoutBorder(BuildContext context,String imageUrl,{required int notificationCount,VoidCallback? onTap}) {
+Container  CustomAppBarWithoutBorder(BuildContext context,String imageUrl,{VoidCallback? onTap}) {
   return Container(
     height: Responsive.height(context, 65),
       color: AppColors.appBar,
@@ -131,55 +132,59 @@ Container  CustomAppBarWithoutBorder(BuildContext context,String imageUrl,{requi
               ),
             ],
           ),
-          Row(
-            children: [
-              const WidthGap(width: 16),
-              GestureDetector(
-                onTap: () {
-                  onTap;
-                  Get.toNamed(AppRoute.notificationScreen);
-                },
-                child: Stack(
-                  children: [
-                    SizedBox(
-                      height: 40.h,
-                      width: 40.h,
-                      child: Center(
-                        child: CustomSvgImage(
-                          imagePath: "assets/svg/notification.svg",
-                          height: 24.h,
-                          width: 24.h,
-                        ),
-                      ),
-                    ),
-                    if (notificationCount > 0)  // Only show if count is greater than 0
-                      Positioned(
-                        right: 4,
-                        top: 0,
-                        child: Container(
-                          height: 18.h,
-                          width: 18.h,
-                          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
-                          decoration: const BoxDecoration(
-                            color: AppColors.red2,
-                            shape: BoxShape.circle,
-                          ),
+          GetBuilder<NotificationController>(
+            builder: (controller) {
+              return Row(
+                children: [
+                  const WidthGap(width: 16),
+                  GestureDetector(
+                    onTap: () {
+                      onTap;
+                      Get.toNamed(AppRoute.notificationScreen);
+                    },
+                    child: Stack(
+                      children: [
+                        SizedBox(
+                          height: 40.h,
+                          width: 40.h,
                           child: Center(
-                            child: Text(
-                              notificationCount > 99 ? '99+' : '${notificationCount}',  // Limit to '99+' for large counts
-                              style:  TextStyle(
-                                color: Colors.white,
-                                fontSize: 10.h,
-                                fontWeight: FontWeight.bold,
-                              ),
+                            child: CustomSvgImage(
+                              imagePath: "assets/svg/notification.svg",
+                              height: 24.h,
+                              width: 24.h,
                             ),
                           ),
                         ),
-                      ),
-                  ],
-                ),
-              ),
-            ],
+                        if (controller.notificationCount > 0)  // Only show if count is greater than 0
+                          Positioned(
+                            right: 4,
+                            top: 0,
+                            child: Container(
+                              height: 18.h,
+                              width: 18.h,
+                              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                              decoration: const BoxDecoration(
+                                color: AppColors.red2,
+                                shape: BoxShape.circle,
+                              ),
+                              child: Center(
+                                child: Text(
+                                 controller.notificationCount > 99 ? '99+' : '${controller.notificationCount}',  // Limit to '99+' for large counts
+                                  style:  TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 10.h,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                      ],
+                    ),
+                  ),
+                ],
+              );
+            }
           )
         ],
       ),
