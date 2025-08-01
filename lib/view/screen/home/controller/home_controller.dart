@@ -45,25 +45,14 @@ class HomeController extends GetxController {
   String? userId;
   // Toggle the expansion state
   Future<void> homeInit() async {
-    userId = await SharePrefsHelper.getString(ApiConstant.myid);
     getCourses();
-    AppSocketAllOperation.instance.initializeSocket();
 
-    // Listen for real-time notifications
-    AppSocketAllOperation.instance.readEvent(
-      event: 'get-notification::$userId',
-      handler: (data) {
-        // Handle new notification data
-        handleNewNotification(data);
-      },
-    );
     getUpcomingSession();
     getTodaySession();
     await getProfile();
     getProfileAnalytics();
     setTextEditingController();
-    getAllNotification();
-    notificationScrollController.addListener(notificationListener);
+
     courseScrollController.addListener(_getCourseListener);
     upComingSessionScrollController.addListener(_getUpComingSessionListener);
 }
@@ -306,58 +295,7 @@ void setTextEditingController(){
   }
 
 
-  ScrollController notificationScrollController = ScrollController();
-  int notificationPage =1;
-  int notificationTotalPage =1;
-  RxBool isPaginationLoading = false.obs;
 
-
-  Future<void> notificationListener() async {
-   if(notificationScrollController.position.pixels == notificationScrollController.position.maxScrollExtent){
-     if(notificationPage<notificationTotalPage){
-       isPaginationLoading.value= true;
-       notificationPage++;
-       await getAllNotification(page: notificationPage);
-       isPaginationLoading.value= false;
-     }else{
-       return;
-     }
-   }
-  }
-
-  Future<void>getAllNotification({int page =1})async{
-    isNotificationLoading.value = false;
-    Response response = await HomeScreenRepo().getAllNotification(page);
-    if(response.statusCode==200){
-      NotificationListModel notificationListModel = NotificationListModel.fromJson(response.body);
-      notificationList.addAll( notificationListModel.notification!.notificationList??[]);
-      notificationTotalPage = notificationListModel.pagination?.totalPage??1;
-    }else{
-      showCustomSnackBar(response.statusText??"Something went wrong");
-    }
-  }
-
-  void handleNewNotification(dynamic data) {
-    try {
-      // Assuming data is the notification item
-      NotificationItem newNotification = NotificationItem.fromJson(data);
-
-      // Add new notification to the top of the list
-      notificationList.insert(0, newNotification);
-     showCustomSnackBar("New notification received");
-      getAllNotification();
-      update();  // To update the UI
-
-    } catch (e) {
-     showCustomSnackBar("Error handling new notification: $e");
-    }
-  }
-
-  @override
-  void onClose() {
-    AppSocketAllOperation.instance.dispose();
-    super.onClose();
-  }
 
 
 

@@ -90,7 +90,7 @@ Container CustomAppBar(BuildContext context) {
   );
 }
 
-Container  CustomAppBarWithoutBorder(BuildContext context,String imageUrl) {
+Container  CustomAppBarWithoutBorder(BuildContext context,String imageUrl,{required int notificationCount,VoidCallback? onTap}) {
   return Container(
     height: Responsive.height(context, 65),
       color: AppColors.appBar,
@@ -136,12 +136,47 @@ Container  CustomAppBarWithoutBorder(BuildContext context,String imageUrl) {
               const WidthGap(width: 16),
               GestureDetector(
                 onTap: () {
+                  onTap;
                   Get.toNamed(AppRoute.notificationScreen);
                 },
-                child: const CustomSvgImage(
-                  imagePath: "assets/svg/notification.svg",
-                  height: 24,
-                  width: 24,
+                child: Stack(
+                  children: [
+                    SizedBox(
+                      height: 40.h,
+                      width: 40.h,
+                      child: Center(
+                        child: CustomSvgImage(
+                          imagePath: "assets/svg/notification.svg",
+                          height: 24.h,
+                          width: 24.h,
+                        ),
+                      ),
+                    ),
+                    if (notificationCount > 0)  // Only show if count is greater than 0
+                      Positioned(
+                        right: 4,
+                        top: 0,
+                        child: Container(
+                          height: 18.h,
+                          width: 18.h,
+                          padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                          decoration: const BoxDecoration(
+                            color: AppColors.red2,
+                            shape: BoxShape.circle,
+                          ),
+                          child: Center(
+                            child: Text(
+                              notificationCount > 99 ? '99+' : '${notificationCount}',  // Limit to '99+' for large counts
+                              style:  TextStyle(
+                                color: Colors.white,
+                                fontSize: 10.h,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                  ],
                 ),
               ),
             ],

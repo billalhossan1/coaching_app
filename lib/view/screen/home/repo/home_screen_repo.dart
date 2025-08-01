@@ -105,6 +105,24 @@ class HomeScreenRepo{
 
   }
 
+
+  Future<Response>readAllNotification()async{
+
+    try{
+
+
+      Response response;
+      response = await ApiClient.patchData(
+        ApiConstant.notification,
+      );
+      return response;
+
+    }catch(e){
+      return Response(statusCode: 1, statusText: "Error: ${e.toString()}");
+    }
+
+  }
+
   Future<Response>createHomeWork({required String sessionId,required String tittle,required String description,required String deadline})async{
 
     try{

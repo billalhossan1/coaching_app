@@ -13,6 +13,7 @@ import '../../view/screen/auth/controller/auth_controller.dart';
 import '../../view/screen/home/bottom_nav_bar/controller/controller.dart';
 import '../../view/screen/home/controller/home_controller.dart';
 import '../../view/screen/home/controller/scedule_controller.dart';
+import '../../view/screen/home/notificaiton/notification_controller.dart';
 import '../../view/screen/home/profile/about/controller/about_screen_controller.dart';
 import '../../view/screen/home/profile/academic_fee/controller/controller.dart';
 import '../../view/screen/home/profile/app_support/controller/app_supprot_controller.dart';
@@ -42,5 +43,6 @@ class DependencyInjection extends Bindings {
     Get.lazyPut(() => CourseHistoryController(), fenix: true);
     Get.lazyPut(() => ManageClassController(), fenix: true);
     Get.lazyPut(() => StudentDetailsController(), fenix: true);
+    Get.lazyPut(() => NotificationController(), fenix: true);
   }
 }

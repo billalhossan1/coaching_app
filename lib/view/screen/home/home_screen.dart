@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:football_coaching_coach_app/Service/api_url.dart';
+import 'package:football_coaching_coach_app/app/utils/strings.dart';
 import 'package:football_coaching_coach_app/shimmer/course_shimmer.dart';
 import 'package:football_coaching_coach_app/shimmer/row_shimmer.dart';
 import 'package:football_coaching_coach_app/shimmer/shimmer_profile_header.dart';
@@ -15,6 +15,7 @@ import '../../../utils/AppImg/app_img.dart';
 import '../../../utils/Texts/text_style.dart';
 import '../../widget/custom_svg.dart';
 import '../../widget/size.dart';
+import 'notificaiton/notification_controller.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -22,6 +23,8 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final HomeController homeController = Get.find<HomeController>();
+    final NotificationController notificationController =
+        Get.find<NotificationController>();
     return Scaffold(
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -31,7 +34,11 @@ class HomeScreen extends StatelessWidget {
                 ? buildShimmerProfileHeader(context)
                 : CustomAppBarWithoutBorder(
                     context,
-                    homeController.profileModel.value?.profileModel?.image ?? '',
+                    homeController.profileModel.value?.profileModel?.image ??
+                        '',
+                    notificationCount:
+                        notificationController.notificationCount.value,
+                    onTap: notificationController.readAllNotification,
                   ),
           ),
           Container(
@@ -105,13 +112,14 @@ class HomeScreen extends StatelessWidget {
                                       ),
                                     ),
                               homeController.todaySession.value != null
-                                  ?  Text(
-                                '${FormatTime.formateTime(homeController.todaySession.value!.startTime!)} - ${FormatTime.formateTime(homeController.todaySession.value!.endTime!)}',
-                                style: TextStyles.regular12.copyWith(
-                                  fontWeight: FontWeight.w400,
-                                  color: AppColors.golden700,
-                                ),
-                              ):const Text('Not Available'),
+                                  ? Text(
+                                      '${FormatTime.formateTime(homeController.todaySession.value!.startTime!)} - ${FormatTime.formateTime(homeController.todaySession.value!.endTime!)}',
+                                      style: TextStyles.regular12.copyWith(
+                                        fontWeight: FontWeight.w400,
+                                        color: AppColors.golden700,
+                                      ),
+                                    )
+                                  : const Text('Not Available'),
                             ],
                           ),
                         ],
@@ -122,7 +130,7 @@ class HomeScreen extends StatelessWidget {
           Expanded(
             child: RefreshIndicator(
               onRefresh: () {
-               return homeController.onRefresh();
+                return homeController.onRefresh();
               },
               child: SingleChildScrollView(
                 physics: const AlwaysScrollableScrollPhysics(),
@@ -172,7 +180,8 @@ class HomeScreen extends StatelessWidget {
                         () => homeController.isUpComingSessionLoading.value
                             ? buildShimmerRow()
                             : Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
                                     "${homeController.upComingSessionList.isNotEmpty ? homeController.upComingSessionList[0].shedules : 0} Schedule",
@@ -222,7 +231,10 @@ class HomeScreen extends StatelessWidget {
                                     .sessions![index];
                                 return GestureDetector(
                                   onTap: () {
-                                    Get.toNamed(AppRoute.menageClassById,arguments: {"sessionId":session.sId});
+                                    Get.toNamed(
+                                      AppRoute.menageClassById,
+                                      arguments: {"sessionId": session.sId},
+                                    );
                                   },
 
                                   child: Container(
@@ -238,10 +250,11 @@ class HomeScreen extends StatelessWidget {
                                         children: [
                                           Text(
                                             session.course?.name ?? '',
-                                            style: TextStyles.regular12.copyWith(
-                                              fontWeight: FontWeight.w500,
-                                              color: AppColors.green500,
-                                            ),
+                                            style: TextStyles.regular12
+                                                .copyWith(
+                                                  fontWeight: FontWeight.w500,
+                                                  color: AppColors.green500,
+                                                ),
                                           ),
                                           HeightGap(height: 16.h),
                                           Row(
@@ -252,7 +265,8 @@ class HomeScreen extends StatelessWidget {
                                                 session.title ?? '',
                                                 style: TextStyles.regular12
                                                     .copyWith(
-                                                      fontWeight: FontWeight.w300,
+                                                      fontWeight:
+                                                          FontWeight.w300,
                                                       color: AppColors.white400,
                                                     ),
                                               ),
@@ -260,7 +274,8 @@ class HomeScreen extends StatelessWidget {
                                                 "${FormatTime.formateTime(session.startTime ?? '')} - ${FormatTime.formateTime(session.endTime ?? '')}",
                                                 style: TextStyles.regular12
                                                     .copyWith(
-                                                      fontWeight: FontWeight.w500,
+                                                      fontWeight:
+                                                          FontWeight.w500,
                                                       color: AppColors.white400,
                                                     ),
                                               ),
@@ -309,7 +324,13 @@ class HomeScreen extends StatelessWidget {
                                 final course = homeController.courseList[index];
                                 return GestureDetector(
                                   onTap: () {
-                                    Get.toNamed(AppRoute.homeCourseDetails,arguments: {"courseId":course.sId,"courseName":course.name});
+                                    Get.toNamed(
+                                      AppRoute.homeCourseDetails,
+                                      arguments: {
+                                        "courseId": course.sId,
+                                        "courseName": course.name,
+                                      },
+                                    );
                                   },
                                   child: Container(
                                     height: 90.h,
@@ -336,7 +357,8 @@ class HomeScreen extends StatelessWidget {
                                                 course.name ?? '',
                                                 style: TextStyles.regular14
                                                     .copyWith(
-                                                      fontWeight: FontWeight.w400,
+                                                      fontWeight:
+                                                          FontWeight.w400,
                                                       color: AppColors.white600,
                                                     ),
                                               ),
@@ -344,7 +366,8 @@ class HomeScreen extends StatelessWidget {
                                                 "${FormatTime.formateDateTimeMonth(course.startDate ?? '')} - ${FormatTime.formateDateTimeMonth(course.endDate ?? '')}",
                                                 style: TextStyles.regular12
                                                     .copyWith(
-                                                      fontWeight: FontWeight.w400,
+                                                      fontWeight:
+                                                          FontWeight.w400,
                                                       color: AppColors.white600,
                                                     ),
                                               ),
