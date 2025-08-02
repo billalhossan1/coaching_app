@@ -36,10 +36,7 @@ class HomeScreen extends StatelessWidget {
                     return CustomAppBarWithoutBorder(
                         context,
                         homeController.profileModel.value?.profileModel?.image ??
-                            '',
-                        onTap: (){
-                          notificationController.readAllNotification();
-                        },
+                            '',controller: notificationController
                       );
                   }
                 ),
@@ -226,69 +223,77 @@ class HomeScreen extends StatelessWidget {
                             )
                           : ListView.separated(
                               itemCount:
-                                  homeController.upComingSessionList.length,
+                              homeController.upComingSessionList[0].sessions?.length ?? 0,
                               shrinkWrap: true,
                               itemBuilder: (context, index) {
+                                print("======================$index");
+                                print("=====================${homeController
+                                    .upComingSessionList[0]
+                                    .sessions?[index].course!.name}");
                                 final session = homeController
                                     .upComingSessionList[0]
-                                    .sessions![index];
-                                return GestureDetector(
-                                  onTap: () {
-                                    Get.toNamed(
-                                      AppRoute.menageClassById,
-                                      arguments: {"sessionId": session.sId},
-                                    );
-                                  },
+                                    .sessions?[index];
+                               if(session!=null){
+                                 return GestureDetector(
+                                   onTap: () {
+                                     Get.toNamed(
+                                       AppRoute.menageClassById,
+                                       arguments: {"sessionId": session.sId},
+                                     );
+                                   },
 
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(16.r),
-                                      color: AppColors.grey900,
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(20.0),
-                                      child: Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
-                                        children: [
-                                          Text(
-                                            session.course?.name ?? '',
-                                            style: TextStyles.regular12
-                                                .copyWith(
-                                                  fontWeight: FontWeight.w500,
-                                                  color: AppColors.green500,
-                                                ),
-                                          ),
-                                          HeightGap(height: 16.h),
-                                          Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            children: [
-                                              Text(
-                                                session.title ?? '',
-                                                style: TextStyles.regular12
-                                                    .copyWith(
-                                                      fontWeight:
-                                                          FontWeight.w300,
-                                                      color: AppColors.white400,
-                                                    ),
-                                              ),
-                                              Text(
-                                                "${FormatTime.formateTime(session.startTime ?? '')} - ${FormatTime.formateTime(session.endTime ?? '')}",
-                                                style: TextStyles.regular12
-                                                    .copyWith(
-                                                      fontWeight:
-                                                          FontWeight.w500,
-                                                      color: AppColors.white400,
-                                                    ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                );
+                                   child: Container(
+                                     decoration: BoxDecoration(
+                                       borderRadius: BorderRadius.circular(16.r),
+                                       color: AppColors.grey900,
+                                     ),
+                                     child: Padding(
+                                       padding: const EdgeInsets.all(20.0),
+                                       child: Column(
+                                         crossAxisAlignment:
+                                         CrossAxisAlignment.start,
+                                         children: [
+                                           Text(
+                                             session.course?.name ?? '',
+                                             style: TextStyles.regular12
+                                                 .copyWith(
+                                               fontWeight: FontWeight.w500,
+                                               color: AppColors.green500,
+                                             ),
+                                           ),
+                                           HeightGap(height: 16.h),
+                                           Row(
+                                             mainAxisAlignment:
+                                             MainAxisAlignment.spaceBetween,
+                                             children: [
+                                               Text(
+                                                 session.title ?? '',
+                                                 style: TextStyles.regular12
+                                                     .copyWith(
+                                                   fontWeight:
+                                                   FontWeight.w300,
+                                                   color: AppColors.white400,
+                                                 ),
+                                               ),
+                                               Text(
+                                                 "${FormatTime.formateTime(session.startTime ?? '')} - ${FormatTime.formateTime(session.endTime ?? '')}",
+                                                 style: TextStyles.regular12
+                                                     .copyWith(
+                                                   fontWeight:
+                                                   FontWeight.w500,
+                                                   color: AppColors.white400,
+                                                 ),
+                                               ),
+                                             ],
+                                           ),
+                                         ],
+                                       ),
+                                     ),
+                                   ),
+                                 );
+                               }else{
+                                 return null;
+                               }
                               },
                               separatorBuilder: (_, __) {
                                 return HeightGap(height: 8.h);

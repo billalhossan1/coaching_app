@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:football_coaching_coach_app/view/screen/home/controller/home_controller.dart';
 import 'package:get/get.dart';
 
 import '../../../../Helper/shared_prefe/shared_prefe.dart' show SharePrefsHelper;
@@ -28,9 +29,11 @@ class NotificationController extends GetxController{
     AppSocketAllOperation.instance.initializeSocket();
     // Listen for real-time notifications
     userId = await SharePrefsHelper.getString(ApiConstant.myid);
+    getAllNotification();
+    notificationScrollController.addListener(notificationListener);
 
     AppSocketAllOperation.instance.readEvent(
-      event: 'get-notification::$userId',
+      event: 'notification::$userId',
       handler: (data) {
         // Handle new notification data
         handleNewNotification(data);
@@ -69,12 +72,13 @@ class NotificationController extends GetxController{
   Future<void>readAllNotification()async{
     print("read call");
     Response response = await HomeScreenRepo().readAllNotification();
-    if(response.statusCode!=200){
+    if(response.statusCode==200){
       notificationCount=0;
-      showCustomSnackBar("Something went wrong");    }
+      Get.find<HomeController>().update();
+    }
   }
 
-  void handleNewNotification(dynamic data) {
+  Future<void> handleNewNotification(dynamic data) async {
     try {
       // Assuming data is the notification item
       NotificationItem newNotification = NotificationItem.fromJson(data);
@@ -82,7 +86,7 @@ class NotificationController extends GetxController{
       // Add new notification to the top of the list
       notificationList.insert(0, newNotification);
       showCustomSnackBar("New notification received");
-      getAllNotification();
+      await getAllNotification();
       update();  // To update the UI
 
     } catch (e) {

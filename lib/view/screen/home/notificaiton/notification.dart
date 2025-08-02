@@ -15,63 +15,79 @@ class Notification extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final NotificationController notificationController = Get.find<NotificationController>();
+
     return Scaffold(
       body: SafeArea(
         child: Column(
           children: [
-    _customAppBar(),
-          notificationController.isLoading.value?const Center(child: CircularProgressIndicator(),):  Expanded(
+            _customAppBar(),
+            notificationController.isLoading.value
+                ? const Center(child: CircularProgressIndicator())
+                : Expanded(
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 10),
-                child: Obx((){
-
-
+                child: Obx(() {
                   return ListView.separated(
                     controller: notificationController.notificationScrollController,
-                    itemCount: notificationController.notificationList.length + (notificationController.isPaginationLoading.value ? 1 : 0),
-                    itemBuilder: (context, index){
-                      final notificationData = notificationController.notificationList[index];
-                      return Container(
-                        decoration: BoxDecoration(
+                    itemCount: notificationController.notificationList.length +
+                        (notificationController.isPaginationLoading.value ? 1 : 0),
+                    itemBuilder: (context, index) {
+                      // Safely handle pagination and check index
+                      if (index < notificationController.notificationList.length) {
+                        final notificationData = notificationController.notificationList[index];
+                        return Container(
+                          decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(16.r),
-                            color: AppColors.grey800
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(16.0),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text( ShortText.getShortText(notificationData.title??'',maxLength: 34), style: TextStyles.regular14.copyWith(
-                                    fontWeight: FontWeight.w400,
-                                    color: AppColors.white300,
-                                  ),),
-                                  Text(notificationData.timeAgo??'', style: TextStyles.regular10.copyWith(
+                            color: AppColors.grey800,
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.all(16.0),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      ShortText.getShortText(notificationData.title ?? '', maxLength: 34),
+                                      style: TextStyles.regular14.copyWith(
+                                        fontWeight: FontWeight.w400,
+                                        color: AppColors.white300,
+                                      ),
+                                    ),
+                                    Text(
+                                      notificationData.timeAgo ?? '',
+                                      style: TextStyles.regular10.copyWith(
+                                        fontWeight: FontWeight.w400,
+                                        color: AppColors.white800,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                HeightGap(height: 12.h),
+                                Text(
+                                  notificationData.body ?? '',
+                                  style: TextStyles.regular12.copyWith(
                                     fontWeight: FontWeight.w400,
                                     color: AppColors.white800,
-                                  ),),
-                                ],
-                              ),
-                              HeightGap(height: 12.h),
-                              Text(notificationData.body??'', style: TextStyles.regular12.copyWith(
-                                fontWeight: FontWeight.w400,
-                                color: AppColors.white800,
-                              ),),
-                            ],
+                                  ),
+                                ),
+                              ],
+                            ),
                           ),
-                        ),
-                      );
+                        );
+                      } else {
+                        // Show loading indicator when fetching more notifications
+                        return const Center(child: CircularProgressIndicator());
+                      }
                     },
-                    separatorBuilder: (_,__){
+                    separatorBuilder: (_, __) {
                       return HeightGap(height: 8.h);
                     },
                   );
-                }
-                ),
+                }),
               ),
-            )
+            ),
           ],
         ),
       ),
@@ -105,15 +121,14 @@ class Notification extends StatelessWidget {
               ),
             ),
             Spacer(),
-                Padding(
-                  padding: const EdgeInsets.only(right: 30.0),
-                  child: Text(
-                    'Notification',
-                    style: TextStyles.regular20.copyWith(
-                        fontWeight: FontWeight.w500, color: AppColors.white50),
-                  ),
-                ),
-
+            Padding(
+              padding: const EdgeInsets.only(right: 30.0),
+              child: Text(
+                'Notification',
+                style: TextStyles.regular20.copyWith(
+                    fontWeight: FontWeight.w500, color: AppColors.white50),
+              ),
+            ),
             Spacer(),
           ],
         ),
