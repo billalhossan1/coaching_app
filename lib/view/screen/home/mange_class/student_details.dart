@@ -20,7 +20,7 @@ class StudentDetails extends StatelessWidget {
         Get.find<StudentDetailsController>();
     return Scaffold(
       body: SafeArea(
-        child: Obx(()=>controller.isLoading.value?Center(child: CircularProgressIndicator(),):Column(
+        child: Obx(()=>controller.isLoading.value?const Center(child: CircularProgressIndicator(),):Column(
           children: [
             _customAppBar(),
             HeightGap(height: 12.h),
@@ -103,9 +103,9 @@ class StudentDetails extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    ActivityInfo(title: "${controller.studentDetails.value?.overView?.attandance??''}", description: 'Attendance'),
-                    ActivityInfo(title:  "${controller.studentDetails.value?.overView?.avarageAttandance??''}", description: 'Attendance  Rate'),
-                    ActivityInfo(title:  "${controller.studentDetails.value?.overView?.avarageActivity??''}", description: 'Activity'),
+                    ActivityInfo(title: controller.studentDetails.value?.overView?.attandance??'', description: 'Attendance'),
+                    ActivityInfo(title:  controller.studentDetails.value?.overView?.avarageAttandance??'', description: 'Attendance  Rate'),
+                    ActivityInfo(title:  controller.studentDetails.value?.overView?.avarageActivity??'', description: 'Activity'),
                   ],
                 ),
               ),
@@ -174,10 +174,10 @@ class StudentDetails extends StatelessWidget {
                 onTap: () {
                   Get.back();
                 },
-                child: Icon(Icons.arrow_back, color: AppColors.white50),
+                child: const Icon(Icons.arrow_back, color: AppColors.white50),
               ),
             ),
-            Spacer(),
+            const Spacer(),
             Padding(
               padding: const EdgeInsets.only(right: 30.0),
               child: Text(
@@ -188,7 +188,7 @@ class StudentDetails extends StatelessWidget {
                 ),
               ),
             ),
-            Spacer(),
+            const Spacer(),
           ],
         ),
       ),

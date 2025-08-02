@@ -21,9 +21,9 @@ class PreviousCourse extends StatelessWidget {
       body: SafeArea(
         child: Obx(
           () => controller.isPrevLoading.value
-              ? Center(child: CircularProgressIndicator())
+              ? const Center(child: CircularProgressIndicator())
               : controller.previousCourseList.isEmpty
-              ? Center(
+              ? const Center(
                   child: Text(
                     'No Course Available',
                     style: TextStyle(color: Colors.white),
@@ -37,7 +37,7 @@ class PreviousCourse extends StatelessWidget {
                       height: 90.h,
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(16.r),
-                        image: DecorationImage(
+                        image: const DecorationImage(
                           image: AssetImage(AppImages.cartBg),
                           fit: BoxFit.cover,
                         ),

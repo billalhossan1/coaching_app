@@ -6,14 +6,12 @@ import 'package:football_coaching_coach_app/Service/api_url.dart';
 import 'package:football_coaching_coach_app/model/course_model.dart';
 import 'package:football_coaching_coach_app/model/notification_list_model.dart';
 import 'package:football_coaching_coach_app/model/profile_analytics_model.dart';
-import 'package:football_coaching_coach_app/model/upcomming_session_list_model.dart' hide Course;
-import 'package:football_coaching_coach_app/view/screen/home/notificaiton/notification_controller.dart';
+import 'package:football_coaching_coach_app/model/upcomming_session_list_model.dart'
+    hide Course;
 import 'package:football_coaching_coach_app/view/screen/home/repo/home_screen_repo.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
-
-import '../../../../Service/socket_service.dart';
 import '../../../../utils/ToastMsg/toast_message.dart';
 import '../profile/model/profile_model.dart';
 import '../profile/repo/profile_repo.dart';
@@ -32,7 +30,8 @@ class HomeController extends GetxController {
   Rxn<Sessions> todaySession = Rxn<Sessions>();
   RxList<Course> courseList = RxList<Course>();
   RxList<NotificationItem> notificationList = RxList<NotificationItem>();
-  RxList<UpComingSessionModel> upComingSessionList = RxList<UpComingSessionModel>();
+  RxList<UpComingSessionModel> upComingSessionList =
+      RxList<UpComingSessionModel>();
   int coursePage = 1;
   int courseTotalPage = 1;
   int upComingSessionPage = 1;
@@ -56,21 +55,20 @@ class HomeController extends GetxController {
 
     courseScrollController.addListener(_getCourseListener);
     upComingSessionScrollController.addListener(_getUpComingSessionListener);
-}
+  }
 
-
-void setTextEditingController(){
-  nameController.text = profileModel.value?.profileModel?.name??'';
-  contactTEController.text = profileModel.value?.profileModel?.contact??'';
-  nationalityTEController.text = profileModel.value?.profileModel?.nationality??'';
-  addressTEController.text = profileModel.value?.profileModel?.address??'';
-}
+  void setTextEditingController() {
+    nameController.text = profileModel.value?.profileModel?.name ?? '';
+    contactTEController.text = profileModel.value?.profileModel?.contact ?? '';
+    nationalityTEController.text =
+        profileModel.value?.profileModel?.nationality ?? '';
+    addressTEController.text = profileModel.value?.profileModel?.address ?? '';
+  }
 
   Future<void> onRefresh() async {
     await getCourses();
     await getUpcomingSession();
   }
-
 
   void toggleExpanded() {
     isExpanded.value = !isExpanded.value;
@@ -85,7 +83,10 @@ void setTextEditingController(){
       isProfileLoading.value = false;
       if (response.statusCode == 200) {
         profileModel.value = ProfileModel.fromJson(response.body);
-        SharePrefsHelper.setString(ApiConstant.myid, profileModel.value!.profileModel!.sId);
+        SharePrefsHelper.setString(
+          ApiConstant.myid,
+          profileModel.value!.profileModel!.sId,
+        );
         update();
       } else {
         showCustomSnackBar(response.statusText ?? "Something went wrong");
@@ -94,12 +95,6 @@ void setTextEditingController(){
       debugPrint(e.toString());
     }
   }
-
-
-
-
-
-
 
   //get course
 
@@ -115,10 +110,9 @@ void setTextEditingController(){
     }
   }
 
-
   Future<void> getCourses({int page = 1}) async {
     try {
-      if(page==1){
+      if (page == 1) {
         isCourseLoading.value = true;
       }
       Response response = await HomeScreenRepo().getCourse(page);
@@ -132,7 +126,7 @@ void setTextEditingController(){
           response.body,
         );
         courseList.value = courseListModel.courseList ?? [];
-        courseTotalPage=courseListModel.pagination?.totalPage??1;
+        courseTotalPage = courseListModel.pagination?.totalPage ?? 1;
       } else {
         showCustomSnackBar(response.statusText ?? "Something went wrong");
       }
@@ -141,10 +135,7 @@ void setTextEditingController(){
     }
   }
 
-  Future<void>getOverView()async{
-
-  }
-
+  Future<void> getOverView() async {}
 
   ////get session
 
@@ -160,50 +151,45 @@ void setTextEditingController(){
     }
   }
 
-  Future<void> getUpcomingSession({int page =1})async{
-    try{
-      if(page==1){
-        isUpComingSessionLoading.value=true;
+  Future<void> getUpcomingSession({int page = 1}) async {
+    try {
+      if (page == 1) {
+        isUpComingSessionLoading.value = true;
       }
-      Response response=await HomeScreenRepo().getUpcomingSession(page);
-      if(response.statusCode==200){
-        if(page==1){
+      Response response = await HomeScreenRepo().getUpcomingSession(page);
+      if (response.statusCode == 200) {
+        if (page == 1) {
           upComingSessionList.clear();
         }
-        UpcomingSessionListModel upcomingSessionListModel=UpcomingSessionListModel.fromJson(response.body);
-        upComingSessionList.value=upcomingSessionListModel.upComingSessionList??[];
-        upComingSessionTotalPage=upcomingSessionListModel.pagination?.totalPage??1;
-        isUpComingSessionLoading.value=false;
-
-      }else{
-        showCustomSnackBar(response.statusText??"Something went wrong");
-        isUpComingSessionLoading.value=false;
-
+        UpcomingSessionListModel upcomingSessionListModel =
+            UpcomingSessionListModel.fromJson(response.body);
+        upComingSessionList.value =
+            upcomingSessionListModel.upComingSessionList ?? [];
+        upComingSessionTotalPage =
+            upcomingSessionListModel.pagination?.totalPage ?? 1;
+        isUpComingSessionLoading.value = false;
+      } else {
+        showCustomSnackBar(response.statusText ?? "Something went wrong");
+        isUpComingSessionLoading.value = false;
       }
-      isUpComingSessionLoading.value=false;
-
-
-    }catch(e){
+      isUpComingSessionLoading.value = false;
+    } catch (e) {
       debugPrint(e.toString());
     }
-
   }
-
-
 
   ////Update Profile
 
   File? selectedImage;
 
   Future<void> pickImage(ImageSource source) async {
-    final ImagePicker _imagePicker = ImagePicker();
-
+    final ImagePicker imagePicker = ImagePicker();
     bool permissionGranted = false;
 
     if (Platform.isIOS) {
       final photoStatus = await Permission.photos.request();
 
-      if ( photoStatus.isGranted) {
+      if (photoStatus.isGranted) {
         permissionGranted = true;
       } else if (photoStatus.isDenied) {
         showCustomSnackBar("Please grant camera and photo access.");
@@ -217,7 +203,7 @@ void setTextEditingController(){
 
       if (photoStatus.isGranted) {
         permissionGranted = true;
-      } else if (photoStatus.isDenied ) {
+      } else if (photoStatus.isDenied) {
         showCustomSnackBar("Please grant storage/photo permission.");
         return;
       } else if (photoStatus.isPermanentlyDenied) {
@@ -231,7 +217,7 @@ void setTextEditingController(){
     await Future.delayed(const Duration(milliseconds: 300));
 
     try {
-      final XFile? image = await _imagePicker.pickImage(
+      final XFile? image = await imagePicker.pickImage(
         source: source,
         imageQuality: 100,
       );
@@ -247,57 +233,55 @@ void setTextEditingController(){
     }
   }
 
+  Future<void> onTapUpdate(BuildContext context) async {
+    isUpdateProfileLoading.value = true;
+    Response response = await HomeScreenRepo().updateProfile(
+      name: nameController.text.trim(),
+      contact: contactTEController.text.trim(),
+      nationality: nationalityTEController.text.trim(),
+      address: addressTEController.text.trim(),
+      image: selectedImage,
+    );
 
-
-  Future<void>onTapUpdate(BuildContext context)async{
-    isUpdateProfileLoading.value=true;
-    Response response = await HomeScreenRepo().updateProfile(name: nameController.text.trim(), contact: contactTEController.text.trim(), nationality: nationalityTEController.text.trim(), address: addressTEController.text.trim() ,image: selectedImage??null);
-
-    if(response.statusCode==200){
-      showCustomSnackBar("Profile updated successfully",isError: false);
-       await getProfile();
+    if (response.statusCode == 200) {
+      showCustomSnackBar("Profile updated successfully", isError: false);
+      await getProfile();
       isUpdateProfileLoading.value = false;
-      Navigator.pop(context);
-    }else{
-      showCustomSnackBar(response.statusText??"Something went wrong");
+      if (context.mounted) {
+        Navigator.pop(context);
+      }
+    } else {
+      showCustomSnackBar(response.statusText ?? "Something went wrong");
     }
-    isUpdateProfileLoading.value=false;
+    isUpdateProfileLoading.value = false;
   }
 
-
-  Future<void>getProfileAnalytics()async{
+  Future<void> getProfileAnalytics() async {
     Response response = await HomeScreenRepo().getProfileOverView();
-    if(response.statusCode==200){
-      ProfileAnalyticsModel profileAnalyticsModel = ProfileAnalyticsModel.fromJson(response.body);
+    if (response.statusCode == 200) {
+      ProfileAnalyticsModel profileAnalyticsModel =
+          ProfileAnalyticsModel.fromJson(response.body);
       profileAnalytics.value = profileAnalyticsModel.profileAnalytics;
-    }else{
-      showCustomSnackBar(response.statusText??"Something went wrong");
+    } else {
+      showCustomSnackBar(response.statusText ?? "Something went wrong");
     }
   }
 
-  Future<void>getTodaySession()async{
-    isUpComingTodaySessionLoading.value= true;
+  Future<void> getTodaySession() async {
+    isUpComingTodaySessionLoading.value = true;
     Response response = await HomeScreenRepo().getUpcomingSessionToday();
 
-    if(response.statusCode==200){
-
-     if(response.body['data']!=null){
-       Sessions session = Sessions.fromJson(response.body['data']);
-       todaySession.value= session;
-       isUpComingTodaySessionLoading.value= false;
-     }
-     isUpComingTodaySessionLoading.value= false;
-
-    }else{
-      showCustomSnackBar(response.statusText??"Something went wrong");
-      isUpComingTodaySessionLoading.value= false;
+    if (response.statusCode == 200) {
+      if (response.body['data'] != null) {
+        Sessions session = Sessions.fromJson(response.body['data']);
+        todaySession.value = session;
+        isUpComingTodaySessionLoading.value = false;
+      }
+      isUpComingTodaySessionLoading.value = false;
+    } else {
+      showCustomSnackBar(response.statusText ?? "Something went wrong");
+      isUpComingTodaySessionLoading.value = false;
     }
-    isUpComingTodaySessionLoading.value= false;
+    isUpComingTodaySessionLoading.value = false;
   }
-
-
-
-
-
-
 }

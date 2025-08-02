@@ -7,7 +7,6 @@ import 'package:get/get.dart';
 import '../../../../../utils/AppColors/app_colors.dart';
 import '../../../../../utils/Texts/text_style.dart';
 import '../../../../widget/size.dart';
-import '../../controller/course_history_controller.dart';
 import '../../widget/tab_widget.dart';
 import 'present_course.dart';
 
@@ -60,13 +59,13 @@ class CourseHistory extends StatelessWidget {
                 onTap: () {
                   Get.back();
                 },
-                child: Icon(
+                child: const Icon(
                   Icons.arrow_back,
                   color: AppColors.white50,
                 ),
               ),
             ),
-            Spacer(),
+            const Spacer(),
             Padding(
               padding: const EdgeInsets.only(right: 30.0),
               child: Text(
@@ -75,7 +74,7 @@ class CourseHistory extends StatelessWidget {
                     fontWeight: FontWeight.w500, color: AppColors.white50),
               ),
             ),
-            Spacer(),
+            const Spacer(),
           ],
         ),
       ),
@@ -101,7 +100,7 @@ class CourseHistory extends StatelessWidget {
         onTap: (index) {
           courseHistoryController.updatedSelectedIndex(index);
         },
-        indicator: BoxDecoration(
+        indicator: const BoxDecoration(
           border: Border(
               bottom: BorderSide(
                   color: AppColors.white50
@@ -111,7 +110,7 @@ class CourseHistory extends StatelessWidget {
         indicatorSize: TabBarIndicatorSize.tab,
         dividerColor: Colors.transparent,
         splashFactory: NoSplash.splashFactory,
-        overlayColor: MaterialStateProperty.all(Colors.transparent),
+        overlayColor: WidgetStateProperty.all(Colors.transparent),
         labelColor: AppColors.white300,
         unselectedLabelColor: AppColors.blue300,
         labelStyle: TextStyles.regular16.copyWith(
@@ -120,7 +119,7 @@ class CourseHistory extends StatelessWidget {
         unselectedLabelStyle: TextStyles.regular16.copyWith(
             fontWeight: FontWeight.w400
         ),
-        tabs: [
+        tabs: const [
           TabWidget(tabStatus: 'Present Courses'),
           TabWidget(tabStatus: 'Previous Courses'),
         ],
@@ -130,7 +129,7 @@ class CourseHistory extends StatelessWidget {
 
   // TabBar view
   Expanded buildTabBarView(context) {
-    return  Expanded(
+    return  const Expanded(
       child: TabBarView(
         physics: NeverScrollableScrollPhysics(),
         children: [

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:football_coaching_coach_app/model/course_model.dart';
 import 'package:football_coaching_coach_app/model/manage_class_model.dart' hide SessionDetails;
-import 'package:football_coaching_coach_app/view/screen/home/controller/manage_class_by_id_controller.dart';
 import 'package:football_coaching_coach_app/view/screen/home/repo/home_screen_repo.dart';
 import 'package:get/get.dart';
 
@@ -166,7 +165,6 @@ class ManageClassController extends GetxController{
   Future<void>getSessionDetails(String sessionId)async{
     try{
       selectedClassId.value=sessionId;
-      print("===================selectedclass:${selectedClassId.value}");
       isSessionDetailsLoading.value=true;
       Response response = await CourseDetailsRepo().getSessionDetails(sessionId: sessionId);
       isSessionDetailsLoading.value=false;
@@ -233,7 +231,6 @@ class ManageClassController extends GetxController{
       Response response = await ManageClassRepo().updateAttandence(attendance:  attendance,sessionId:  selectedClassId.value!,userId: userId);
       if(response.statusCode==200){
         getOverview();
-        print("success");
 
       }else{
         showCustomSnackBar(response.statusText??"Something went wrong");

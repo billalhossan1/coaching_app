@@ -80,13 +80,13 @@ class HelpSupport extends StatelessWidget {
                 onTap: () {
                   Get.back();
                 },
-                child: Icon(
+                child: const Icon(
                   Icons.arrow_back,
                   color: AppColors.white50,
                 ),
               ),
             ),
-            Spacer(),
+            const Spacer(),
             Padding(
               padding: const EdgeInsets.only(right: 30.0),
               child: Text(
@@ -95,7 +95,7 @@ class HelpSupport extends StatelessWidget {
                     fontWeight: FontWeight.w500, color: AppColors.white50),
               ),
             ),
-            Spacer(),
+            const Spacer(),
           ],
         ),
       ),

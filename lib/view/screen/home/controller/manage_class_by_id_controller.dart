@@ -47,7 +47,6 @@ class ManageClassByIdController extends GetxController{
      Response response = await ManageClassRepo().updateAttandence(attendance:  attendance,sessionId:  sessionId,userId: userId);
      if(response.statusCode==200){
        Get.find<ManageClassByIdController>().manageClassById();
-       print("success");
 
      }else{
        showCustomSnackBar(response.statusText??"Something went wrong");

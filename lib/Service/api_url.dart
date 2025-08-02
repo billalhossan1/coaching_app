@@ -16,7 +16,7 @@ class ApiConstant {
   // static const socketUrl="http://10.0.70.208:5200";
 
   ///<================= For Auth And Home part ====================>
-  static const create_user = "/user";
+  static const createUser = "/user";
   static const getCourse = "/course";
   static const getHomeWork = "/homework";
   static const auth_login = "/auth/login";

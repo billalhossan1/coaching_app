@@ -1,6 +1,5 @@
 import 'package:football_coaching_coach_app/view/screen/home/mange_class/manage_class_by_id.dart';
 import 'package:football_coaching_coach_app/view/screen/home/notificaiton/notification.dart';
-import 'package:football_coaching_coach_app/view/screen/home/video_player/video_player_screen.dart';
 import 'package:get/get.dart';
 
 import '../../view/screen/auth/sign_in_screen.dart';
@@ -13,7 +12,6 @@ import '../../view/screen/home/profile/about/about.dart';
 import '../../view/screen/home/profile/academic_fee/academic_fee.dart';
 import '../../view/screen/home/profile/academic_fee/fee_details.dart';
 import '../../view/screen/home/profile/app_support/app_support.dart';
-import '../../view/screen/home/profile/course_history/course_details.dart';
 import '../../view/screen/home/profile/course_history/course_history.dart';
 import '../../view/screen/home/profile/hep_support/help_support.dart';
 import '../../view/screen/home/profile/order_history/order_history.dart';
@@ -91,7 +89,6 @@ class AppRoute {
     GetPage(name: feeDetails, page: () =>  FeeDetails()),
     GetPage(name: orderHistory, page: () =>  OrderHistory()),
     GetPage(name: courseHistory, page: () =>  CourseHistory()),
-    GetPage(name: courseDetails, page: () =>  CourseDetails()),
     GetPage(name: settings, page: () =>  Setting()),
     GetPage(name: changePassword, page: () =>  ChangePassword()),
     GetPage(name: helpSupport, page: () =>  HelpSupport()),

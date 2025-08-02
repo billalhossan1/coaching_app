@@ -17,7 +17,7 @@ class TermsCondition extends StatelessWidget {
         child: Column(
           children: [
             _customAppBar(),
-            Obx(()=>controller.isLoading.value?Center(child: CircularProgressIndicator(),):Padding(
+            Obx(()=>controller.isLoading.value?const Center(child: CircularProgressIndicator(),):Padding(
                 padding:  const EdgeInsets.symmetric(horizontal: 20),
                 child: HtmlWidget(controller.termAndCondition.value,textStyle:  TextStyles.regular20.copyWith(
                     fontWeight: FontWeight.w500, color: AppColors.white50),)
@@ -47,13 +47,13 @@ class TermsCondition extends StatelessWidget {
                 onTap: () {
                   Get.back();
                 },
-                child: Icon(
+                child: const Icon(
                   Icons.arrow_back,
                   color: AppColors.white50,
                 ),
               ),
             ),
-            Spacer(),
+            const Spacer(),
             Padding(
               padding: const EdgeInsets.only(right: 30.0),
               child: Text(
@@ -62,7 +62,7 @@ class TermsCondition extends StatelessWidget {
                     fontWeight: FontWeight.w500, color: AppColors.white50),
               ),
             ),
-            Spacer(),
+            const Spacer(),
           ],
         ),
       ),

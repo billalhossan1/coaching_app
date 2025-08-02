@@ -1,4 +1,3 @@
-import 'course_details_model.dart';
 
 class SessionsListByIdModel {
 

@@ -24,7 +24,6 @@ class NotificationController extends GetxController{
     super.onInit();
   }
   void intial()async{
-    print("afgijadsfijaisdjf");
     AppSocketAllOperation.instance.initializeSocket();
     // Listen for real-time notifications
     userId = await SharePrefsHelper.getString(ApiConstant.myid);
@@ -50,7 +49,6 @@ class NotificationController extends GetxController{
       notificationTotalPage = notificationListModel.pagination?.totalPage??1;
       notificationCount = notificationListModel.notification?.unreadCount??0;
       Get.find<HomeController>().update();
-      print("===========================${notificationCount}");
     }else{
       showCustomSnackBar(response.statusText??"Something went wrong");
     }
@@ -71,7 +69,6 @@ class NotificationController extends GetxController{
   }
 
   Future<void>readAllNotification()async{
-    print("read call");
     Response response = await HomeScreenRepo().readAllNotification();
     if(response.statusCode==200){
       notificationCount=0;

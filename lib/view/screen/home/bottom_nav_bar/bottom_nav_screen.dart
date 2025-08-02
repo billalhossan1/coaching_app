@@ -34,7 +34,6 @@ class _BottomNavBarState extends State<BottomNavBar> {
     return Scaffold(
       body: SafeArea(
         child: Obx((){
-          final value= navigationController.selectedIndex.value;
           return PageView(
             controller: pageController,
             onPageChanged: (index) => navigationController.changePage(index),

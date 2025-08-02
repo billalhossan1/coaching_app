@@ -21,7 +21,7 @@ class PresentCourse extends StatelessWidget {
     final CourseHistoryController controller = Get.find<CourseHistoryController>();
     return Scaffold(
       body: SafeArea(
-            child:Obx(()=> controller.isPresentLoading.value?const Center(child: CircularProgressIndicator(),):controller.presentCourseList.isEmpty?Center(child: Text('No Course Available',style: TextStyle(color: Colors.white),),):ListView.separated(
+            child:Obx(()=> controller.isPresentLoading.value?const Center(child: CircularProgressIndicator(),):controller.presentCourseList.isEmpty?const Center(child: Text('No Course Available',style: TextStyle(color: Colors.white),),):ListView.separated(
               itemCount: controller.presentCourseList.length,
               itemBuilder: (context, index) {
                 return Container(

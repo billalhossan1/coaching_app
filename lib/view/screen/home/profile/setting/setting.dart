@@ -25,7 +25,7 @@ class Setting extends StatelessWidget {
                 },
                 child: Row(
                   children: [
-                    Icon(Icons.lock_open,color: AppColors.white500,),
+                    const Icon(Icons.lock_open,color: AppColors.white500,),
                     WidthGap(width: 8.w),
                     Text('Change Password', style: TextStyles.regular16.copyWith(
                       fontWeight: FontWeight.w500,
@@ -60,13 +60,13 @@ class Setting extends StatelessWidget {
                 onTap: () {
                   Get.back();
                 },
-                child: Icon(
+                child: const Icon(
                   Icons.arrow_back,
                   color: AppColors.white50,
                 ),
               ),
             ),
-            Spacer(),
+            const Spacer(),
             Padding(
               padding: const EdgeInsets.only(right: 30.0),
               child: Text(
@@ -75,7 +75,7 @@ class Setting extends StatelessWidget {
                     fontWeight: FontWeight.w500, color: AppColors.white50),
               ),
             ),
-            Spacer(),
+            const Spacer(),
           ],
         ),
       ),

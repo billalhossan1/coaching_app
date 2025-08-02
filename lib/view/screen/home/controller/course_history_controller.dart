@@ -52,8 +52,7 @@ class CourseHistoryController extends GetxController{
 
       presentCourseList.addAll(courseListModel.courseList??[]);
       presentTotalPage = courseListModel.pagination!.totalPage!;
-      print("======================${courseListModel.courseList!.length}");
-      print("======================${presentCourseList.length}");
+
     }else{
       showCustomSnackBar(response.statusText??"Something went wrong");
     }

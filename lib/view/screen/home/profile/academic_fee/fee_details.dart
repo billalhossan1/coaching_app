@@ -65,7 +65,7 @@ class FeeDetails extends StatelessWidget {
                       info: '4517 Washington Ave. Manchester, Kentucky 39495',
                     ),
                     HeightGap(height: 8.h),
-                    Divider(
+                    const Divider(
                       color: AppColors.white800,
                       thickness: 0.3,
                     ),
@@ -122,7 +122,7 @@ class FeeDetails extends StatelessWidget {
                         ),),
                       ],
                     ),
-                    Divider(
+                    const Divider(
                       color: AppColors.white700,
                         thickness: 0.3,
                     ),
@@ -171,13 +171,13 @@ class FeeDetails extends StatelessWidget {
                 onTap: () {
                   Get.back();
                 },
-                child: Icon(
+                child: const Icon(
                   Icons.arrow_back,
                   color: AppColors.white50,
                 ),
               ),
             ),
-            Spacer(),
+            const Spacer(),
             Padding(
               padding: const EdgeInsets.only(right: 30.0),
               child: Text(
@@ -186,7 +186,7 @@ class FeeDetails extends StatelessWidget {
                     fontWeight: FontWeight.w500, color: AppColors.white50),
               ),
             ),
-            Spacer(),
+            const Spacer(),
           ],
         ),
       ),

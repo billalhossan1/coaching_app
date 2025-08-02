@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:football_coaching_coach_app/Service/api_url.dart';
-import 'package:football_coaching_coach_app/core/app_route/app_route.dart';
 import 'package:football_coaching_coach_app/utils/format_time.dart';
 import 'package:football_coaching_coach_app/view/screen/home/controller/course_details_controller.dart';
 import 'package:football_coaching_coach_app/view/screen/home/profile/course_history/widget/schedule_table.dart';
 import 'package:football_coaching_coach_app/view/screen/home/video_player/get_video_player.dart';
-import 'package:football_coaching_coach_app/view/screen/home/video_player/video_player_screen.dart';
 import 'package:football_coaching_coach_app/view/screen/home/widget/activity_info_widget.dart';
 import 'package:football_coaching_coach_app/view/widget/conditional_image_widget.dart';
 import 'package:get/get.dart';
@@ -451,8 +449,7 @@ class HomeCourseDetails extends StatelessWidget {
                                                             ),
                                                         image: DecorationImage(
                                                           image: NetworkImage(
-                                                            "${ApiConstant.imageUrl}${video.thumbnail}" ??
-                                                                '',
+                                                            "${ApiConstant.imageUrl}${video.thumbnail}",
                                                           ),
                                                           fit: BoxFit.cover,
                                                         ),

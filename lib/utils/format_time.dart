@@ -1,7 +1,5 @@
 import 'package:intl/intl.dart';
 
-import 'package:intl/intl.dart';
-
 class FormatTime {
   static String formateTime(String? dateString) {
     if (dateString == null || dateString.isEmpty) return '';

@@ -25,7 +25,7 @@ class WishList extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: GridView.builder(
                   itemCount: 10,
-                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     mainAxisSpacing: 10,
                     crossAxisSpacing: 10,
@@ -39,7 +39,7 @@ class WishList extends StatelessWidget {
                       child: Container(
                           alignment: Alignment.center,
                           decoration: BoxDecoration(
-                            color: Color(0xFF333333),
+                            color: const Color(0xFF333333),
                             borderRadius: BorderRadius.circular(16.r),
                           ),
                           child: Padding(
@@ -108,7 +108,7 @@ class WishList extends StatelessWidget {
                   onTap: (){
                     Get.back();
                   },
-                  child: Icon(Icons.arrow_back,
+                  child: const Icon(Icons.arrow_back,
                       size: 24, color: AppColors.white50),
                 ),
                 Text(
@@ -116,7 +116,7 @@ class WishList extends StatelessWidget {
                   style: TextStyles.regular20.copyWith(
                       fontWeight: FontWeight.w400, color: AppColors.white50),
                 ),
-                CustomSvgImage(imagePath: AppImages.cart)
+                const CustomSvgImage(imagePath: AppImages.cart)
               ],
             ),
           ],

@@ -24,11 +24,11 @@ class ManageClassById extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            CustomAppbarWithTitle(text: 'Manage Class'),
+            const CustomAppbarWithTitle(text: 'Manage Class'),
             HeightGap(height: 12.h),
             Expanded(
               child: SingleChildScrollView(
-                child: Obx(()=>controller.isLoading.value?Center(child: CircularProgressIndicator(),):Column(
+                child: Obx(()=>controller.isLoading.value?const Center(child: CircularProgressIndicator(),):Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Obx(
@@ -45,7 +45,7 @@ class ManageClassById extends StatelessWidget {
                           ),
                           child: Row(
                             children: [
-                              ClipRRect(
+                              const ClipRRect(
                                 child: Image(
                                   image: AssetImage(AppImages.logo),
                                   height: 48,
@@ -121,11 +121,11 @@ class ManageClassById extends StatelessWidget {
                                 description: 'Total Players',
                               ),
                               ActivityInfo(
-                                title: '${controller.manageClass.value?.overview?.avarageAttandance??''}',
+                                title: controller.manageClass.value?.overview?.avarageAttandance??'',
                                 description: 'Attendance  Rate',
                               ),
                               ActivityInfo(
-                                title: '${controller.manageClass.value?.overview?.avarageActivity??''}',
+                                title: controller.manageClass.value?.overview?.avarageActivity??'',
                                 description: 'Activity',
                               ),
                             ],

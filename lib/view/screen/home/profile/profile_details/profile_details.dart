@@ -73,7 +73,7 @@ class ProfileDetails extends StatelessWidget {
                               InfoCart(
                                 title: 'Employee Id',
                                 contexts:
-                                    "${ShortText.getShortText(profileModel.value?.profileModel?.sId ?? '', maxLength: 15)}",
+                                    ShortText.getShortText(profileModel.value?.profileModel?.sId ?? '', maxLength: 15),
                               ),
                               HeightGap(height: 8.h),
                               InfoCart(
@@ -86,7 +86,7 @@ class ProfileDetails extends StatelessWidget {
                               InfoCart(
                                 title: 'Contact No.',
                                 contexts:
-                                    '${profileModel.value?.profileModel?.contact ?? ''}',
+                                    profileModel.value?.profileModel?.contact ?? '',
                               ),
                               HeightGap(height: 8.h),
                               InfoCart(
@@ -171,7 +171,7 @@ class ProfileDetails extends StatelessWidget {
           ),
           Obx(
             () => Padding(
-              padding: EdgeInsets.only(left: 16.0, right: 16, bottom: 16),
+              padding: const EdgeInsets.only(left: 16.0, right: 16, bottom: 16),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -212,7 +212,7 @@ class ProfileDetails extends StatelessWidget {
             color: const Color(0xFF212220),
           ),
           child: Padding(
-            padding: EdgeInsets.all(6.0),
+            padding: const EdgeInsets.all(6.0),
             child: Container(
               height: 100.h,
               width: 100.w,
@@ -220,7 +220,7 @@ class ProfileDetails extends StatelessWidget {
                 borderRadius: BorderRadius.circular(100),
                 color: const Color(0xFF212220),
               ),
-              child: ClipOval(child: ConditionalImageWidget(imageUrl:  profileModel.profileModel?.image ?? '', width: 100, height: 100, baseUrl:'${ApiConstant.imageUrl}')),
+              child: ClipOval(child: ConditionalImageWidget(imageUrl:  profileModel.profileModel?.image ?? '', width: 100, height: 100, baseUrl:ApiConstant.imageUrl)),
             ),
           ),
         ),
@@ -237,7 +237,7 @@ class ProfileDetails extends StatelessWidget {
                 controller.selectedImage = null;
               });
             },
-            child: CustomSvgImage(
+            child: const CustomSvgImage(
               imagePath: AppImages.editIcon,
               height: 20,
               width: 20,

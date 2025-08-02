@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_phoenix/flutter_phoenix.dart' show Phoenix;
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:football_coaching_coach_app/Helper/shared_prefe/shared_prefe.dart';
 import 'package:football_coaching_coach_app/Service/api_url.dart';
@@ -13,7 +12,6 @@ import '../../../../utils/AppColors/app_colors.dart';
 import '../../../../utils/AppImg/app_img.dart';
 import '../../../../utils/Texts/text_style.dart';
 import '../../../widget/custom_svg.dart';
-import '../../../widget/network_image_widget.dart';
 import '../../../widget/size.dart';
 import '../widget/custom_appbar_with_title.dart';
 
@@ -30,7 +28,7 @@ class ProfileScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: [
-            CustomAppbarWithTitle(text: 'My Account ',isBackIcon: false,),
+            const CustomAppbarWithTitle(text: 'My Account ',isBackIcon: false,),
             // Profile details and Course history
             Padding(
               padding:

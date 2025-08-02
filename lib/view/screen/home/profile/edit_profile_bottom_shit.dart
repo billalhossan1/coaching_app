@@ -6,7 +6,6 @@ import 'package:football_coaching_coach_app/view/widget/conditional_image_widget
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../../../widget/custom_svg.dart';
 import '../controller/home_controller.dart';
 import 'model/profile_model.dart'; // Assuming you use Svg for your icons
 
@@ -174,7 +173,7 @@ Widget editProfileBottomsheet(
           const SizedBox(height: 20),
 
           // Save button
-          Obx(()=>controller.isUpdateProfileLoading.value?CircularProgressIndicator():ElevatedButton(
+          Obx(()=>controller.isUpdateProfileLoading.value?const CircularProgressIndicator():ElevatedButton(
             onPressed: () {
               controller.onTapUpdate(context);
             },

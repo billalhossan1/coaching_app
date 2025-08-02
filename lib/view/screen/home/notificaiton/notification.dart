@@ -6,7 +6,6 @@ import '../../../../utils/AppColors/app_colors.dart';
 import '../../../../utils/Texts/text_style.dart';
 import '../../../../utils/format_time.dart';
 import '../../../widget/size.dart';
-import '../controller/home_controller.dart';
 import 'notification_controller.dart';
 
 class Notification extends StatelessWidget {
@@ -114,13 +113,13 @@ class Notification extends StatelessWidget {
                 onTap: () {
                   Get.back();
                 },
-                child: Icon(
+                child: const Icon(
                   Icons.arrow_back,
                   color: AppColors.white50,
                 ),
               ),
             ),
-            Spacer(),
+            const Spacer(),
             Padding(
               padding: const EdgeInsets.only(right: 30.0),
               child: Text(
@@ -129,7 +128,7 @@ class Notification extends StatelessWidget {
                     fontWeight: FontWeight.w500, color: AppColors.white50),
               ),
             ),
-            Spacer(),
+            const Spacer(),
           ],
         ),
       ),

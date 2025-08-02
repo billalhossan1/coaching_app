@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:football_coaching_coach_app/app/utils/strings.dart';
 import 'package:football_coaching_coach_app/shimmer/course_shimmer.dart';
 import 'package:football_coaching_coach_app/shimmer/row_shimmer.dart';
 import 'package:football_coaching_coach_app/shimmer/shimmer_profile_header.dart';

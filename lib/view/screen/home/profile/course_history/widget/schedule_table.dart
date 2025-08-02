@@ -6,10 +6,8 @@ import 'package:football_coaching_coach_app/model/manage_class_model.dart' hide 
 import 'package:football_coaching_coach_app/model/session_details_model.dart';
 import 'package:football_coaching_coach_app/model/student_details_model.dart';
 import 'package:football_coaching_coach_app/utils/format_time.dart';
-import 'package:football_coaching_coach_app/view/screen/home/controller/course_details_controller.dart';
 import 'package:football_coaching_coach_app/view/screen/home/controller/manage_class_by_id_controller.dart';
 import 'package:football_coaching_coach_app/view/screen/home/controller/manage_class_controller.dart';
-import 'package:football_coaching_coach_app/view/screen/home/controller/student_details_controller.dart';
 import 'package:football_coaching_coach_app/view/screen/home/widget/attandence_widget.dart';
 import 'package:football_coaching_coach_app/view/widget/conditional_image_widget.dart';
 import 'package:football_coaching_coach_app/view/widget/network_image_widget.dart';
@@ -461,26 +459,7 @@ class ScheduleTable3 extends StatelessWidget {
   }
 
   // Build attendance cell - removed since it's now inline
-  Widget _buildAttendanceCell(String attendance) {
-    return Flexible(
-      flex: 2,
-      child: Center(
-        child: Container(
-          height: 28.h,
-          width: 28.w,
-          alignment: Alignment.center,
-          decoration: const BoxDecoration(
-            shape: BoxShape.circle,
-            color: AppColors.green500,
-          ),
-          child: Text(
-            attendance,
-            style: TextStyles.regular12.copyWith(color: Colors.white),
-          ),
-        ),
-      ),
-    );
-  }
+
 }
 
 
@@ -649,25 +628,6 @@ class ScheduleTable4 extends StatelessWidget {
   }
 
   // Build attendance cell - removed since it's now inline
-  Widget _buildAttendanceCell(String attendance) {
-    return Flexible(
-      flex: 2,
-      child: Center(
-        child: Container(
-          height: 28.h,
-          width: 28.w,
-          alignment: Alignment.center,
-          decoration: const BoxDecoration(
-            shape: BoxShape.circle,
-            color: AppColors.green500,
-          ),
-          child: Text(
-            attendance,
-            style: TextStyles.regular12.copyWith(color: Colors.white),
-          ),
-        ),
-      ),
-    );
-  }
+
 }
 

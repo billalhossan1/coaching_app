@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:football_coaching_coach_app/view/screen/auth/controller/auth_controller.dart';
 import 'package:get/get.dart';
-import '../../../core/app_route/app_route.dart';
 import '../../../utils/AppColors/app_colors.dart';
 import '../../../utils/AppImg/app_img.dart';
 import '../../../utils/StaticString/static_string.dart';
@@ -11,9 +10,14 @@ import '../../widget/custom_button.dart';
 import '../../widget/custom_circular_indicator.dart';
 import '../../widget/custom_text_form_field.dart';
 import '../../widget/size.dart';
-class SignInScreen extends StatelessWidget {
-  SignInScreen({super.key});
+class SignInScreen extends StatefulWidget {
+  const SignInScreen({super.key});
 
+  @override
+  State<SignInScreen> createState() => _SignInScreenState();
+}
+
+class _SignInScreenState extends State<SignInScreen> {
   RxBool value = false.obs;
 
   final authController = Get.find<AuthController>();
@@ -172,5 +176,4 @@ class SignInScreen extends StatelessWidget {
       ],
     );
   }
-
 }

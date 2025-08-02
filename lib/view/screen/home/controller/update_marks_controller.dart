@@ -50,7 +50,6 @@ class UpdateMarksController extends GetxController{
     userName = Get.arguments['userName'];
     userImage = Get.arguments['userImage'];
     manage = Get.arguments?['manage']??'';
-    print("=============================manage:$manage");
     await getStudentMark();
    if(performanceList.isNotEmpty){
      pacController.text = safeScore(performanceList[0].score).toString();
@@ -72,12 +71,7 @@ class UpdateMarksController extends GetxController{
 
      update();
    }
-    print("pacController.text = ${pacController.text}");
-    print("shoController.text = ${shoController.text}");
-    print("pasController.text = ${pasController.text}");
-    print("driController.text = ${driController.text}");
-    print("cooController.text = ${cooController.text}");
-    print("phyController.text = ${phyController.text}");
+
   }
 
 
@@ -126,7 +120,7 @@ class UpdateMarksController extends GetxController{
        }
 
       else{
-         print("api call===================================");
+
          await Get.find<ManageClassController>().getSessionDetails(sessionId);
        }
 
