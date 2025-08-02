@@ -72,7 +72,7 @@ class ManageClassController extends GetxController{
 
     Future<void>manageClassById()async{
       isLoading.value = true;
-      Response response = await ManageClassRepo().manageClassById(selectedClassId.value!);
+      Response response = await ManageClassRepo().manageClassById(selectedClassId.value??'');
       isLoading.value = false;
       if(response.statusCode==200){
         ManageClassModel manageClassModel = ManageClassModel.fromJson(response.body);
@@ -232,6 +232,7 @@ class ManageClassController extends GetxController{
     try{
       Response response = await ManageClassRepo().updateAttandence(attendance:  attendance,sessionId:  selectedClassId.value!,userId: userId);
       if(response.statusCode==200){
+        getOverview();
         print("success");
 
       }else{

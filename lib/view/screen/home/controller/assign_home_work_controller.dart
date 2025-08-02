@@ -22,7 +22,7 @@ class AssignHomeWorkController extends GetxController{
     Response response = await ManageClassRepo().assignHomeWork(tittle: tittleController.text.trim(), sessionId: sessionId, description: descriptionController.text.trim());
     isLoading.value = false;
     if(response.statusCode==200){
-
+      Get.find<ManageClassController>().getOverview();
       Get.back();
       showCustomSnackBar("Home work assigned successfully",isError: false);
 

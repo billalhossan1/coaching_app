@@ -14,6 +14,7 @@ class VideoPlayerPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     Get.put(VideoPlayerControllerX(videoUrl: videoUrl));
     return Scaffold(
       body: GetBuilder<VideoPlayerControllerX>(builder: (controller) {

@@ -46,6 +46,7 @@ class ManageClassByIdController extends GetxController{
    try{
      Response response = await ManageClassRepo().updateAttandence(attendance:  attendance,sessionId:  sessionId,userId: userId);
      if(response.statusCode==200){
+       Get.find<ManageClassByIdController>().manageClassById();
        print("success");
 
      }else{

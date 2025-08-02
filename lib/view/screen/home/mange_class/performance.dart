@@ -23,7 +23,7 @@ class Performance extends StatelessWidget {
       body: SafeArea(
         child: Column(
           children: [
-            _customAppBar(),
+            _customAppBar('Performance'),
             HeightGap(height: 8.h),
             Expanded(
               child: SingleChildScrollView(
@@ -332,7 +332,7 @@ class Performance extends StatelessWidget {
   }
 
   /// Custom AppBar
-  Container _customAppBar() {
+  Container _customAppBar(String tittle) {
     return Container(
       height: 64.h,
       decoration: const BoxDecoration(color: AppColors.appBar),
@@ -352,7 +352,7 @@ class Performance extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.only(right: 30.0),
               child: Text(
-                'Profile Details',
+                tittle,
                 style: TextStyles.regular20.copyWith(
                   fontWeight: FontWeight.w500,
                   color: AppColors.white50,

@@ -20,7 +20,6 @@ class NotificationController extends GetxController{
 
   @override
   void onInit() {
-    print("=====================================================================ajfhsdjkhasdkjfhksadjhkjasdf");
     intial();
     super.onInit();
   }
@@ -37,6 +36,7 @@ class NotificationController extends GetxController{
       handler: (data) {
         // Handle new notification data
         handleNewNotification(data);
+
       },
     );
   }
@@ -49,6 +49,7 @@ class NotificationController extends GetxController{
       notificationList.addAll( notificationListModel.notification!.notificationList??[]);
       notificationTotalPage = notificationListModel.pagination?.totalPage??1;
       notificationCount = notificationListModel.notification?.unreadCount??0;
+      Get.find<HomeController>().update();
       print("===========================${notificationCount}");
     }else{
       showCustomSnackBar(response.statusText??"Something went wrong");
@@ -87,6 +88,7 @@ class NotificationController extends GetxController{
       notificationList.insert(0, newNotification);
       showCustomSnackBar("New notification received");
       await getAllNotification();
+      Get.find<HomeController>().getUpcomingSession();
       update();  // To update the UI
 
     } catch (e) {

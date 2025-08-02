@@ -451,7 +451,7 @@ class HomeCourseDetails extends StatelessWidget {
                                                             ),
                                                         image: DecorationImage(
                                                           image: NetworkImage(
-                                                            video.thumbnail ??
+                                                            "${ApiConstant.imageUrl}${video.thumbnail}" ??
                                                                 '',
                                                           ),
                                                           fit: BoxFit.cover,

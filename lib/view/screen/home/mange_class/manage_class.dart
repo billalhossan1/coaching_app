@@ -15,6 +15,7 @@ import '../../../../utils/format_time.dart';
 import '../../../widget/conditional_image_widget.dart';
 import '../../../widget/custom_drop_down.dart';
 import '../../../widget/size.dart';
+import '../video_player/get_video_player.dart';
 import '../video_player/video_player_screen.dart';
 import '../widget/custom_appbar_with_title.dart';
 
@@ -481,16 +482,7 @@ class ManageClass extends StatelessWidget {
                                   controller.videoList[index];
                                   return GestureDetector(
                                     onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              InteractiveVideoPlayer(
-                                                videoUrl:
-                                                video.video ?? "",
-                                              ),
-                                        ),
-                                      );
+                                      Get.to(() => VideoPlayerPage(videoUrl: '${ApiConstant.baseUrl}${video.video!}', text: video.description??'',),);
                                     },
                                     child: Container(
                                       decoration: BoxDecoration(
@@ -516,7 +508,7 @@ class ManageClass extends StatelessWidget {
                                                   ),
                                                   image: DecorationImage(
                                                     image: NetworkImage(
-                                                      video.thumbnail ??
+                                                      "${ApiConstant.imageUrl}${video.thumbnail}" ??
                                                           '',
                                                     ),
                                                     fit: BoxFit.cover,
