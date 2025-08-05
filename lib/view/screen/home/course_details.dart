@@ -156,11 +156,11 @@ class HomeCourseDetails extends StatelessWidget {
                                         mainAxisAlignment: MainAxisAlignment.center,
                                         children: [
                                           Text(
-                                            session.title ?? '',
-                                            style: (controller.selectedIndex==index)?TextStyles.title12.copyWith(
+                                            ShortText.getShortText(session.title ?? '',maxLength: 10),
+                                            style: (controller.selectedIndex==index)?TextStyles.title9.copyWith(
                                               fontWeight: FontWeight.w800,
                                               color: AppColors.white500,
-                                            ):TextStyles.title12.copyWith(
+                                            ):TextStyles.title9.copyWith(
                                               fontWeight: FontWeight.w500,
                                               color: AppColors.white300,
                                             ),
@@ -169,10 +169,10 @@ class HomeCourseDetails extends StatelessWidget {
                                             FormatTime.formateDateMonth(
                                               session.date ?? '',
                                             ),
-                                            style: (controller.selectedIndex==index)?TextStyles.regular12.copyWith(
+                                            style: (controller.selectedIndex==index)?TextStyles.regular10.copyWith(
                                               fontWeight: FontWeight.w800,
                                               color: AppColors.white400,
-                                            ):TextStyles.regular12.copyWith(
+                                            ):TextStyles.regular10.copyWith(
                                               fontWeight: FontWeight.w400,
                                               color: AppColors.green300,
                                             ),
@@ -286,14 +286,14 @@ class HomeCourseDetails extends StatelessWidget {
                                                     ?.date ??
                                                 '',
                                           ),
-                                          style: TextStyles.regular20.copyWith(
+                                          style: TextStyles.regular12.copyWith(
                                             fontWeight: FontWeight.w400,
                                             color: AppColors.green300,
                                           ),
                                         ),
                                         Text(
                                           "${FormatTime.formateTime(controller.sessionDetails.value?.sessionInfo?.startTime ?? '')} - ${FormatTime.formateTime(controller.sessionDetails.value?.sessionInfo?.endTime ?? '')}",
-                                          style: TextStyles.regular20.copyWith(
+                                          style: TextStyles.regular12.copyWith(
                                             fontWeight: FontWeight.w400,
                                             color: AppColors.green300,
                                           ),

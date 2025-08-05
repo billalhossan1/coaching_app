@@ -21,6 +21,22 @@ class ManageClassRepo{
 
   }
 
+  Future<Response>getHomeWork(String homeWorkId)async{
+
+    try{
+
+      Response response;
+      response = await ApiClient.getData(
+          ApiConstant.homeWorkUrl(homeWorkId)
+      );
+      return response;
+
+    }catch(e){
+      return Response(statusCode: 1, statusText: "Error: ${e.toString()}");
+    }
+
+  }
+
 
   Future<Response>updatePerformance({List<
       Map<String, dynamic>>?performance,required String userId,required String sessionId})async{

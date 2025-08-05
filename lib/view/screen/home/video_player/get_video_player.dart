@@ -14,7 +14,7 @@ class VideoPlayerPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
+    print("=================================================$videoUrl");
     Get.put(VideoPlayerControllerX(videoUrl: videoUrl));
     return Scaffold(
       body: GetBuilder<VideoPlayerControllerX>(builder: (controller) {
@@ -35,10 +35,11 @@ class VideoPlayerPage extends StatelessWidget {
             ],
           );
         }
+
         // Create a ChewieController
         ChewieController chewieController = ChewieController(
           videoPlayerController: controller.videoController,
-          autoPlay: true,
+          autoPlay: false,
           looping: true,
           allowFullScreen: true,
           showControls: true,
@@ -57,27 +58,31 @@ class VideoPlayerPage extends StatelessWidget {
 
         return Stack(
           children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                AspectRatio(
-                  aspectRatio: controller.videoController.value.aspectRatio,
-                  child: Chewie(controller: chewieController),
-                ),
-                HeightGap(height: 20.h),
-                // Video description text
-                Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Text(
-                    text,
-                    style: TextStyles.regular14.copyWith(
-                      fontWeight: FontWeight.w500,
-                      color: AppColors.white600,
+            // Wrap the content in a SingleChildScrollView
+            SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // Directly use AspectRatio without Flexible
+                  AspectRatio(
+                    aspectRatio: controller.videoController.value.aspectRatio,
+                    child: Chewie(controller: chewieController),
+                  ),
+                  HeightGap(height: 20.h),
+                  // Video description text
+                  Padding(
+                    padding: const EdgeInsets.all(16.0),
+                    child: Text(
+                      text,
+                      style: TextStyles.regular14.copyWith(
+                        fontWeight: FontWeight.w500,
+                        color: AppColors.white600,
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
             Positioned(
               top: 40.h, // Adjust this for back button placement

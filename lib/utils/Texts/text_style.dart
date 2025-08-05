@@ -17,6 +17,7 @@ class TextStyles {
   static final title14 = title32.copyWith(fontSize: 14);
   static final title12 = title32.copyWith(fontSize: 12);
   static final title11 = title32.copyWith(fontSize: 11);
+  static final title9 = title32.copyWith(fontSize: 9);
 
   static TextStyle regular16 = GoogleFonts.poppins(
       fontSize: 16, color: AppColors.white50, fontWeight: FontWeight.normal);

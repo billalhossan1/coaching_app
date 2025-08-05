@@ -221,15 +221,15 @@ class ManageClass extends StatelessWidget {
                                             MainAxisAlignment.center,
                                         children: [
                                           Text(
-                                            session.title ?? '',
+                                            ShortText.getShortText(session.title ?? '',maxLength: 10),
                                             style:
                                                 (controller.selectedIndex ==
                                                     index)
-                                                ? TextStyles.title12.copyWith(
+                                                ? TextStyles.title9.copyWith(
                                                     fontWeight: FontWeight.w800,
                                                     color: AppColors.white500,
                                                   )
-                                                : TextStyles.title12.copyWith(
+                                                : TextStyles.title9.copyWith(
                                                     fontWeight: FontWeight.w500,
                                                     color: AppColors.white300,
                                                   ),
@@ -241,11 +241,11 @@ class ManageClass extends StatelessWidget {
                                             style:
                                                 (controller.selectedIndex ==
                                                     index)
-                                                ? TextStyles.regular12.copyWith(
+                                                ? TextStyles.regular10.copyWith(
                                                     fontWeight: FontWeight.w800,
                                                     color: AppColors.white400,
                                                   )
-                                                : TextStyles.regular12.copyWith(
+                                                : TextStyles.regular10.copyWith(
                                                     fontWeight: FontWeight.w400,
                                                     color: AppColors.green300,
                                                   ),
@@ -414,14 +414,14 @@ class ManageClass extends StatelessWidget {
                                                     ?.date ??
                                                 '',
                                           ),
-                                          style: TextStyles.regular20.copyWith(
+                                          style: TextStyles.regular12.copyWith(
                                             fontWeight: FontWeight.w400,
                                             color: AppColors.green300,
                                           ),
                                         ),
                                         Text(
                                           "${FormatTime.formateTime(controller.sessionDetails.value?.sessionInfo?.startTime ?? '')} - ${FormatTime.formateTime(controller.sessionDetails.value?.sessionInfo?.endTime ?? '')}",
-                                          style: TextStyles.regular20.copyWith(
+                                          style: TextStyles.regular12.copyWith(
                                             fontWeight: FontWeight.w400,
                                             color: AppColors.green300,
                                           ),
@@ -554,7 +554,7 @@ class ManageClass extends StatelessWidget {
                                             Get.to(
                                               () => VideoPlayerPage(
                                                 videoUrl:
-                                                    '${ApiConstant.baseUrl}${video.video!}',
+                                                    '${ApiConstant.videoUrl}${video.video!}',
                                                 text: video.description ?? '',
                                               ),
                                             );

@@ -2,7 +2,8 @@ class ApiConstant {
 
   static const baseUrl="http://31.97.114.108:5000/api/v1/";//31.97.114.108:5000  10.10.7.6:5000
   static const imageUrl="http://31.97.114.108:5000/";
-  static const videoUrl="http://31.97.114.108:5000/api/v1/tutorial/video/";
+  static const videoUrl="http://31.97.114.108:5000/api/v1";
+  static const homeWorkVideoUrl="http://31.97.114.108:5000/api/v1/tutorial/video";
   static const socketUrl="http://31.97.114.108:5000/";
   static const myid = "myid";
 
@@ -53,6 +54,7 @@ class ApiConstant {
   static String sessionDetails(var id)=>"/session/$id";
   static String courseOverviewUrl(var id)=>"/course/course-overview/$id";
   static String manageClassByIdUrl(var id)=>"/course/manage-class/$id";
+  static String homeWorkUrl(var id)=>"/submission/$id";
   static String postData(var id)=>"/post/$id";
 
 

@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:football_coaching_coach_app/model/home_work_details_model.dart';
 import 'package:football_coaching_coach_app/model/manage_class_model.dart';
 import 'package:football_coaching_coach_app/utils/ToastMsg/toast_message.dart';
 import 'package:football_coaching_coach_app/view/screen/home/repo/manage_class_repo.dart';
@@ -36,6 +37,22 @@ class ManageClassByIdController extends GetxController{
     }
   }
 
+  RxBool isHomeWorkLoading = false.obs;
+ HomeWork? homeWork;
+  Future<void>getHomeWork(String homeWorkId)async{
+    homeWork=null;
+    isHomeWorkLoading.value = true;
+    Response response = await ManageClassRepo().getHomeWork(homeWorkId);
+    isHomeWorkLoading.value = false;
+    if(response.statusCode==200){
+      ViewHomeWorkModel viewHomeWorkModel = ViewHomeWorkModel.fromJson(response.body);
+      homeWork = viewHomeWorkModel.homeWork;
+    }else{
+      showCustomSnackBar(response.statusText??"Something went wrong");
+
+    }
+
+  }
 
 
 

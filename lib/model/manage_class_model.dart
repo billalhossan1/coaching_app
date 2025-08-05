@@ -121,7 +121,7 @@ class StudentLists {
   String? totalPerformance;
   String? userId;
   bool? attandance;
-  bool? homeWork;
+  String? homeWork;
 
   StudentLists(
       {this.image,
@@ -141,7 +141,7 @@ class StudentLists {
     userId = json['userId'];
 
     // Convert the 'homeWork' field to a boolean if it's a string
-    homeWork = json['homeWork'] is String ? json['homeWork'] == 'true' : json['homeWork'];
+    homeWork= json['homeWork'];
   }
 
 

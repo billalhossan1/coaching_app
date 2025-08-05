@@ -16,6 +16,7 @@ import 'package:get/get.dart';
 import '../../../../../../utils/AppColors/app_colors.dart';
 import '../../../../../../utils/Texts/text_style.dart';
 import '../../../../../widget/size.dart';
+import '../../../video_player/get_video_player.dart';
 
 
 class ScheduleTable extends StatelessWidget {
@@ -324,6 +325,7 @@ class ScheduleTable3 extends StatelessWidget {
                 _buildHeaderCell('Player name'),
                 _buildHeaderCell('Performance'),
                 _buildHeaderCell('Attendance'),
+                _buildHeaderCell('HomeWork'),
               ],
             ),
           );
@@ -366,6 +368,38 @@ class ScheduleTable3 extends StatelessWidget {
                     );
                   }
               ),
+              GetBuilder<ManageClassByIdController>(
+                  builder: (controller) {
+                    return Obx(()=>Flexible(
+                      flex: 2,
+                      child: GestureDetector(
+                        onTap: () async {
+
+                          if(student.homework!=null&&student.homework!.isNotEmpty){
+                            await  controller.getHomeWork(student.homework!);
+                            Get.to(() => VideoPlayerPage(videoUrl: '${ApiConstant.homeWorkVideoUrl}${controller.homeWork!.video}', text: '',),);
+                          }
+
+                        },
+                        child: controller.isHomeWorkLoading.value?const Center(child: CircularProgressIndicator(),):Center(
+                          child: Container(
+                            height: 28.h,
+                            width: 28.w,
+                            alignment: Alignment.center,
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: AppColors.green500,
+                            ),
+                            child: Text(
+                              (student.homework!=null&&student.homework!.isNotEmpty) ? '✓' : '✗',
+                              style: TextStyles.regular12.copyWith(color: Colors.white),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ));
+                  }
+              )
             ],
           ),
         );
@@ -493,6 +527,7 @@ class ScheduleTable4 extends StatelessWidget {
                 _buildHeaderCell('Player name'),
                 _buildHeaderCell('Performance'),
                 _buildHeaderCell('Attendance'),
+                _buildHeaderCell('HomeWork'),
               ],
             ),
           );
@@ -535,6 +570,41 @@ class ScheduleTable4 extends StatelessWidget {
                     );
                   }
               ),
+
+          GetBuilder<ManageClassByIdController>(
+            builder: (controller) {
+              return Obx(()=>Flexible(
+                flex: 2,
+                child: GestureDetector(
+                  onTap: () async {
+
+                  if(student.homeWork!=null&&student.homeWork!.isNotEmpty){
+                    await  controller.getHomeWork(student.homeWork!);
+                    Get.to(() => VideoPlayerPage(videoUrl: '${ApiConstant.homeWorkVideoUrl}${controller.homeWork!.video}', text: '',),);
+                  }
+
+                  },
+                  child: controller.isHomeWorkLoading.value?const Center(child: CircularProgressIndicator(),):Center(
+                    child: Container(
+                      height: 28.h,
+                      width: 28.w,
+                      alignment: Alignment.center,
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: AppColors.green500,
+                      ),
+                      child: Text(
+                        student.homeWork!.isNotEmpty ? '✓' : '✗',
+                        style: TextStyles.regular12.copyWith(color: Colors.white),
+                      ),
+                    ),
+                  ),
+                ),
+              ));
+            }
+          )
+
+
             ],
           ),
         );
@@ -552,7 +622,7 @@ class ScheduleTable4 extends StatelessWidget {
         child: Text(
           text,
           overflow: TextOverflow.ellipsis,
-          style: TextStyles.regular12.copyWith(
+          style: TextStyles.regular11.copyWith(
             fontWeight: FontWeight.w400,
             color: AppColors.green300,
           ),
