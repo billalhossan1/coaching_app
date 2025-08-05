@@ -371,7 +371,7 @@ class HomeScreen extends StatelessWidget {
                                               ),
                                               Text(
                                                 "${FormatTime.formateDateTimeMonth(course.startDate ?? '')} - ${FormatTime.formateDateTimeMonth(course.endDate ?? '')}",
-                                                style: TextStyles.regular12
+                                                style: TextStyles.regular11
                                                     .copyWith(
                                                       fontWeight:
                                                           FontWeight.w400,

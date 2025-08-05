@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:football_coaching_coach_app/Helper/shared_prefe/shared_prefe.dart';
+import 'package:football_coaching_coach_app/Service/api_url.dart';
 import 'package:football_coaching_coach_app/core/app_route/app_route.dart';
 import 'package:football_coaching_coach_app/utils/AppConst/app_const.dart';
 import 'package:football_coaching_coach_app/utils/ToastMsg/toast_message.dart';
@@ -49,9 +50,12 @@ class AuthController extends GetxController {
     try {
       if (signInFormKey.currentState!.validate()) {
         isLoading.value = true;
+        String? deviceToken= await SharePrefsHelper.getString(SharedPreferenceValue.fcmToken);
         Response response = await authRepo.login(
             email: signInEmailTextEditingController.text.trim(),
-            password: signInPasswordTextEditingController.text
+            password: signInPasswordTextEditingController.text,
+          deviceToken: deviceToken
+
         );
 
         isLoading.value = false;

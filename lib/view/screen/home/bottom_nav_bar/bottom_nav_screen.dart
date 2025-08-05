@@ -33,13 +33,11 @@ class _BottomNavBarState extends State<BottomNavBar> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: Obx((){
-          return PageView(
+        child: PageView(
             controller: pageController,
             onPageChanged: (index) => navigationController.changePage(index),
             children: navigationController.getPages(),
-          );
-        }),
+          )
       ),
       bottomNavigationBar: Obx(() => SizedBox(
         height: Responsive.height(context, 70),

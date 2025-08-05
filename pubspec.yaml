@@ -57,6 +57,9 @@ dependencies:
   get:
   flutter_phoenix:
   flutter_widget_from_html: ^0.16.0
+  firebase_auth: ^6.0.0
+  firebase_core: ^4.0.0
+  firebase_messaging: ^16.0.0
 
 dev_dependencies:
   flutter_test:

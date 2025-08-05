@@ -5,14 +5,14 @@ import '../../../../Service/api_url.dart';
 
 
 class AuthRepo{
-  Future<Response>login({required String email,required dynamic password})async{
+  Future<Response>login({required String email,required dynamic password,required String? deviceToken})async{
 
     try{
 
       Map<String,dynamic>body={
         "email":email,
         "password":password,
-
+        "deviceToken":deviceToken
       };
       Response response;
       response = await ApiClient.postData(
