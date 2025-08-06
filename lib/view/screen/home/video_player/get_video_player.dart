@@ -21,12 +21,12 @@ class VideoPlayerPage extends StatelessWidget {
         if (!controller.videoController.value.isInitialized) {
           return Stack(
             children: [
-              Center(child: CircularProgressIndicator()),
+              const Center(child: CircularProgressIndicator()),
               Positioned(
                 top: 40.h, // Adjust this to place the back button where you want
                 left: 16.w, // Adjust this to place the back button
                 child: IconButton(
-                  icon: Icon(Icons.arrow_back, color: Colors.white),
+                  icon: const Icon(Icons.arrow_back, color: Colors.white),
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
@@ -88,7 +88,7 @@ class VideoPlayerPage extends StatelessWidget {
               top: 40.h, // Adjust this for back button placement
               left: 16.w, // Adjust this for back button placement
               child: IconButton(
-                icon: Icon(Icons.arrow_back, color: Colors.white),
+                icon: const Icon(Icons.arrow_back, color: Colors.white),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },

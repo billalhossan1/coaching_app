@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:football_coaching_coach_app/core/app_route/app_route.dart';
 import 'package:football_coaching_coach_app/utils/AppConst/app_const.dart';
 import 'package:get/get.dart';
 import 'package:get/get_connect/http/src/request/request.dart';
@@ -23,8 +24,12 @@ class ApiClient extends GetxService {
   static String bearerToken = "";
 
   ///<======================== This is for get methode =======================>
-  static Future<Response> getData(String uri,
-      {Map<String, dynamic>? query, Map<String, String>? headers,String? token,}) async {
+  static Future<Response> getData(
+      String uri, {
+        Map<String, dynamic>? query,
+        Map<String, String>? headers,
+        String? token,
+      }) async {
     bearerToken = await SharePrefsHelper.getString(AppConstants.bearerToken);
 
     var mainHeaders = {
@@ -50,12 +55,25 @@ class ApiClient extends GetxService {
         headers: headers ?? mainHeaders,
       )
           .timeout(const Duration(seconds: timeoutInSeconds));
+
+      if (response.statusCode == 401) {
+        // Handle JWT expiration, redirect to login screen
+        _navigateToLoginScreen();
+        return const Response(statusCode: 1, statusText: 'Session expired, please log in');
+      }
+
       return handleResponse(response, uri);
     } catch (e) {
       debugPrint('------------${e.toString()}');
       return const Response(statusCode: 1, statusText: noInternetMessage);
     }
   }
+
+  static void _navigateToLoginScreen() {
+   Get.offAllNamed(AppRoute.signInScreen);
+   SharePrefsHelper.remove(AppConstants.bearerToken);
+  }
+
 
 
   ///<====================== This is for post methode ========================>
@@ -87,6 +105,10 @@ class ApiClient extends GetxService {
         headers: headers ?? mainHeaders,
       )
           .timeout(const Duration(seconds: timeoutInSeconds));
+      if (response.statusCode == 401) {
+        _navigateToLoginScreen();
+        return const Response(statusCode: 1, statusText: 'Session expired, please log in');
+      }
       return handleResponse(response, uri);
     } catch (e) {
       debugPrint('------------${e.toString()}');
@@ -118,6 +140,10 @@ class ApiClient extends GetxService {
         headers: headers ?? mainHeaders,
       )
           .timeout(const Duration(seconds: timeoutInSeconds));
+      if (response.statusCode == 401) {
+        _navigateToLoginScreen();
+        return const Response(statusCode: 1, statusText: 'Session expired, please log in');
+      }
       return handleResponse(response, uri);
     } catch (e) {
       debugPrint('------------${e.toString()}');
@@ -182,6 +208,10 @@ class ApiClient extends GetxService {
       final content = await response.stream.bytesToString();
       debugPrint(
           '====> API Response: [${response.statusCode}}] $uri\n$content');
+      if (response.statusCode == 401) {
+        _navigateToLoginScreen();
+        return const Response(statusCode: 1, statusText: 'Session expired, please log in');
+      }
 
       return Response(
           statusCode: response.statusCode,
@@ -241,6 +271,10 @@ class ApiClient extends GetxService {
       http.StreamedResponse response = await request.send();
       final content = await response.stream.bytesToString();
       debugPrint('====> API Response: [${response.statusCode}}] $uri\n$content');
+      if (response.statusCode == 401) {
+        _navigateToLoginScreen();
+        return const Response(statusCode: 1, statusText: 'Session expired, please log in');
+      }
 
       return Response(
         statusCode: response.statusCode,
@@ -279,6 +313,10 @@ class ApiClient extends GetxService {
         headers: headers ?? mainHeaders,
       )
           .timeout(const Duration(seconds: timeoutInSeconds));
+      if (response.statusCode == 401) {
+        _navigateToLoginScreen();
+        return const Response(statusCode: 1, statusText: 'Session expired, please log in');
+      }
 
       return handleResponse(response, uri);
     } catch (e) {
@@ -353,6 +391,10 @@ class ApiClient extends GetxService {
       final content = await response.stream.bytesToString();
       debugPrint(
           '====> API Response: [${response.statusCode}}] $uri\n$content');
+      if (response.statusCode == 401) {
+        _navigateToLoginScreen();
+        return const Response(statusCode: 1, statusText: 'Session expired, please log in');
+      }
 
       return Response(
           statusCode: response.statusCode,
@@ -381,6 +423,10 @@ class ApiClient extends GetxService {
           .delete(Uri.parse(ApiConstant.baseUrl + uri),
           headers: headers ?? mainHeaders, body: body)
           .timeout(const Duration(seconds: timeoutInSeconds));
+      if (response.statusCode == 401) {
+        _navigateToLoginScreen();
+        return const Response(statusCode: 1, statusText: 'Session expired, please log in');
+      }
       return handleResponse(response, uri);
     } catch (e) {
       return const Response(statusCode: 1, statusText: noInternetMessage);
@@ -407,6 +453,10 @@ class ApiClient extends GetxService {
       statusCode: response.statusCode,
       statusText: response.reasonPhrase,
     );
+    if (response.statusCode == 401) {
+      _navigateToLoginScreen();
+      return const Response(statusCode: 1, statusText: 'Session expired, please log in');
+    }
 
     if (response0.statusCode != 200 &&
         response0.body != null &&
@@ -430,6 +480,7 @@ class ApiClient extends GetxService {
     } else if (response0.statusCode != 200 && response0.body == null) {
       response0 = const Response(statusCode: 0, statusText: noInternetMessage);
     }
+
 
     debugPrint(
         '====> API Response: [${response0.statusCode}] $uri\n${response0.body}');

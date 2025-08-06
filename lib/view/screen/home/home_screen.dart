@@ -132,6 +132,7 @@ class HomeScreen extends StatelessWidget {
                 return homeController.onRefresh();
               },
               child: SingleChildScrollView(
+                controller: homeController.courseScrollController,
                 physics: const AlwaysScrollableScrollPhysics(),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -221,14 +222,11 @@ class HomeScreen extends StatelessWidget {
                               ),
                             )
                           : ListView.separated(
+                        physics: const NeverScrollableScrollPhysics(),
                               itemCount:
                               homeController.upComingSessionList[0].sessions?.length ?? 0,
                               shrinkWrap: true,
                               itemBuilder: (context, index) {
-                                print("======================$index");
-                                print("=====================${homeController
-                                    .upComingSessionList[0]
-                                    .sessions?[index].course!.name}");
                                 final session = homeController
                                     .upComingSessionList[0]
                                     .sessions?[index];
@@ -325,8 +323,8 @@ class HomeScreen extends StatelessWidget {
                             )
                           : ListView.separated(
                               itemCount: homeController.courseList.length,
-                              controller: homeController.courseScrollController,
                               shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
                               itemBuilder: (context, index) {
                                 final course = homeController.courseList[index];
                                 return GestureDetector(
