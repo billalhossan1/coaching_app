@@ -1,18 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:football_coaching_coach_app/Helper/shared_prefe/shared_prefe.dart';
-import 'package:football_coaching_coach_app/Service/api_url.dart';
 import 'package:football_coaching_coach_app/core/app_route/app_route.dart';
 import 'package:football_coaching_coach_app/utils/AppConst/app_const.dart';
 import 'package:football_coaching_coach_app/utils/ToastMsg/toast_message.dart';
 import 'package:football_coaching_coach_app/view/screen/auth/repo/auth_repo.dart';
 import 'package:get/get.dart';
-import 'package:get/get_rx/get_rx.dart';
 
 class AuthController extends GetxController {
-  TextEditingController signInEmailTextEditingController =
-      TextEditingController();
-  TextEditingController signInPasswordTextEditingController =
-      TextEditingController();
+  TextEditingController signInEmailTextEditingController = TextEditingController();
+  TextEditingController signInPasswordTextEditingController = TextEditingController();
   // var isLoading = false.obs;
   RxBool isLoading = false.obs;
   GlobalKey<FormState> signInFormKey = GlobalKey<FormState>();
@@ -50,17 +46,16 @@ class AuthController extends GetxController {
     try {
       if (signInFormKey.currentState!.validate()) {
         isLoading.value = true;
-        String? deviceToken= await SharePrefsHelper.getString(SharedPreferenceValue.fcmToken);
+        String? deviceToken = await SharePrefsHelper.getString(SharedPreferenceValue.fcmToken);
         Response response = await authRepo.login(
-            email: signInEmailTextEditingController.text.trim(),
-            password: signInPasswordTextEditingController.text,
-          deviceToken: deviceToken
-
+          email: signInEmailTextEditingController.text.trim(),
+          password: signInPasswordTextEditingController.text,
+          deviceToken: deviceToken,
         );
 
         isLoading.value = false;
         if (response.statusCode == 200) {
-          showCustomSnackBar('Login Successfully',isError: false);
+          showCustomSnackBar('Login Successfully', isError: false);
           String? token = response.body['data']['accessToken'];
           SharePrefsHelper.setString(AppConstants.bearerToken, token);
           Get.offAllNamed(AppRoute.bottomNavBar);

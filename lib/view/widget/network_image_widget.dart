@@ -63,10 +63,7 @@ class NetworkImageWidget extends StatelessWidget {
           height: height,
           decoration: BoxDecoration(
             borderRadius: borderRadius,
-            image: DecorationImage(
-              image: imageProvider,
-              fit: fit,
-            ),
+            image: DecorationImage(image: imageProvider, fit: fit),
           ),
         ),
 
@@ -77,10 +74,7 @@ class NetworkImageWidget extends StatelessWidget {
 
     // Add tap functionality if provided
     if (onTap != null) {
-      imageWidget = GestureDetector(
-        onTap: onTap,
-        child: imageWidget,
-      );
+      imageWidget = GestureDetector(onTap: onTap, child: imageWidget);
     }
 
     return imageWidget;
@@ -95,20 +89,11 @@ class NetworkImageWidget extends StatelessWidget {
       child: Container(
         width: width == double.infinity ? double.infinity : width,
         height: height == double.infinity ? double.infinity : height,
-        decoration: BoxDecoration(
-          color: shimmerBaseColor,
-          borderRadius: borderRadius,
-        ),
+        decoration: BoxDecoration(color: shimmerBaseColor, borderRadius: borderRadius),
         child: placeholder != null
             ? Center(
-          child: Text(
-            placeholder!,
-            style: const TextStyle(
-              color: Colors.grey,
-              fontSize: 12,
-            ),
-          ),
-        )
+                child: Text(placeholder!, style: const TextStyle(color: Colors.grey, fontSize: 12)),
+              )
             : const SizedBox.shrink(),
       ),
     );
@@ -129,8 +114,7 @@ class NetworkImageWidget extends StatelessWidget {
       errorIcon = Icons.image_not_supported;
       errorMessage = 'Image not found';
       errorColor = Colors.orange;
-    } else if (error.toString().contains('timeout') ||
-        error.toString().contains('connection')) {
+    } else if (error.toString().contains('timeout') || error.toString().contains('connection')) {
       errorIcon = Icons.wifi_off;
       errorMessage = 'Connection error';
       errorColor = Colors.red;
@@ -155,11 +139,7 @@ class NetworkImageWidget extends StatelessWidget {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(
-            errorIcon,
-            color: errorColor,
-            size: (height != null && height! < 100 && height != double.infinity) ? 24 : 48,
-          ),
+          Icon(errorIcon, color: errorColor, size: (height != null && height! < 100 && height != double.infinity) ? 24 : 48),
           const SizedBox(height: 8),
           Text(
             errorMessage,
@@ -187,25 +167,13 @@ class NetworkImageWidget extends StatelessWidget {
               ),
               child: Text(
                 'Retry',
-                style: TextStyle(
-                  color: errorColor,
-                  fontSize: 10,
-                  fontWeight: FontWeight.w600,
-                ),
+                style: TextStyle(color: errorColor, fontSize: 10, fontWeight: FontWeight.w600),
               ),
             ),
           ),
         ],
       ),
     );
-  }
-
-  // Helper method to safely convert double to int for cache dimensions
-  int? _getSafeIntValue(double? value) {
-    if (value == null || value == double.infinity) {
-      return null;
-    }
-    return value.toInt();
   }
 
   // Create cache manager that doesn't cache (for testing purposes)
@@ -215,4 +183,3 @@ class NetworkImageWidget extends StatelessWidget {
     return null;
   }
 }
-

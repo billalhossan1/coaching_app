@@ -7,6 +7,44 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:953616443674:android:b9b4a7ede3da423e77a4a3",
+        "android_client_info": {
+          "package_name": "com.eliteacademy.eliteacademy"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAnaw0cikUTRmgVvSdM-XVyMQSvqr8f7ak"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:953616443674:android:b9ad4e1baa33334577a4a3",
+        "android_client_info": {
+          "package_name": "com.eliteacademy.eliteacademy2"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAnaw0cikUTRmgVvSdM-XVyMQSvqr8f7ak"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:953616443674:android:88fa5171e201e4dd77a4a3",
         "android_client_info": {
           "package_name": "com.example.football_coaching_coach_app"

@@ -1,17 +1,11 @@
-
 class SessionsListByIdModel {
-
   Pagination? pagination;
   List<SessionItem>? sessionList;
 
-  SessionsListByIdModel(
-      { this.pagination, this.sessionList});
+  SessionsListByIdModel({this.pagination, this.sessionList});
 
   SessionsListByIdModel.fromJson(Map<String, dynamic> json) {
-
-    pagination = json['pagination'] != null
-        ? Pagination.fromJson(json['pagination'])
-        : null;
+    pagination = json['pagination'] != null ? Pagination.fromJson(json['pagination']) : null;
     if (json['data'] != null) {
       sessionList = <SessionItem>[];
       json['data'].forEach((v) {
@@ -26,8 +20,8 @@ class SessionsListByIdModel {
     if (pagination != null) {
       data['pagination'] = pagination!.toJson();
     }
-    if (this.sessionList != null) {
-      data['data'] = this.sessionList!.map((v) => v.toJson()).toList();
+    if (sessionList != null) {
+      data['data'] = sessionList!.map((v) => v.toJson()).toList();
     }
     return data;
   }
@@ -125,6 +119,7 @@ class SessionItem {
     return data;
   }
 }
+
 class CourseModel {
   String? id;
   String? name;

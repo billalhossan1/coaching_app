@@ -6,18 +6,11 @@ class ConditionalImageWidget extends StatelessWidget {
   final double height;
   final String baseUrl;
 
-  ConditionalImageWidget({
-    required this.imageUrl,
-    required this.width,
-    required this.height,
-    required this.baseUrl,
-  });
+  const ConditionalImageWidget({super.key, required this.imageUrl, required this.width, required this.height, required this.baseUrl});
 
   @override
   Widget build(BuildContext context) {
-    String finalImageUrl = imageUrl.startsWith('http') || imageUrl.startsWith('https')
-        ? imageUrl
-        : '$baseUrl$imageUrl';
+    String finalImageUrl = imageUrl.startsWith('http') || imageUrl.startsWith('https') ? imageUrl : '$baseUrl$imageUrl';
 
     // Handle network image
     return Image.network(
@@ -39,13 +32,7 @@ class ConditionalImageWidget extends StatelessWidget {
         }
       },
       errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
-        return Center(
-          child: Icon(
-            Icons.error,
-            color: Colors.red,
-            size: 40.0,
-          ),
-        );
+        return Center(child: Icon(Icons.error, color: Colors.red, size: 40.0));
       },
     );
   }

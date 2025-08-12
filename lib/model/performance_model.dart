@@ -17,7 +17,7 @@ class PerformanceModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['success'] = success;
     data['message'] = message;
     if (performance != null) {
@@ -41,7 +41,7 @@ class Performance {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data['topic'] = topic;
     data['score'] = score;
     data['_id'] = sId;

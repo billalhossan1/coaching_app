@@ -58,7 +58,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyAnaw0cikUTRmgVvSdM-XVyMQSvqr8f7ak',
-    appId: '1:953616443674:android:88fa5171e201e4dd77a4a3',
+    appId: '1:953616443674:android:b9ad4e1baa33334577a4a3',
     messagingSenderId: '953616443674',
     projectId: 'elite-academy-7d7fe',
     storageBucket: 'elite-academy-7d7fe.firebasestorage.app',
@@ -66,10 +66,11 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyBhjKOSVEyt4D087rtSYA8qS77GFBMp3EY',
-    appId: '1:953616443674:ios:2054d8116f32947477a4a3',
+    appId: '1:953616443674:ios:7d25fe0c90b052eb77a4a3',
     messagingSenderId: '953616443674',
     projectId: 'elite-academy-7d7fe',
     storageBucket: 'elite-academy-7d7fe.firebasestorage.app',
-    iosBundleId: 'com.example.footballCoachingCoachApp',
+    iosBundleId: 'com.eliteacademy.eliteacademy2',
   );
+
 }

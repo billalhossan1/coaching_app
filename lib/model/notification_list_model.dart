@@ -1,19 +1,13 @@
 class NotificationListModel {
-
   Pagination? pagination;
   NotificationModel? notification;
 
-  NotificationListModel({ this.pagination, this.notification});
+  NotificationListModel({this.pagination, this.notification});
 
   NotificationListModel.fromJson(Map<String, dynamic> json) {
-
-    pagination = json['pagination'] != null
-        ? new Pagination.fromJson(json['pagination'])
-        : null;
+    pagination = json['pagination'] != null ? Pagination.fromJson(json['pagination']) : null;
     notification = json['data'] != null ? NotificationModel.fromJson(json['data']) : null;
   }
-
-
 }
 
 class Pagination {
@@ -30,8 +24,6 @@ class Pagination {
     page = json['page'];
     totalPage = json['totalPage'];
   }
-
-
 }
 
 class NotificationModel {
@@ -45,12 +37,10 @@ class NotificationModel {
     if (json['notification'] != null) {
       notificationList = <NotificationItem>[];
       json['notification'].forEach((v) {
-        notificationList!.add(new NotificationItem.fromJson(v));
+        notificationList!.add(NotificationItem.fromJson(v));
       });
     }
   }
-
-
 }
 
 class NotificationItem {
@@ -65,17 +55,7 @@ class NotificationItem {
   bool? read;
   String? timeAgo;
 
-  NotificationItem(
-      {this.sId,
-        this.title,
-        this.body,
-        this.reciever,
-        this.seener,
-        this.path,
-        this.referenceId,
-        this.iV,
-        this.read,
-        this.timeAgo});
+  NotificationItem({this.sId, this.title, this.body, this.reciever, this.seener, this.path, this.referenceId, this.iV, this.read, this.timeAgo});
 
   NotificationItem.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
@@ -88,6 +68,4 @@ class NotificationItem {
     read = json['read'];
     timeAgo = json['timeAgo'];
   }
-
-
 }

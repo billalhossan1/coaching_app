@@ -15,7 +15,6 @@ import '../Helper/shared_prefe/shared_prefe.dart';
 import 'api_url.dart';
 
 class ApiClient extends GetxService {
-
   static var client = http.Client();
 
   static const String noInternetMessage = "Can't connect to the internet!";
@@ -24,18 +23,10 @@ class ApiClient extends GetxService {
   static String bearerToken = "";
 
   ///<======================== This is for get methode =======================>
-  static Future<Response> getData(
-      String uri, {
-        Map<String, dynamic>? query,
-        Map<String, String>? headers,
-        String? token,
-      }) async {
+  static Future<Response> getData(String uri, {Map<String, dynamic>? query, Map<String, String>? headers, String? token}) async {
     bearerToken = await SharePrefsHelper.getString(AppConstants.bearerToken);
 
-    var mainHeaders = {
-      'Accept': 'multipart/form-data',
-      'Authorization': token != null ? 'Bearer $token' : 'Bearer $bearerToken',
-    };
+    var mainHeaders = {'Accept': 'multipart/form-data', 'Authorization': token != null ? 'Bearer $token' : 'Bearer $bearerToken'};
 
     if (query != null) {
       uri += '?';
@@ -50,10 +41,7 @@ class ApiClient extends GetxService {
       debugPrint('====> API Call: $uri\nHeader: ${headers ?? mainHeaders}');
 
       http.Response response = await client
-          .get(
-        Uri.parse(ApiConstant.baseUrl + uri),
-        headers: headers ?? mainHeaders,
-      )
+          .get(Uri.parse(ApiConstant.baseUrl + uri), headers: headers ?? mainHeaders)
           .timeout(const Duration(seconds: timeoutInSeconds));
 
       if (response.statusCode == 401) {
@@ -70,40 +58,33 @@ class ApiClient extends GetxService {
   }
 
   static void _navigateToLoginScreen() {
-   Get.offAllNamed(AppRoute.signInScreen);
-   SharePrefsHelper.remove(AppConstants.bearerToken);
+    Get.offAllNamed(AppRoute.signInScreen);
+    SharePrefsHelper.remove(AppConstants.bearerToken);
   }
-
-
 
   ///<====================== This is for post methode ========================>
 
-  static Future<Response> postData(
-      String uri, {
-        Map<String, String>? headers,
-        String? token,
-        dynamic body,
-      }) async {
-    String bodyJson = jsonEncode(body);  // Ensure the body is serialized
+  static Future<Response> postData(String uri, {Map<String, String>? headers, String? token, dynamic body}) async {
+    String bodyJson = jsonEncode(body); // Ensure the body is serialized
 
     bearerToken = await SharePrefsHelper.getString(AppConstants.bearerToken);
 
     var mainHeaders = {
-      'Accept': 'application/json',  // Expecting JSON in response
+      'Accept': 'application/json', // Expecting JSON in response
       'Authorization': token != null ? 'Bearer $token' : 'Bearer $bearerToken',
-      'Content-Type': 'application/json',  // Sending JSON data
+      'Content-Type': 'application/json', // Sending JSON data
     };
 
     try {
       debugPrint('====> API Call: $uri\nHeader: ${headers ?? mainHeaders}');
-      debugPrint('====> API Body: $bodyJson');  // Debug log of the JSON body
+      debugPrint('====> API Body: $bodyJson'); // Debug log of the JSON body
 
       http.Response response = await client
           .post(
-        Uri.parse(ApiConstant.baseUrl + uri),
-        body: bodyJson,  // Send the serialized JSON string
-        headers: headers ?? mainHeaders,
-      )
+            Uri.parse(ApiConstant.baseUrl + uri),
+            body: bodyJson, // Send the serialized JSON string
+            headers: headers ?? mainHeaders,
+          )
           .timeout(const Duration(seconds: timeoutInSeconds));
       if (response.statusCode == 401) {
         _navigateToLoginScreen();
@@ -116,29 +97,21 @@ class ApiClient extends GetxService {
     }
   }
 
-
-
-
   ///<====================== This is for patch methode ========================>
-  static Future<Response> patchData(String uri,
-      {Map<String, String>? headers, dynamic body}) async {
+  static Future<Response> patchData(String uri, {Map<String, String>? headers, dynamic body}) async {
     bearerToken = await SharePrefsHelper.getString(AppConstants.bearerToken);
 
     var mainHeaders = {
       // 'Content-Type': 'application/x-www-form-urlencoded',
       'Accept': 'application/json',
-      'Authorization': 'Bearer $bearerToken'
+      'Authorization': 'Bearer $bearerToken',
     };
     try {
       debugPrint('====> API Call: $uri\nHeader: ${headers ?? mainHeaders}');
       debugPrint('====> API Body: $body');
 
       http.Response response = await client
-          .patch(
-        Uri.parse(ApiConstant.baseUrl + uri),
-        body: body,
-        headers: headers ?? mainHeaders,
-      )
+          .patch(Uri.parse(ApiConstant.baseUrl + uri), body: body, headers: headers ?? mainHeaders)
           .timeout(const Duration(seconds: timeoutInSeconds));
       if (response.statusCode == 401) {
         _navigateToLoginScreen();
@@ -155,17 +128,16 @@ class ApiClient extends GetxService {
   ///<====================== This is for postMultipartData  methode ========================>
 
   static Future<Response> postMultipartData(
-      String uri, Map<String, String> body,
-      {List<MultipartBody>? multipartBody,
-        Map<String, String>? headers,String? token}) async {
+    String uri,
+    Map<String, String> body, {
+    List<MultipartBody>? multipartBody,
+    Map<String, String>? headers,
+    String? token,
+  }) async {
     try {
       bearerToken = await SharePrefsHelper.getString(AppConstants.bearerToken);
 
-      var mainHeaders = {
-        'Accept': 'multipart/form-data',
-        'Authorization': token != null ? 'Bearer $token' : 'Bearer $bearerToken',
-      };
-
+      var mainHeaders = {'Accept': 'multipart/form-data', 'Authorization': token != null ? 'Bearer $token' : 'Bearer $bearerToken'};
 
       debugPrint('====> API Call: $uri\nHeader: ${headers ?? mainHeaders}');
       debugPrint('====> API Body: $body with ${multipartBody?.length} picture');
@@ -180,8 +152,7 @@ class ApiClient extends GetxService {
       //     ));
       //   }
       // }
-      var request =
-      http.MultipartRequest('POST', Uri.parse(ApiConstant.baseUrl + uri));
+      var request = http.MultipartRequest('POST', Uri.parse(ApiConstant.baseUrl + uri));
       request.fields.addAll(body);
 
       if (multipartBody!.isNotEmpty) {
@@ -193,11 +164,7 @@ class ApiClient extends GetxService {
 
           debugPrint("MimeType================$mimeType");
 
-          var multipartImg = await http.MultipartFile.fromPath(
-            element.key,
-            element.file.path,
-            contentType: MediaType.parse(mimeType!),
-          );
+          var multipartImg = await http.MultipartFile.fromPath(element.key, element.file.path, contentType: MediaType.parse(mimeType!));
           request.files.add(multipartImg);
           //request.files.add(await http.MultipartFile.fromPath(element.key, element.file.path,contentType: MediaType('video', 'mp4')));
         });
@@ -206,17 +173,13 @@ class ApiClient extends GetxService {
       request.headers.addAll(mainHeaders);
       http.StreamedResponse response = await request.send();
       final content = await response.stream.bytesToString();
-      debugPrint(
-          '====> API Response: [${response.statusCode}}] $uri\n$content');
+      debugPrint('====> API Response: [${response.statusCode}}] $uri\n$content');
       if (response.statusCode == 401) {
         _navigateToLoginScreen();
         return const Response(statusCode: 1, statusText: 'Session expired, please log in');
       }
 
-      return Response(
-          statusCode: response.statusCode,
-          statusText: noInternetMessage,
-          body: content);
+      return Response(statusCode: response.statusCode, statusText: noInternetMessage, body: content);
     } catch (e) {
       debugPrint('------------${e.toString()}');
 
@@ -224,20 +187,19 @@ class ApiClient extends GetxService {
     }
   }
 
-
   ///<====================== This is for patchMultipartData methode ========================>
 
   static Future<Response> patchMultipartData(
-      String uri, Map<String, dynamic> body,
-      {List<MultipartBody>? multipartBody,
-        Map<String, String>? headers, String? token}) async {
+    String uri,
+    Map<String, dynamic> body, {
+    List<MultipartBody>? multipartBody,
+    Map<String, String>? headers,
+    String? token,
+  }) async {
     try {
       bearerToken = await SharePrefsHelper.getString(AppConstants.bearerToken);
 
-      var mainHeaders = {
-        'Accept': 'multipart/form-data',
-        'Authorization': token != null ? 'Bearer $token' : 'Bearer $bearerToken',
-      };
+      var mainHeaders = {'Accept': 'multipart/form-data', 'Authorization': token != null ? 'Bearer $token' : 'Bearer $bearerToken'};
 
       debugPrint('====> API Call: $uri\nHeader: ${headers ?? mainHeaders}');
       debugPrint('====> API Body: $body with ${multipartBody?.length} picture');
@@ -245,9 +207,11 @@ class ApiClient extends GetxService {
       var request = http.MultipartRequest('PATCH', Uri.parse(ApiConstant.baseUrl + uri));
 
       // Convert the body values to String if they are not already
-      request.fields.addAll(body.map((key, value) {
-        return MapEntry(key, value.toString());
-      }));
+      request.fields.addAll(
+        body.map((key, value) {
+          return MapEntry(key, value.toString());
+        }),
+      );
 
       if (multipartBody!.isNotEmpty) {
         // ignore: avoid_function_literals_in_foreach_calls
@@ -258,11 +222,7 @@ class ApiClient extends GetxService {
 
           debugPrint("MimeType================$mimeType");
 
-          var multipartImg = await http.MultipartFile.fromPath(
-            element.key,
-            element.file.path,
-            contentType: MediaType.parse(mimeType!),
-          );
+          var multipartImg = await http.MultipartFile.fromPath(element.key, element.file.path, contentType: MediaType.parse(mimeType!));
           request.files.add(multipartImg);
         });
       }
@@ -276,11 +236,7 @@ class ApiClient extends GetxService {
         return const Response(statusCode: 1, statusText: 'Session expired, please log in');
       }
 
-      return Response(
-        statusCode: response.statusCode,
-        statusText: noInternetMessage,
-        body: content,
-      );
+      return Response(statusCode: response.statusCode, statusText: noInternetMessage, body: content);
     } catch (e) {
       debugPrint('------------${e.toString()}');
 
@@ -288,17 +244,13 @@ class ApiClient extends GetxService {
     }
   }
 
-
-
-
   ///<====================== This is for patch methode ========================>
-  static Future<Response> putData(String uri, dynamic body,
-      {Map<String, String>? headers}) async {
+  static Future<Response> putData(String uri, dynamic body, {Map<String, String>? headers}) async {
     bearerToken = await SharePrefsHelper.getString(AppConstants.bearerToken);
 
     var mainHeaders = {
-      'Content-Type': 'application/json',  // Changed to application/json
-      'Authorization': 'Bearer $bearerToken'
+      'Content-Type': 'application/json', // Changed to application/json
+      'Authorization': 'Bearer $bearerToken',
     };
 
     try {
@@ -308,10 +260,10 @@ class ApiClient extends GetxService {
       // Encode the body as JSON
       http.Response response = await http
           .put(
-        Uri.parse(ApiConstant.baseUrl + uri),
-        body: jsonEncode(body),  // Ensure the body is correctly JSON encoded
-        headers: headers ?? mainHeaders,
-      )
+            Uri.parse(ApiConstant.baseUrl + uri),
+            body: jsonEncode(body), // Ensure the body is correctly JSON encoded
+            headers: headers ?? mainHeaders,
+          )
           .timeout(const Duration(seconds: timeoutInSeconds));
       if (response.statusCode == 401) {
         _navigateToLoginScreen();
@@ -325,18 +277,17 @@ class ApiClient extends GetxService {
     }
   }
 
-
-  static Future<Response> putMultipartData(String uri, Map<String, String> body,
-      {List<MultipartBody>? multipartBody,
-        List<MultipartListBody>? multipartListBody,
-        Map<String, String>? headers}) async {
+  static Future<Response> putMultipartData(
+    String uri,
+    Map<String, String> body, {
+    List<MultipartBody>? multipartBody,
+    List<MultipartListBody>? multipartListBody,
+    Map<String, String>? headers,
+  }) async {
     try {
       bearerToken = await SharePrefsHelper.getString(AppConstants.bearerToken);
 
-      var mainHeaders = {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        'Authorization': 'Bearer $bearerToken'
-      };
+      var mainHeaders = {'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Bearer $bearerToken'};
 
       debugPrint('====> API Call: $uri\nHeader: ${headers ?? mainHeaders}');
       debugPrint('====> API Body: $body with ${multipartBody?.length} picture');
@@ -353,8 +304,7 @@ class ApiClient extends GetxService {
       //   }
       // }
 
-      var request =
-      http.MultipartRequest('PUT', Uri.parse(ApiConstant.baseUrl + uri));
+      var request = http.MultipartRequest('PUT', Uri.parse(ApiConstant.baseUrl + uri));
       request.fields.addAll(body);
 
       if (multipartBody!.isNotEmpty) {
@@ -364,22 +314,26 @@ class ApiClient extends GetxService {
 
           if (element.file.path.contains(".mp4")) {
             debugPrint("media type mp4 ==== ${element.file.path}");
-            request.files.add(http.MultipartFile(
-              element.key,
-              element.file.readAsBytes().asStream(),
-              element.file.lengthSync(),
-              filename: 'video.mp4',
-              contentType: MediaType('video', 'mp4'),
-            ));
+            request.files.add(
+              http.MultipartFile(
+                element.key,
+                element.file.readAsBytes().asStream(),
+                element.file.lengthSync(),
+                filename: 'video.mp4',
+                contentType: MediaType('video', 'mp4'),
+              ),
+            );
           } else if (element.file.path.contains(".png")) {
             debugPrint("media type png ==== ${element.file.path}");
-            request.files.add(http.MultipartFile(
-              element.key,
-              element.file.readAsBytes().asStream(),
-              element.file.lengthSync(),
-              filename: 'image.png',
-              contentType: MediaType('image', 'png'),
-            ));
+            request.files.add(
+              http.MultipartFile(
+                element.key,
+                element.file.readAsBytes().asStream(),
+                element.file.lengthSync(),
+                filename: 'image.png',
+                contentType: MediaType('image', 'png'),
+              ),
+            );
           }
 
           //request.files.add(await http.MultipartFile.fromPath(element.key, element.file.path,contentType: MediaType('video', 'mp4')));
@@ -389,39 +343,29 @@ class ApiClient extends GetxService {
       request.headers.addAll(mainHeaders);
       http.StreamedResponse response = await request.send();
       final content = await response.stream.bytesToString();
-      debugPrint(
-          '====> API Response: [${response.statusCode}}] $uri\n$content');
+      debugPrint('====> API Response: [${response.statusCode}}] $uri\n$content');
       if (response.statusCode == 401) {
         _navigateToLoginScreen();
         return const Response(statusCode: 1, statusText: 'Session expired, please log in');
       }
 
-      return Response(
-          statusCode: response.statusCode,
-          statusText: noInternetMessage,
-          body: content);
+      return Response(statusCode: response.statusCode, statusText: noInternetMessage, body: content);
     } catch (e) {
       return const Response(statusCode: 1, statusText: noInternetMessage);
     }
   }
 
-
   ///<====================== This is for delete methode ========================>
-  static Future<Response> deleteData(String uri,
-      {Map<String, String>? headers, dynamic body}) async {
+  static Future<Response> deleteData(String uri, {Map<String, String>? headers, dynamic body}) async {
     bearerToken = await SharePrefsHelper.getString(AppConstants.bearerToken);
 
-    var mainHeaders = {
-      'Content-Type': 'application/x-www-form-urlencoded',
-      'Authorization': 'Bearer $bearerToken'
-    };
+    var mainHeaders = {'Content-Type': 'application/x-www-form-urlencoded', 'Authorization': 'Bearer $bearerToken'};
     try {
       debugPrint('====> API Call: $uri\nHeader: ${headers ?? mainHeaders}');
       debugPrint('====> API Call: $uri\n Body: $body');
 
       http.Response response = await http
-          .delete(Uri.parse(ApiConstant.baseUrl + uri),
-          headers: headers ?? mainHeaders, body: body)
+          .delete(Uri.parse(ApiConstant.baseUrl + uri), headers: headers ?? mainHeaders, body: body)
           .timeout(const Duration(seconds: timeoutInSeconds));
       if (response.statusCode == 401) {
         _navigateToLoginScreen();
@@ -432,7 +376,6 @@ class ApiClient extends GetxService {
       return const Response(statusCode: 1, statusText: noInternetMessage);
     }
   }
-
 
   ///<====================== This is for handle response methode ========================>
   static Response handleResponse(http.Response response, String uri) {
@@ -445,10 +388,7 @@ class ApiClient extends GetxService {
     Response response0 = Response(
       body: body ?? response.body,
       bodyString: response.body.toString(),
-      request: Request(
-          headers: response.request!.headers,
-          method: response.request!.method,
-          url: response.request!.url),
+      request: Request(headers: response.request!.headers, method: response.request!.method, url: response.request!.url),
       headers: response.headers,
       statusCode: response.statusCode,
       statusText: response.reasonPhrase,
@@ -458,14 +398,9 @@ class ApiClient extends GetxService {
       return const Response(statusCode: 1, statusText: 'Session expired, please log in');
     }
 
-    if (response0.statusCode != 200 &&
-        response0.body != null &&
-        response0.body is! String) {
+    if (response0.statusCode != 200 && response0.body != null && response0.body is! String) {
       ErrorResponse errorResponse = ErrorResponse.fromJson(response0.body);
-      response0 = Response(
-          statusCode: response0.statusCode,
-          body: response0.body,
-          statusText: errorResponse.message);
+      response0 = Response(statusCode: response0.statusCode, body: response0.body, statusText: errorResponse.message);
 
       // if(_response.body.toString().startsWith('{errors: [{code:')) {
       //   ErrorResponse _errorResponse = ErrorResponse.fromJson(_response.body);
@@ -481,15 +416,12 @@ class ApiClient extends GetxService {
       response0 = const Response(statusCode: 0, statusText: noInternetMessage);
     }
 
-
-    debugPrint(
-        '====> API Response: [${response0.statusCode}] $uri\n${response0.body}');
+    debugPrint('====> API Response: [${response0.statusCode}] $uri\n${response0.body}');
     // log.e("Handle Response error} ");
     return response0;
   }
 
-///<====================== This is for PUT method ========================>
-
+  ///<====================== This is for PUT method ========================>
 }
 
 class MultipartBody {
