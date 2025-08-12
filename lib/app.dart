@@ -13,6 +13,7 @@ class FootballCoachApp extends StatelessWidget {
     return ScreenUtilInit(
       designSize: const Size(375, 812),
       child: GetMaterialApp(
+
         debugShowCheckedModeBanner: false,
         title: 'Flutter Demo',
         theme: ThemeData(
