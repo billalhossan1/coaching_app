@@ -103,13 +103,18 @@ class HomeScreen extends StatelessWidget {
                                         color: AppColors.green300,
                                       ),
                                     )
-                                  : Text(
-                                      'No upcoming session',
-                                      style: TextStyles.title20.copyWith(
-                                        fontWeight: FontWeight.w500,
-                                        color: AppColors.green300,
+                                  : SizedBox(
+                                width: 200.w,
+                                    child: Text(
+                                        'No session today, take a break!',
+                                        style: TextStyles.title20.copyWith(
+                                          fontWeight: FontWeight.w500,
+                                          color: AppColors.green300,
+                                          overflow:TextOverflow.ellipsis,
+
+                                        ),
                                       ),
-                                    ),
+                                  ),
                               homeController.todaySession.value != null
                                   ? Text(
                                       '${FormatTime.formateTime(homeController.todaySession.value!.startTime!)} - ${FormatTime.formateTime(homeController.todaySession.value!.endTime!)}',
