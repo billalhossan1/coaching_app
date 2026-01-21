@@ -43,8 +43,10 @@ dependencies:
   smooth_page_indicator:
   dropdown_button2:
   fl_chart:
+  intl:
   google_maps_flutter:
   image_picker:
+  file_picker:
   device_preview:
   collection:
   permission_handler:

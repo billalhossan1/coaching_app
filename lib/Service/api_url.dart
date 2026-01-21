@@ -1,10 +1,10 @@
 class ApiConstant {
 
-  static const baseUrl="http://31.97.114.108:5000/api/v1/";//31.97.114.108:5000  10.10.7.6:5000
-  static const imageUrl="http://31.97.114.108:5000/";
-  static const videoUrl="http://31.97.114.108:5000/api/v1";
-  static const homeWorkVideoUrl="http://31.97.114.108:5000/api/v1/tutorial/video";
-  static const socketUrl="http://31.97.114.108:5000/";
+  static const baseUrl="http://10.10.7.9:5006/api/v1/";//31.97.114.108:5000  10.10.7.6:5000
+  static const imageUrl="http://10.10.7.9:5006/";
+  static const videoUrl="http://10.10.7.9:5006/api/v1";
+  static const homeWorkVideoUrl="http://10.10.7.9:5006/api/v1/tutorial/video";
+  static const socketUrl="http://10.10.7.9:5006/";
   static const myid = "myid";
 
 
@@ -20,6 +20,7 @@ class ApiConstant {
   static const createUser = "/user";
   static const getCourse = "/course";
   static const getHomeWork = "/homework";
+  static const leaveApplicaiton = "/leave-application";
   static const auth_login = "/auth/login";
   static const forgot_password = "/auth/forget-password";
   static const verify_email = "/auth/verify-email";

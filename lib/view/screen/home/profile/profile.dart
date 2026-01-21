@@ -22,28 +22,32 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     Rxn<ProfileModel> profileModel = Rxn<ProfileModel>();
 
-    profileModel =  Get.find<HomeController>().profileModel;
+    profileModel = Get.find<HomeController>().profileModel;
     final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
           children: [
-            const CustomAppbarWithTitle(text: 'My Account ',isBackIcon: false,),
+            const CustomAppbarWithTitle(text: 'My Account ', isBackIcon: false),
             // Profile details and Course history
             Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 20.0,
+                vertical: 10.0,
+              ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Obx(()=>ProfileCart1(
-                    screenWidth: screenWidth,
-                    img: profileModel.value?.profileModel?.image??'',
-                    text: 'Profile Details',
-                    onTap: () {
-                      Get.toNamed(AppRoute.profileDetails);
-                    },
-                  ),),
+                  Obx(
+                    () => ProfileCart1(
+                      screenWidth: screenWidth,
+                      img: profileModel.value?.profileModel?.image ?? '',
+                      text: 'Profile Details',
+                      onTap: () {
+                        Get.toNamed(AppRoute.profileDetails);
+                      },
+                    ),
+                  ),
                   ProfileCart(
                     screenWidth: screenWidth,
                     img: AppImages.courseHistory,
@@ -57,8 +61,10 @@ class ProfileScreen extends StatelessWidget {
             ),
             // Setting and Help support
             Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 20.0,
+                vertical: 10.0,
+              ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -83,8 +89,10 @@ class ProfileScreen extends StatelessWidget {
             ),
             // About and App Support
             Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 20.0,
+                vertical: 10.0,
+              ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -109,8 +117,10 @@ class ProfileScreen extends StatelessWidget {
             ),
             // Terms condition and log out
             Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+              padding: const EdgeInsets.symmetric(
+                horizontal: 20.0,
+                vertical: 10.0,
+              ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
@@ -124,12 +134,41 @@ class ProfileScreen extends StatelessWidget {
                   ),
                   ProfileCart(
                     screenWidth: screenWidth,
+                    img: AppImages.myApplication,
+                    text: 'My Applications',
+                    onTap: () {
+                      Get.toNamed(AppRoute.myApplication);
+                      // SharePrefsHelper.remove(AppConstants.bearerToken);
+                      // Get.offAllNamed(AppRoute.signInScreen);
+                    },
+                  ),
+                ],
+              ),
+            ),
+
+            Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: 20.0,
+                vertical: 10.0,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  ProfileCart(
+                    screenWidth: screenWidth,
+                    img: AppImages.leaveApplication,
+                    text: 'Leave Application',
+                    onTap: () {
+                      Get.toNamed(AppRoute.leaveApplication);
+                    },
+                  ),
+                  ProfileCart(
+                    screenWidth: screenWidth,
                     img: AppImages.logOut,
                     text: 'Log Out',
                     onTap: () {
                       SharePrefsHelper.remove(AppConstants.bearerToken);
                       Get.offAllNamed(AppRoute.signInScreen);
-
                     },
                   ),
                 ],
@@ -147,12 +186,13 @@ class ProfileCart extends StatelessWidget {
   final String text;
   final VoidCallback onTap;
 
-  const ProfileCart(
-      {super.key,
-      required this.screenWidth,
-      required this.img,
-      required this.text,
-      required this.onTap});
+  const ProfileCart({
+    super.key,
+    required this.screenWidth,
+    required this.img,
+    required this.text,
+    required this.onTap,
+  });
 
   final double screenWidth;
 
@@ -177,8 +217,10 @@ class ProfileCart extends StatelessWidget {
               Text(
                 text,
                 style: TextStyles.regular16.copyWith(
-                    fontWeight: FontWeight.w400, color: AppColors.white500),
-              )
+                  fontWeight: FontWeight.w400,
+                  color: AppColors.white500,
+                ),
+              ),
             ],
           ),
         ),
@@ -192,12 +234,13 @@ class ProfileCart1 extends StatelessWidget {
   final String text;
   final VoidCallback onTap;
 
-  const ProfileCart1(
-      {super.key,
-      required this.screenWidth,
-      required this.img,
-      required this.text,
-      required this.onTap});
+  const ProfileCart1({
+    super.key,
+    required this.screenWidth,
+    required this.img,
+    required this.text,
+    required this.onTap,
+  });
 
   final double screenWidth;
 
@@ -222,15 +265,18 @@ class ProfileCart1 extends StatelessWidget {
                 child: ConditionalImageWidget(
                   imageUrl: img,
                   height: 32.h,
-                  width: 32.w, baseUrl: ApiConstant.imageUrl,
+                  width: 32.w,
+                  baseUrl: ApiConstant.imageUrl,
                 ),
               ),
               HeightGap(height: 20.h),
               Text(
                 text,
                 style: TextStyles.regular16.copyWith(
-                    fontWeight: FontWeight.w400, color: AppColors.white500),
-              )
+                  fontWeight: FontWeight.w400,
+                  color: AppColors.white500,
+                ),
+              ),
             ],
           ),
         ),

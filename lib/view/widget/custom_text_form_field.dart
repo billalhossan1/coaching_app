@@ -163,6 +163,9 @@ class CustomTextFromFieldMaxLine extends StatelessWidget {
       child: AbsorbPointer(
         absorbing: readonly ?? false,
         child: TextFormField(
+          onTapOutside: (event) {
+            FocusScope.of(context).unfocus();
+          },
           autovalidateMode: AutovalidateMode.onUserInteraction,
           keyboardType: keyBoardType,
           style: TextStyles.regular16,

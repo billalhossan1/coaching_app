@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:get/get_connect/http/src/response/response.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../../../Service/api_client.dart';
 import '../../../../Service/api_url.dart';
@@ -125,4 +128,37 @@ class ManageClassRepo{
     }
 
   }
+
+  Future<Response> leaveApplication({
+    required String startDate,
+    required String reason,
+    required String endDate,
+    File? document,  // File to upload
+  }) async {
+    try {
+      Map<String, String> body = {
+        "startDate": startDate,
+        "endDate": endDate,
+        "reason": reason,
+      };
+
+      // Prepare multipartBody if document is provided
+      List<MultipartBody> multipartBody = [];
+      if (document != null) {
+        multipartBody.add(MultipartBody("doc", document));
+      }
+
+      // Call the postMultipartData method with multipartBody
+      Response response = await ApiClient.postMultipartData(
+        ApiConstant.leaveApplicaiton,
+        body,
+        multipartBody: multipartBody,  // Pass the file here
+      );
+
+      return response;
+    } catch (e) {
+      return Response(statusCode: 1, statusText: "Error: ${e.toString()}");
+    }
+  }
+
 }

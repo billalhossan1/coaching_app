@@ -1,10 +1,12 @@
 import 'package:football_coaching_coach_app/view/screen/home/controller/assign_home_work_controller.dart';
 import 'package:football_coaching_coach_app/view/screen/home/controller/course_details_controller.dart';
 import 'package:football_coaching_coach_app/view/screen/home/controller/course_history_controller.dart';
+import 'package:football_coaching_coach_app/view/screen/home/controller/leave_application_controller.dart';
 import 'package:football_coaching_coach_app/view/screen/home/controller/manage_class_by_id_controller.dart';
 import 'package:football_coaching_coach_app/view/screen/home/controller/manage_class_controller.dart';
 import 'package:football_coaching_coach_app/view/screen/home/controller/student_details_controller.dart';
 import 'package:football_coaching_coach_app/view/screen/home/controller/update_marks_controller.dart';
+import 'package:football_coaching_coach_app/view/screen/home/profile/my_application/controller/my_application_controller.dart';
 import 'package:football_coaching_coach_app/view/screen/home/profile/setting/controller/change_password_controller.dart';
 import 'package:football_coaching_coach_app/view/screen/home/profile/terms_condition/controller/terms_and_condition_controller.dart';
 import 'package:get/get.dart';
@@ -44,5 +46,7 @@ class DependencyInjection extends Bindings {
     Get.lazyPut(() => ManageClassController(), fenix: true);
     Get.lazyPut(() => StudentDetailsController(), fenix: true);
     Get.lazyPut(() => NotificationController(), fenix: true);
+    Get.lazyPut(() => LeaveApplicationController(), fenix: true);
+    Get.lazyPut(() => MyApplicationController(), fenix: true);
   }
 }

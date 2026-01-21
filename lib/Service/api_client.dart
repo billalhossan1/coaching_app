@@ -129,7 +129,8 @@ class ApiClient extends GetxService {
 
   static Future<Response> postMultipartData(
     String uri,
-    Map<String, String> body, {
+      Map<String, String> body,
+    {
     List<MultipartBody>? multipartBody,
     Map<String, String>? headers,
     String? token,

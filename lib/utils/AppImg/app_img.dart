@@ -1,7 +1,7 @@
 class AppImages {
   static const String basePath = "assets/images";
 
-  static const String logo ="$basePath/logo.png";
+  static const String logo = "$basePath/logo.png";
 
   ///====================== Splash Image =========================
   static const String player1 = "$basePath/player_1.png";
@@ -30,8 +30,6 @@ class AppImages {
   static const String manageClassGreen = "assets/svg/manage_class.svg";
   static const String manageGrey = "assets/svg/mange_grey.svg";
 
-
-
   ///===================== Home ====================================
   static const String search = "assets/svg/search.svg";
   static const String cart = "assets/svg/cart.svg";
@@ -43,15 +41,12 @@ class AppImages {
   static const String fav = "assets/svg/favIcon.svg";
   static const String hexa = "assets/images/hexa.png";
 
-
   static const String usaFlag = "assets/svg/usa_flag.svg";
   static const String multiplePerson = "assets/svg/multiple_person.svg";
   static const String runningPerson = "assets/svg/runnng_person.svg";
   static const String singlePerson = "assets/svg/single_person.svg";
   static const String enrollElitBg = "assets/images/enroll_elit_bg.png";
   static const String doneIcon = "assets/svg/doneIcon.svg";
-
-
 
   ///===================== Profile ====================================
   static const String about = "assets/svg/about.svg";
@@ -65,6 +60,6 @@ class AppImages {
   static const String editIcon = "assets/svg/edit.svg";
   static const String blueBg = "$basePath/blue_background.png";
   static const String logOut = "assets/svg/log out.svg";
-
-
+  static const String leaveApplication = "assets/svg/leave.svg";
+  static const String myApplication = "assets/svg/my_application.svg";
 }

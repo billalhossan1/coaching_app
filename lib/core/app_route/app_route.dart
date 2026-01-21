@@ -1,5 +1,7 @@
+import 'package:football_coaching_coach_app/view/screen/home/mange_class/leave_application.dart';
 import 'package:football_coaching_coach_app/view/screen/home/mange_class/manage_class_by_id.dart';
 import 'package:football_coaching_coach_app/view/screen/home/notificaiton/notification.dart';
+import 'package:football_coaching_coach_app/view/screen/home/profile/my_application/my_application.dart';
 import 'package:get/get.dart';
 
 import '../../view/screen/auth/sign_in_screen.dart';
@@ -63,6 +65,8 @@ class AppRoute {
   static const String videoPlayerScreen = "/videoPlayer";
   static const String menageClassById = "/videoPlayer";
   static const String notificationScreen = "/notification";
+  static const String leaveApplication = "/leaveApplication";
+  static const String myApplication = "/myApplication";
 
   static List<GetPage> routes = [
     ///==================== Initial Routes ====================
@@ -97,6 +101,8 @@ class AppRoute {
     GetPage(name: appSupport, page: () =>  AppSupport()),
     GetPage(name: termsCondition, page: () =>  TermsCondition()),
     GetPage(name: notificationScreen, page: () =>  Notification()),
+    GetPage(name: leaveApplication, page: () =>  LeaveApplication()),
+    GetPage(name: myApplication, page: () =>  MyApplication()),
 
 
   ];

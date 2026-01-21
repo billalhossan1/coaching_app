@@ -40,5 +40,22 @@ class ProfileRepo{
     }
 
   }
+  Future<Response>getMyApplications({required int page})async{
+
+    try{
+      Map<String,dynamic>query={
+        "page":page
+      };
+      Response response;
+      response = await ApiClient.getData(
+        ApiConstant.leaveApplicaiton,query: query
+      );
+      return response;
+
+    }catch(e){
+      return Response(statusCode: 1, statusText: "Error: ${e.toString()}");
+    }
+
+  }
 
 }
